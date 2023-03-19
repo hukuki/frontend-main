@@ -1,1 +1,1 @@
-export {Hide} from "@chakra-ui/react"
+export { Hide } from "@chakra-ui/react";

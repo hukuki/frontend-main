@@ -1,1 +1,1 @@
-export {Grid} from "@chakra-ui/react"
+export { Grid } from "@chakra-ui/react";

@@ -1,1 +1,1 @@
-export {VStack} from "@chakra-ui/react"
+export { VStack } from "@chakra-ui/react";

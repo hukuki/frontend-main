@@ -1,1 +1,1 @@
-export {Tr} from "@chakra-ui/react"
+export { Tr } from "@chakra-ui/react";

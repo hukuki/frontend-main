@@ -1,1 +1,1 @@
-export {AccordionItem} from "@chakra-ui/react"
+export { AccordionItem } from "@chakra-ui/react";

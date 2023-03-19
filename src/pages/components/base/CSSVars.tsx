@@ -1,1 +1,1 @@
-export {CSSVars} from "@chakra-ui/react"
+export { CSSVars } from "@chakra-ui/react";

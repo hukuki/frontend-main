@@ -1,1 +1,1 @@
-export {CheckboxGroup} from "@chakra-ui/react"
+export { CheckboxGroup } from "@chakra-ui/react";

@@ -1,1 +1,1 @@
-export {OrderedList} from "@chakra-ui/react"
+export { OrderedList } from "@chakra-ui/react";

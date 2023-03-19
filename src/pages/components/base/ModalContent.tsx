@@ -1,1 +1,1 @@
-export {ModalContent} from "@chakra-ui/react"
+export { ModalContent } from "@chakra-ui/react";

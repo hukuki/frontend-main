@@ -1,1 +1,1 @@
-export {Spacer} from "@chakra-ui/react"
+export { Spacer } from "@chakra-ui/react";

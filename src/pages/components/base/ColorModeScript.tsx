@@ -1,1 +1,1 @@
-export {ColorModeScript} from "@chakra-ui/react"
+export { ColorModeScript } from "@chakra-ui/react";

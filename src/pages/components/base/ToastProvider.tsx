@@ -1,1 +1,1 @@
-export {ToastProvider} from "@chakra-ui/react"
+export { ToastProvider } from "@chakra-ui/react";

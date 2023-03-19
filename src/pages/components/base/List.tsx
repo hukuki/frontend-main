@@ -1,1 +1,1 @@
-export {List} from "@chakra-ui/react"
+export { List } from "@chakra-ui/react";

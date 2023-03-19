@@ -1,1 +1,1 @@
-export {Thead} from "@chakra-ui/react"
+export { Thead } from "@chakra-ui/react";

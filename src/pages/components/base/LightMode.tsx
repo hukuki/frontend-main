@@ -1,1 +1,1 @@
-export {LightMode} from "@chakra-ui/react"
+export { LightMode } from "@chakra-ui/react";

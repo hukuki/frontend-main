@@ -1,1 +1,1 @@
-export {ButtonSpinner} from "@chakra-ui/react"
+export { ButtonSpinner } from "@chakra-ui/react";

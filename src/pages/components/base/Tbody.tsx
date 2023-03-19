@@ -1,1 +1,1 @@
-export {Tbody} from "@chakra-ui/react"
+export { Tbody } from "@chakra-ui/react";

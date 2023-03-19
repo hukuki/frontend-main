@@ -1,1 +1,1 @@
-export {StackItem} from "@chakra-ui/react"
+export { StackItem } from "@chakra-ui/react";

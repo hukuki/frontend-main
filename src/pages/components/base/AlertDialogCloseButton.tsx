@@ -1,1 +1,1 @@
-export {AlertDialogCloseButton} from "@chakra-ui/react"
+export { AlertDialogCloseButton } from "@chakra-ui/react";

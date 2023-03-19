@@ -1,1 +1,1 @@
-export {SliderTrack} from "@chakra-ui/react"
+export { SliderTrack } from "@chakra-ui/react";

@@ -1,1 +1,1 @@
-export {PortalManager} from "@chakra-ui/react"
+export { PortalManager } from "@chakra-ui/react";

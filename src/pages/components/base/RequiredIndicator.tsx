@@ -1,1 +1,1 @@
-export {RequiredIndicator} from "@chakra-ui/react"
+export { RequiredIndicator } from "@chakra-ui/react";

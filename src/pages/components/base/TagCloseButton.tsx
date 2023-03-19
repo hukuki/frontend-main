@@ -1,1 +1,1 @@
-export {TagCloseButton} from "@chakra-ui/react"
+export { TagCloseButton } from "@chakra-ui/react";

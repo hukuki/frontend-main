@@ -1,1 +1,1 @@
-export {Tag} from "@chakra-ui/react"
+export { Tag } from "@chakra-ui/react";

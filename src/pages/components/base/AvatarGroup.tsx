@@ -1,1 +1,1 @@
-export {AvatarGroup} from "@chakra-ui/react"
+export { AvatarGroup } from "@chakra-ui/react";

@@ -1,1 +1,1 @@
-export {EditableTextarea} from "@chakra-ui/react"
+export { EditableTextarea } from "@chakra-ui/react";

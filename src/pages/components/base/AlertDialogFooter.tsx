@@ -1,1 +1,1 @@
-export {AlertDialogFooter} from "@chakra-ui/react"
+export { AlertDialogFooter } from "@chakra-ui/react";

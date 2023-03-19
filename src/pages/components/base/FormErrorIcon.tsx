@@ -1,1 +1,1 @@
-export {FormErrorIcon} from "@chakra-ui/react"
+export { FormErrorIcon } from "@chakra-ui/react";

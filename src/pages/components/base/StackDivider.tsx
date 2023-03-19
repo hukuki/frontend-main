@@ -1,1 +1,1 @@
-export {StackDivider} from "@chakra-ui/react"
+export { StackDivider } from "@chakra-ui/react";

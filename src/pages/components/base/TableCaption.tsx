@@ -1,1 +1,1 @@
-export {TableCaption} from "@chakra-ui/react"
+export { TableCaption } from "@chakra-ui/react";

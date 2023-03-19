@@ -1,1 +1,1 @@
-export {RadioGroup} from "@chakra-ui/react"
+export { RadioGroup } from "@chakra-ui/react";

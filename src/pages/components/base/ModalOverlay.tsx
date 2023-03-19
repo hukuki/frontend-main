@@ -1,1 +1,1 @@
-export {ModalOverlay} from "@chakra-ui/react"
+export { ModalOverlay } from "@chakra-ui/react";

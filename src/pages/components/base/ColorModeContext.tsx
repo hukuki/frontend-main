@@ -1,1 +1,1 @@
-export {ColorModeContext} from "@chakra-ui/react"
+export { ColorModeContext } from "@chakra-ui/react";

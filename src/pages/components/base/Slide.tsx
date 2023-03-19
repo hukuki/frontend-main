@@ -1,1 +1,1 @@
-export {Slide} from "@chakra-ui/react"
+export { Slide } from "@chakra-ui/react";

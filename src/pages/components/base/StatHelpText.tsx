@@ -1,1 +1,1 @@
-export {StatHelpText} from "@chakra-ui/react"
+export { StatHelpText } from "@chakra-ui/react";

@@ -1,1 +1,1 @@
-export {EASINGS} from "@chakra-ui/react"
+export { EASINGS } from "@chakra-ui/react";

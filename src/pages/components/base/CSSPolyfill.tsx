@@ -1,1 +1,1 @@
-export {CSSPolyfill} from "@chakra-ui/react"
+export { CSSPolyfill } from "@chakra-ui/react";

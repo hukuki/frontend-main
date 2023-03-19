@@ -1,1 +1,1 @@
-export {MenuIcon} from "@chakra-ui/react"
+export { MenuIcon } from "@chakra-ui/react";

@@ -1,1 +1,1 @@
-export {MenuDivider} from "@chakra-ui/react"
+export { MenuDivider } from "@chakra-ui/react";

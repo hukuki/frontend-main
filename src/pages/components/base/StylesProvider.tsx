@@ -1,1 +1,1 @@
-export {StylesProvider} from "@chakra-ui/react"
+export { StylesProvider } from "@chakra-ui/react";

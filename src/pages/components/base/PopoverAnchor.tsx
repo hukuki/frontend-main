@@ -1,1 +1,1 @@
-export {PopoverAnchor} from "@chakra-ui/react"
+export { PopoverAnchor } from "@chakra-ui/react";

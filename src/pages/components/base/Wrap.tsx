@@ -1,1 +1,1 @@
-export {Wrap} from "@chakra-ui/react"
+export { Wrap } from "@chakra-ui/react";

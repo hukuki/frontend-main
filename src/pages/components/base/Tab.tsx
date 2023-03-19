@@ -1,1 +1,1 @@
-export {Tab} from "@chakra-ui/react"
+export { Tab } from "@chakra-ui/react";

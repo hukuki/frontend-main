@@ -1,1 +1,1 @@
-export {AlertDialogOverlay} from "@chakra-ui/react"
+export { AlertDialogOverlay } from "@chakra-ui/react";

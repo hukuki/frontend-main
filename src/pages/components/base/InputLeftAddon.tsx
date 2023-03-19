@@ -1,1 +1,1 @@
-export {InputLeftAddon} from "@chakra-ui/react"
+export { InputLeftAddon } from "@chakra-ui/react";

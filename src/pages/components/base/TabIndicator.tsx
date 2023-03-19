@@ -1,1 +1,1 @@
-export {TabIndicator} from "@chakra-ui/react"
+export { TabIndicator } from "@chakra-ui/react";

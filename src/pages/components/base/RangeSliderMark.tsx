@@ -1,1 +1,1 @@
-export {RangeSliderMark} from "@chakra-ui/react"
+export { RangeSliderMark } from "@chakra-ui/react";

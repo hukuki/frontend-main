@@ -1,1 +1,1 @@
-export {CSSReset} from "@chakra-ui/react"
+export { CSSReset } from "@chakra-ui/react";

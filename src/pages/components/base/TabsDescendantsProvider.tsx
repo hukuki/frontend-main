@@ -1,1 +1,1 @@
-export {TabsDescendantsProvider} from "@chakra-ui/react"
+export { TabsDescendantsProvider } from "@chakra-ui/react";
