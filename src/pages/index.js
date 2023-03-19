@@ -1,11 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { useEffect } from "react";
-import Hero from "./components/hero.tsx";
-import * as chakra from "@chakra-ui/react";
-
-const inter = Inter({ subsets: ["latin"] });
+import Hero from "../components/hero.tsx";
 
 export default function Home() {
   return (
