@@ -6,7 +6,7 @@ export default function Hero() {
   const router = useRouter();
 
   return (
-    <Container maxW={"5xl"} onClick={() => router.push("/home")}>
+    <Container maxW={"5xl"} onClick={() => router.push("/home")} bg="dark.secondary">
       <Stack textAlign={"center"} align={"center"} spacing={{ base: 8, md: 10 }} py={{ base: 20, md: 28 }}>
         <Heading fontWeight={600} fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }} lineHeight={"110%"}>
           <Text as={"span"} className={styles.cover} color={"main.primary"} style={{ position: "relative" }}>
