@@ -10,12 +10,14 @@ import { Menu, MenuButton, MenuList, MenuItemOption } from "@chakra-ui/react";
 // Types
 type SearchBarProps = {
   onSubmit: (search: string, category: string) => void;
+  initialSearch?: string;
+  initialCategory?: "mevzuat" | "içtihat" | "literatür";
 };
 
 // Component
-export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit }) => {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("mevzuat");
+export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initialSearch, initialCategory }) => {
+  const [search, setSearch] = useState(initialSearch ?? "");
+  const [category, setCategory] = useState(initialCategory ?? "mevzuat");
 
   return (
     <motion.div layout layoutId="motionSearchBar" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
@@ -39,7 +41,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit }) => {
           />
 
           <InputRightElement width="fit-content" borderRadius="25px" paddingEnd="10px">
-            <Menu placement="bottom-end">
+            <Menu placement="bottom-end" computePositionOnMount={true}>
               <MenuButton>
                 {category}
                 <ChevronDownIcon />
