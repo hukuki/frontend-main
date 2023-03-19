@@ -3,6 +3,7 @@ import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 // Component style overrides
 import { Menu } from "./components/overlay";
+import { Input } from "./components/forms";
 
 // Colors
 const colors = {
@@ -24,6 +25,7 @@ const overrides = {
   colors,
   components: {
     Menu,
+    Input,
     // Other components go here
   },
   config,
