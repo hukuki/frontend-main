@@ -2,6 +2,7 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 // Component style overrides
+import { Card } from "./components/dataDisplay";
 import { Menu } from "./components/overlay";
 import { Input } from "./components/forms";
 
@@ -26,6 +27,7 @@ const overrides = {
   components: {
     Menu,
     Input,
+    Card,
     // Other components go here
   },
   config,

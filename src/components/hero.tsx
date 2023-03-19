@@ -1,9 +1,12 @@
 import styles from "./hero.module.css";
+import { useRouter } from "next/router";
 import { Flex, Container, Heading, Stack, Text, Button, Icon, IconProps } from "@chakra-ui/react";
 
 export default function Hero() {
+  const router = useRouter();
+
   return (
-    <Container maxW={"5xl"}>
+    <Container maxW={"5xl"} onClick={() => router.push("/home")}>
       <Stack textAlign={"center"} align={"center"} spacing={{ base: 8, md: 10 }} py={{ base: 20, md: 28 }}>
         <Heading fontWeight={600} fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }} lineHeight={"110%"}>
           <Text as={"span"} className={styles.cover} color={"main.primary"} style={{ position: "relative" }}>
