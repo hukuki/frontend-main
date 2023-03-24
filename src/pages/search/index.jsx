@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { GoLaw } from "react-icons/go";
 import { Icon } from "@chakra-ui/icons";
 import { Box, Flex } from "@/components/base/layout";
-import { SearchBar } from "@/components/common";
+import { SearchBar } from "@/components/common/search-bar";
 
 // CSS
 import styles from "./SearchPage.module.css"
@@ -19,12 +19,9 @@ const SearchPage = () => {
         <div className={styles["logo__container"]}>
           <h1 className={styles.logo}>DeepLex</h1>
         </div>
-        <form action="" className={styles["searchbar__form"]}>
-          <div className={styles["searchbar__container"]}>
-            <input className={styles["searchbar__input"]} placeholder="Döküman ara" />
-          </div>
-          <button className={styles["search__button"]} type="submit">Search</button>
-        </form>
+        <div className={styles["searchbar__container"]}>
+          <SearchBar />
+        </div>
       </div>
       {/*
     <Flex height="100%" align="center" direction="column" justify="center" gap="10px" paddingBottom="100px">
