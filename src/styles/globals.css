@@ -98,8 +98,6 @@ meter {
     all: revert;
 }
 
-/* Additional custom features */
-
 :root {
     --color-blue-50: #DEF4FF;
     --color-blue-100: #B0DDFF;
@@ -137,9 +135,8 @@ meter {
     --color-grey-900: #0C0C0E;
 }
 
-/* Additional custom features */
 * {
-    font-size: 62.5%;
+    font-size: 62.5%
 }
 
 html,

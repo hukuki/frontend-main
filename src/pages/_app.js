@@ -8,6 +8,7 @@ import theme from "@/theme";
 export default function App({ Component, pageProps: { session, ...pageProps }, router }) {
   return (
     <SessionProvider session={session}>
+      <Component {...pageProps} />
       <ChakraProvider theme={theme}>
         <AnimatePresence mode="wait" initial={false}>
           <LayoutGroup>
