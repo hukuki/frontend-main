@@ -7,9 +7,7 @@ import theme from "@/theme";
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <Component {...pageProps} />
     </SessionProvider>
   );
 }
