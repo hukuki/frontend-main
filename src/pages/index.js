@@ -8,6 +8,8 @@ import { Text } from "../components/base/Text.tsx"
 import { Button } from "../components/base/forms"
 import { Grid } from "../components/base/Grid.tsx"
 
+import { Link } from "next/link";
+
 export default function Home() {
   return (
     <>
@@ -54,7 +56,7 @@ export default function Home() {
           flex="1"
           color="primary.400"
           >
-            DeepLex
+            <Link href="/">DeepLex</Link>
           </Text>
           <Flex
           justifyContent="center"
@@ -72,7 +74,7 @@ export default function Home() {
               transform: "scale(1.05)"
             }}
             >
-              Neden DeepLex
+              <Link href="/about">Neden DeepLex</Link>
             </Text>
             <Text
             height="100%"
@@ -95,7 +97,7 @@ export default function Home() {
             padding="2rem"
             borderRadius="1.5rem"
             >
-              Giriş Yap
+              <Link href="/login">Giriş Yap</Link>
             </Button>
           </Flex>
         </Flex>
@@ -145,7 +147,7 @@ export default function Home() {
             py="2.5rem"
             borderRadius="1rem"
             >
-            DeepLex'i Dene
+              <Link href="/search">DeepLex'i Dene</Link>
             </Button>
           </Flex>
         </Grid>
