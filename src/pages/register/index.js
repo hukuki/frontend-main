@@ -1,6 +1,28 @@
 import styles from "./RegisterPage.module.css"
+import { useCallback } from "react"
+
+import { useState } from "react";
 
 function RegisterPage() {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [firstname, setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [username, setUsername] = useState("")
+
+    const handleRegistration = async (e) => {
+        e.preventDefault()
+        const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({firstname, lastname, username, email, password})
+        })
+        console.log(response.json())
+    }
+
   return (
     <div className={styles.container}>
         <div className={styles["hero__container"]}>
@@ -12,36 +34,51 @@ function RegisterPage() {
         </div>
         <div className={styles["form__container"]}>
             <h3 className={styles["form__header"]}>Kayıt Olun</h3>
-            <form action="" className={styles["login__form"]}>
+            <form action="" className={styles["login__form"]} onSubmit={handleRegistration}>
                 <div className={styles["form__input-area"]}>
                     <div className={styles["form__input-names-container"]}>
                         <div className={styles["form__input-container"]}>
                             <label htmlFor="first_name" className={styles["form__name-input-label"]}>İsim</label>
-                            <input type="text" className={styles["form__input-name"]} placeholder="İsminiz" id="first_name" />
+                            <input
+                            onChange={(e) => setFirstname(e.target.value)}
+                            value={firstname}
+                            type="text" className={styles["form__input-name"]} placeholder="İsminiz" id="first_name" />
                         </div>
                         <div className={styles["form__input-container"]}>
                             <label htmlFor="last_name" className={styles["form__name-input-label"]}>Soyisim</label>
-                            <input type="text" className={styles["form__input-name"]} placeholder="Soyisminiz" id="last_name" />
+                            <input
+                            onChange={(e) => setLastname(e.target.value)}
+                            value={lastname}
+                            type="text" className={styles["form__input-name"]} placeholder="Soyisminiz" id="last_name" />
                         </div>
                     </div>
                     <div className={styles["form__input-container"]}>
                         <label htmlFor="username" className={styles["form__input-label"]}>Kullanıcı Adı</label>
-                        <input type="text" className={styles["form__input"]} placeholder="Kullanıcı adınız" id="username" />
+                        <input
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                        type="text" className={styles["form__input"]} placeholder="Kullanıcı adınız" id="username" />
                     </div>
                     <div className={styles["form__input-container"]}>
                         <label htmlFor="email" className={styles["form__input-label"]}>Email</label>
-                        <input type="email" className={styles["form__input"]} placeholder="Email adresiniz" id="email" />
+                        <input
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        type="email" className={styles["form__input"]} placeholder="Email adresiniz" id="email"/>
                     </div>
                     <div className={styles["form__input-container"]}>
                         <label htmlFor="password" className={styles["form__input-label"]}>Şifre</label>
-                        <input type="password" className={styles["form__input"]} placeholder="Şifreniz" id="password" />
+                        <input
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        type="password" className={styles["form__input"]} placeholder="Şifreniz" id="password" value={password} />
                     </div>
                     <div className={styles["form__input-container"]}>
                         <label htmlFor="password_confirm" className={styles["form__input-label"]}>Şifre Tekrar</label>
                         <input type="password" className={styles["form__input"]} placeholder="Şifrenizin tekrarı" id="password_confirm" />
                     </div>
               </div>
-                <button className={styles["form__button"]} type="submit" class="button">Kayıt Olun</button>
+                <button className={styles["form__button"]} type="submit">Kayıt Olun</button>
             </form>
             <div className={styles["or__container"]}>
                 <span>Ya da</span>

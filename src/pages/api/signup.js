@@ -1,8 +1,28 @@
-import { CognitoIdentityProviderClient, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import auth from "../../utils/auth"
+import firestore from "../../utils/firestore"
+import { collection, addDoc } from "firebase/firestore"
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send();
+  try {
+    const {firstname, lastname, username, email, password} = req.body;
+    const response = await createUserWithEmailAndPassword(auth, email, password)
+    try {
+      const newUser = await addDoc(collection(firestore, "users"), {
+        firstname,
+        lastname,
+        username,
+        email,
+      })
+      console.log(newUser.id)
+    } catch (err) {
+        console.log(err)
+    }
+  } catch (err) {
+    console.log(err)
+  }
 
+  /*
   const params = {
     ClientId: process.env.COGNITO_CLIENT_ID,
     Password: req.body.password,
@@ -32,4 +52,5 @@ export default async function handler(req, res) {
     console.log(err);
     return res.status(err["$metadata"].httpStatusCode).json({ message: err.toString() });
   }
+  */
 }
