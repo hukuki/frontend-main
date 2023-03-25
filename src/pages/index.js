@@ -8,9 +8,12 @@ import { Text } from "../components/base/Text.tsx"
 import { Button } from "../components/base/forms"
 import { Grid } from "../components/base/Grid.tsx"
 
-import { Link } from "next/link";
+import { useRouter } from 'next/router'
 
 export default function Home() {
+
+  const router = useRouter()
+
   return (
     <>
       <Head>
@@ -55,8 +58,9 @@ export default function Home() {
           cursor="pointer"
           flex="1"
           color="primary.400"
+          onClick={() => router.push("/")}
           >
-            <Link href="/">DeepLex</Link>
+            DeepLex
           </Text>
           <Flex
           justifyContent="center"
@@ -73,8 +77,9 @@ export default function Home() {
               color: "primary.400",
               transform: "scale(1.05)"
             }}
+            onClick={() => router.push("/about")}
             >
-              <Link href="/about">Neden DeepLex</Link>
+              Neden DeepLex
             </Text>
             <Text
             height="100%"
@@ -96,8 +101,9 @@ export default function Home() {
             fontWeight="200"
             padding="2rem"
             borderRadius="1.5rem"
+            onClick={() => router.push("/login")}
             >
-              <Link href="/login">Giriş Yap</Link>
+              Giriş Yap
             </Button>
           </Flex>
         </Flex>
@@ -146,8 +152,9 @@ export default function Home() {
             px="1.5rem"
             py="2.5rem"
             borderRadius="1rem"
+            onClick={() => router.push("/search")}
             >
-              <Link href="/search">DeepLex'i Dene</Link>
+              DeepLex'i Dene
             </Button>
           </Flex>
         </Grid>
@@ -163,6 +170,7 @@ export default function Home() {
         my="0"
         mx="auto"
         zIndex="10"
+        color="primary.400"
         >
           &copy; 2023. All rights reserved.
         </Flex>
