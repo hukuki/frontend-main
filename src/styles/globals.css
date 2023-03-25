@@ -98,33 +98,54 @@ meter {
     all: revert;
 }
 
+/* Additional custom features */
+
 :root {
+    --color-blue-50: #DEF4FF;
+    --color-blue-100: #B0DDFF;
+    --color-blue-200: #82C5FC;
+    --color-blue-300: #52ADF7;
+    --color-blue-400: #2596F4;
+    --color-blue-500: #0B7DDA;
+    --color-blue-600: #0061AB;
+    --color-blue-700: #00457B;
+    --color-blue-800: #002A4D;
+    --color-blue-900: #000F1F;
 
-    --first-hue: 207;
-    --sat: 90%;
-    --lig: 48%;
-    --second-hue: 219;
-    --first-color: hsl(var(--first-hue), var(--sat), var(--lig));
-    --first-color-alt: hsl(var(--first-hue), var(--sat), 44%); /* -4% */
-    --title-color: hsl(var(--second-hue), 15%, 95%);
-    --text-color: hsl(var(--second-hue), 8%, 75%);
-    --text-color-light: hsl(var(--second-hue), 4%, 55%);
-    --body-color: hsl(var(--second-hue), 48%, 8%);
-    --container-color: hsl(var(--second-hue), 32%, 12%);
+    --background-color-dark: #000F1F;
+    --background-color-light: #FAFAFA;
 
-    --title-color-light: hsl(var(--second-hue), 15%, 15%);
-    --text-color-light: hsl(var(--second-hue), 8%, 75%);
-    --body-color-light: hsl(var(--second-hue), 100%, 99%);
-    --container-color-light: #fff;
+    --container-color-dark: #151C28;
+    --container-color-light: #FFFFFF;
+
+    --text-color-primary-light: #FFFFFF;
+    --text-color-secondary-light: #E6E6E6;
+    --text-color-ternary-light: #CCCCCC;
+    --text-color-primary-dark: #000F1F;
+    --text-color-secondary-dark: #002752;
+    --text-color-ternary-dark: #004085;
+
+    --color-grey-50: #F1F1F3;
+    --color-grey-100: #D5D5D7;
+    --color-grey-200: #BABABE;
+    --color-grey-300: #9F9FA6;
+    --color-grey-400: #83838E;
+    --color-grey-500: #696974;
+    --color-grey-600: #52525A;
+    --color-grey-700: #3B3B40;
+    --color-grey-800: #232326;
+    --color-grey-900: #0C0C0E;
 }
 
 /* Additional custom features */
+* {
+    font-size: 62.5%;
+}
 
 html,
 body,
 body > div:first-of-type { /* the div is the root div (id="__next") */
     height: 100%;
-    background-color: #25274D;
     scrollbar-gutter: auto;
 }
 
@@ -148,4 +169,3 @@ body > div:first-of-type { /* the div is the root div (id="__next") */
 	background-color: #C4C4C4;
     border-radius: 10px;
 }
-
