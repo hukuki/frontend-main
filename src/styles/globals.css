@@ -98,7 +98,28 @@ meter {
     all: revert;
 }
 
+:root {
+
+    --first-hue: 207;
+    --sat: 90%;
+    --lig: 48%;
+    --second-hue: 219;
+    --first-color: hsl(var(--first-hue), var(--sat), var(--lig));
+    --first-color-alt: hsl(var(--first-hue), var(--sat), 44%); /* -4% */
+    --title-color: hsl(var(--second-hue), 15%, 95%);
+    --text-color: hsl(var(--second-hue), 8%, 75%);
+    --text-color-light: hsl(var(--second-hue), 4%, 55%);
+    --body-color: hsl(var(--second-hue), 48%, 8%);
+    --container-color: hsl(var(--second-hue), 32%, 12%);
+
+    --title-color-light: hsl(var(--second-hue), 15%, 15%);
+    --text-color-light: hsl(var(--second-hue), 8%, 75%);
+    --body-color-light: hsl(var(--second-hue), 100%, 99%);
+    --container-color-light: #fff;
+}
+
 /* Additional custom features */
+
 html,
 body,
 body > div:first-of-type { /* the div is the root div (id="__next") */
@@ -127,3 +148,4 @@ body > div:first-of-type { /* the div is the root div (id="__next") */
 	background-color: #C4C4C4;
     border-radius: 10px;
 }
+
