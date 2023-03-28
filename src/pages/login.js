@@ -13,7 +13,6 @@ import {
   useColorModeValue,
   Container,
 } from "@chakra-ui/react";
-import Navigation from "./components/navigation.tsx";
 
 const Login = () => {
   return (
