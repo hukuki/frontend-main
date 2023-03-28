@@ -13,7 +13,7 @@ function RegisterPage() {
 
     const handleRegistration = async (e) => {
         e.preventDefault()
-        const response = await fetch("/api/signup", {
+        const response = await fetch("/api/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -71,7 +71,7 @@ function RegisterPage() {
                         <input
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
-                        type="password" className={styles["form__input"]} placeholder="Şifreniz" id="password" value={password} />
+                        type="password" className={styles["form__input"]} placeholder="Şifreniz" id="password" value={password} autoComplete="true" />
                     </div>
                     <div className={styles["form__input-container"]}>
                         <label htmlFor="password_confirm" className={styles["form__input-label"]}>Şifre Tekrar</label>
