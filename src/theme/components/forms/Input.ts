@@ -5,12 +5,12 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 
 const baseStyle = definePartsStyle({
   field: {
-    color: (props) => (props.colorMode === "dark" ? props.colors.dark.primary : props.colors.light.primary),
+    color: (props) => (props.colorMode === "dark" ? props.colors.primary["400"] : props.colors.primary["800"]),
     _hover: {
-      borderColor: (props) => (props.colorMode === "dark" ? props.colors.dark.quaternary : props.colors.light.quaternary),
+      borderColor: (props) => (props.colorMode === "dark" ? props.colors.primary["400"] : props.colors.primary["800"]),
     },
     _focus: {
-      borderColor: (props) => (props.colorMode === "dark" ? props.colors.dark.quaternary : props.colors.light.quaternary),
+      borderColor: (props) => (props.colorMode === "dark" ? props.colors.primary["400"] : props.colors.primary["800"]),
     },
   },
 });

@@ -9,12 +9,12 @@ const baseStyle = definePartsStyle({
   button: {
     // this will style the MenuButton component
     bg: "transparent",
-    color: (props) => props.colors[props.colorMode].quinary,
+    color: (props) => (props.colorMode === "dark" ? props.colors.primary["400"] : props.colors.primary["700"]),
     textDecoration: "underline",
     padding: "0.5rem 1rem",
     borderRadius: "25px",
     _hover: {
-      color: (props) => props.colors[props.colorMode].quinary,
+      color: (props) => (props.colorMode === "dark" ? props.colors.primary["500"] : props.colors.primary["800"]),
       fontWeight: "bold",
     },
   },

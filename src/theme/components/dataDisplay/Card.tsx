@@ -5,7 +5,7 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 
 const baseStyle = definePartsStyle({
   container: {
-    bg: (props) => (props.colorMode === "dark" ? props.colors.dark.secondary : props.colors.light.secondary),
+    bg: (props) => (props.colorMode === "dark" ? props.colors.container.dark : props.colors.container.light),
     borderRadius: "25px",
     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
   },
