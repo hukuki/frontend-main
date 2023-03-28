@@ -124,4 +124,28 @@ html,
 body,
 body > div:first-of-type { /* the div is the root div (id="__next") */
     height: 100%;
+    background-color: #25274D;
+    scrollbar-gutter: auto;
 }
+
+/* Customize scrollbar */
+::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #E9EBEE;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #E9EBEE;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb
+{
+    width: 20px;
+	background-color: #C4C4C4;
+    border-radius: 10px;
+}
+
