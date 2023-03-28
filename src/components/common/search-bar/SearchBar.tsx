@@ -16,9 +16,11 @@ type SearchBarProps = {
 
 // Component CSS
 import styles from "./SearchBar.module.css"
+import { useRouter } from "next/router";
 
 // Component
 export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initialSearch, initialCategory }) => {
+
   const [search, setSearch] = useState(initialSearch ?? "");
   const [category, setCategory] = useState(initialCategory ?? "mevzuat");
 
@@ -29,7 +31,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
           <div className={styles["searchbar__container"]}>
             <input
             className={styles["searchbar__input"]}
-            placeholder={`${category} arayın`}
+            placeholder={`${category.toLocaleUpperCase().charAt(0) + category.substring(1)} arayın`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => {
@@ -48,13 +50,13 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
                 </MenuButton>
                 <MenuList className={styles["menu-list"]}>
                   <MenuOptionGroup defaultValue="mevzuat" type="radio">
-                    <MenuItemOption onClick={() => setCategory("mevzuat")} value="mevzuat">
+                    <MenuItemOption onClick={() => setCategory("mevzuat")} value="mevzuat" fontSize={"4rem"}>
                       Mevzuat
                     </MenuItemOption>
-                    <MenuItemOption onClick={() => setCategory("içtihat")} value="içtihat">
+                    <MenuItemOption onClick={() => setCategory("içtihat")} value="içtihat" fontSize={"4rem"}>
                       İçtihat
                     </MenuItemOption>
-                    <MenuItemOption onClick={() => setCategory("literatür")} value="literatür">
+                    <MenuItemOption onClick={() => setCategory("literatür")} value="literatür" fontSize={"4rem"}>
                       Literatür
                     </MenuItemOption>
                   </MenuOptionGroup>
