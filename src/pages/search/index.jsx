@@ -13,6 +13,10 @@ import styles from "./SearchPage.module.css"
 
 const SearchPage = () => {
   const router = useRouter();
+
+  const handleSubmit = (e) => {
+    router.push("/search/results")
+  }
     return (
     <>
       <div className={styles.container}>
@@ -20,7 +24,7 @@ const SearchPage = () => {
           <h1 className={styles.logo}>DeepLex</h1>
         </div>
         <div className={styles["searchbar__container"]}>
-          <SearchBar />
+          <SearchBar onSubmit={handleSubmit} />
         </div>
       </div>
       {/*

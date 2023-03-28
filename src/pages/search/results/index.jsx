@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Card, CardHeader, CardFooter } from "@/components/base/dataDisplay";
 import { CircularProgress } from "@/components/base/feedback";
 import { Flex, Box } from "@/components/base/layout";
-import { SearchBar } from "@/components/common";
+import { SearchBar } from "@/components/common/search-bar";
 
 // Mock Data
 import { SearchResults as mockSearchResults } from "@/mocks/search";
