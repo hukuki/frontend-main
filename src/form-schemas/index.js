@@ -23,3 +23,8 @@ export const RegistrationSchema = yup.object().shape({
     .required("Lütfen geçerli bir şifre giriniz."),
     confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Şifreler uyuşmamaktadır.").required("Lütfen şifrenizi tekrar giriniz.")
 })
+
+export const LoginSchema = yup.object().shape({
+    email: yup.string().email("Lütfen geçerli bir e-posta adresi giriniz.").required("Lütfen e-postanızı giriniz."),
+    password: yup.string().required("Lütfen şifrenizi giriniz")
+})

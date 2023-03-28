@@ -1,6 +1,39 @@
 import styles from "./LoginPage.module.css"
 
+import { useFormik } from "formik"
+
+import { Spinner } from "../../components/base/Spinner"
+
+import { LoginSchema } from "../../form-schemas"
+
 function LoginPage() {
+
+    const handleLogin = async (values, actions) => {
+        const res = await fetch("/api/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: values.email,
+                password: values.password
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const data = await res.json();
+        console.log(data)
+        actions.setSubmitting(false);
+        actions.resetForm()
+    }
+
+    const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validationSchema: LoginSchema,
+        onSubmit: handleLogin
+    })
+
   return (
     <div className={styles.container}>
         <div className={styles["hero__container"]}>
@@ -12,18 +45,42 @@ function LoginPage() {
         </div>
         <div className={styles["form__container"]}>
             <h3 className={styles["form__header"]}>Giriş Yapın</h3>
-            <form action="" className={styles["login__form"]}>
+            <form action="" className={styles["login__form"]} onSubmit={handleSubmit} autoComplete="off">
                 <div className={styles["form__input-area"]}>
                     <div className={styles["form__input-container"]}>
-                        <label for="email" className={styles["form__input-label"]}>Email / Kullanıcı Adı</label>
-                        <input type="email" className={styles["form__input"]} placeholder="Email adresinizi veya kullanıcı adınızı giriniz" id="email" />
+                        <label
+                        className={`${styles["form__input-label"]} ${errors.email && touched.email && styles["form__input-label-error"]}`}
+                        htmlFor="email"
+                        >E-posta</label>
+                        <input
+                        className={`${styles["form__input"]} ${errors.email && touched.email && styles["form__input-error"]}`}
+                        value={values.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        type="email"
+                        placeholder="Email adresinizi veya kullanıcı adınızı giriniz"
+                        id="email" />
+                        {errors.email && touched.email && <p className={styles["form__input-error-p"]}>{errors.email}</p>}
                     </div>
                     <div className={styles["form__input-container"]}>
                         <label for="password" className={styles["form__input-label"]}>Şifre</label>
-                        <input type="password" className={styles["form__input"]} placeholder="Şifrenizi giriniz" id="password" />
+                        <input
+                        className={`${styles["form__input"]} ${errors.password && touched.password && styles["form__input-error"]}`}
+                        value={values.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        type="password"
+                        placeholder="Şifrenizi giriniz"
+                        id="password" />
+                        {errors.password && touched.password && <p className={styles["form__input-error-p"]}>{errors.password}</p>}
                     </div>
               </div>
-                <button className={styles["form__button"]} type="submit" class="button">Giriş Yapın</button>
+                <button
+                disabled={isSubmitting}
+                className={styles["form__button"]}
+                type="submit" class="button">
+                    {isSubmitting ? <Spinner /> : "Giriş Yapın"}
+                </button>
             </form>
             <div className={styles["or__container"]}>
                 <span>Ya da</span>
