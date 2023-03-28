@@ -1,14 +1,13 @@
-import { setAuthCookies } from "next-firebase-auth";
-import initAuth from "../../utils/initAuth";
-
-initAuth()
+import { signInWithEmailAndPassword } from "firebase/auth";
+import auth from "../../utils/firebase/auth"
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send();
   try {
-    await setAuthCookies(req, res)
-  } catch (e) {
-    return res.status(500).json({ error: 'Unexpected error.' })
+    const {email, password} = req.body;
+    const response = await signInWithEmailAndPassword(auth, email, password)
+    res.send(JSON.stringify(response))
+  } catch (err) {
+    console.log(err)
   }
-  return res.status(200).json({ success: true })
 }
