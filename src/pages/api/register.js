@@ -6,6 +6,7 @@ export default async function handler(req, res) {
   try {
     const {email, password} = req.body;
     const response = await createUserWithEmailAndPassword(auth, email, password)
+    res.send(JSON.stringify(response))
   } catch (err) {
     console.log(err)
   }

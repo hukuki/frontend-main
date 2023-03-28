@@ -11,15 +11,23 @@ function RegisterPage() {
     const handleRegistration = async (values, actions) => {
         const res = await fetch("/api/register", {
             method: "POST",
-            body: JSON.stringify(values.email, values.password, values.firstname, values.lastname, values.username),
+            body: JSON.stringify({
+                email: values.email,
+                password: values.password,
+                firstname: values.firstname,
+                lastname: values.lastname,
+                username: values.username
+            }),
             headers: {
                 "Content-Type": "application/json"
             }
         })
+        const data = await res.json()
+        actions.setSubmitting(false)
         actions.resetForm()
     }
 
-    const { values, errors, touched, isSubmitting, resetForm, handleChange, handleBlur, handleSubmit } = useFormik({
+    const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: {
             firstname: "",
             lastname: "",
@@ -31,8 +39,6 @@ function RegisterPage() {
         validationSchema: RegistrationSchema,
         onSubmit: handleRegistration
     })
-
-    console.log(errors)
 
   return (
     <div className={styles.container}>
