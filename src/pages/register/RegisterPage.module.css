@@ -87,6 +87,7 @@
     width: 100%;
     height: 5rem;
     margin-bottom: 4rem;
+    transition: margin .2s ease;
 }
 
 .form__input-names-container {
@@ -137,9 +138,7 @@
 }
 
 .form__input {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     height: 100%;
     background: none;
@@ -167,6 +166,30 @@
 
 .form__button:hover {
     background: var(--color-blue-500);
+}
+
+.form__input-error {
+    border-color: var(--error-box-dark);
+}
+
+.form__input-label-error {
+    color: var(--error-text-dark);
+}
+
+.form__name-input-error-p {
+    color: var(--error-text-dark);
+    font-size: 1.4rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.form__input-error-p {
+    color: var(--error-text-dark);
+    font-size: 1.4rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.password__error {
+    margin-bottom: 6rem;
 }
 
 /* OR LINES */

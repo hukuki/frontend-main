@@ -133,6 +133,11 @@ meter {
     --color-grey-700: #3B3B40;
     --color-grey-800: #232326;
     --color-grey-900: #0C0C0E;
+
+    /* TODO: Change the Error color for different types: Text and Box */
+
+    --error-box-dark: #CC6666;
+    --error-text-dark: #CC6666;
 }
 
 /* Additional custom features */

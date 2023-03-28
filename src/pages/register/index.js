@@ -1,27 +1,38 @@
 import styles from "./RegisterPage.module.css"
-import { useCallback } from "react"
 
-import { useState } from "react";
+import { useFormik } from "formik";
+
+import { RegistrationSchema } from "../../form-schemas"
+
+import { Spinner } from '../../components/base/Spinner'
 
 function RegisterPage() {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
-    const [username, setUsername] = useState("")
-
-    const handleRegistration = async (e) => {
-        e.preventDefault()
-        const response = await fetch("/api/register", {
+    const handleRegistration = async (values, actions) => {
+        const res = await fetch("/api/register", {
             method: "POST",
+            body: JSON.stringify(values.email, values.password, values.firstname, values.lastname, values.username),
             headers: {
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify({firstname, lastname, username, email, password})
+            }
         })
-        console.log(response.json())
+        actions.resetForm()
     }
+
+    const { values, errors, touched, isSubmitting, resetForm, handleChange, handleBlur, handleSubmit } = useFormik({
+        initialValues: {
+            firstname: "",
+            lastname: "",
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+        validationSchema: RegistrationSchema,
+        onSubmit: handleRegistration
+    })
+
+    console.log(errors)
 
   return (
     <div className={styles.container}>
@@ -34,51 +45,96 @@ function RegisterPage() {
         </div>
         <div className={styles["form__container"]}>
             <h3 className={styles["form__header"]}>Kayıt Olun</h3>
-            <form action="" className={styles["login__form"]} onSubmit={handleRegistration}>
+            <form action="" className={styles["login__form"]} onSubmit={handleSubmit}>
                 <div className={styles["form__input-area"]}>
                     <div className={styles["form__input-names-container"]}>
                         <div className={styles["form__input-container"]}>
-                            <label htmlFor="first_name" className={styles["form__name-input-label"]}>İsim</label>
+                            <label htmlFor="firstname"
+                            className={`${styles["form__name-input-label"]} ${errors.firstname && touched.firstname && styles["form__input-label-error"]}`}
+                            >İsim</label>
                             <input
-                            onChange={(e) => setFirstname(e.target.value)}
-                            value={firstname}
-                            type="text" className={styles["form__input-name"]} placeholder="İsminiz" id="first_name" />
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.firstname}
+                            type="text"
+                            className={`${styles["form__input-name"]} ${errors.firstname && touched.firstname && styles["form__input-error"]}`}
+                            placeholder="İsminiz"
+                            id="firstname" />
+                            {errors.firstname && touched.firstname && <p className={styles["form__name-input-error-p"]}>{errors.firstname}</p>}
                         </div>
                         <div className={styles["form__input-container"]}>
-                            <label htmlFor="last_name" className={styles["form__name-input-label"]}>Soyisim</label>
+                            <label htmlFor="lastname"
+                            className={`${styles["form__name-input-label"]} ${errors.lastname && touched.lastname && styles["form__input-label-error"]}`}
+                            >Soyisim</label>
                             <input
-                            onChange={(e) => setLastname(e.target.value)}
-                            value={lastname}
-                            type="text" className={styles["form__input-name"]} placeholder="Soyisminiz" id="last_name" />
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.lastname}
+                            type="text"
+                            className={`${styles["form__input-name"]} ${errors.lastname && touched.lastname && styles["form__input-error"]}`}
+                            placeholder="Soyisminiz"
+                            id="lastname" />
+                            {errors.lastname && touched.lastname && <p className={styles["form__name-input-error-p"]}>{errors.lastname}</p>}
                         </div>
                     </div>
                     <div className={styles["form__input-container"]}>
-                        <label htmlFor="username" className={styles["form__input-label"]}>Kullanıcı Adı</label>
+                        <label htmlFor="username"
+                        className={`${styles["form__input-label"]} ${errors.username && touched.username && styles["form__input-label-error"]}`}
+                        >Kullanıcı Adı</label>
                         <input
-                        onChange={(e) => setUsername(e.target.value)}
-                        value={username}
-                        type="text" className={styles["form__input"]} placeholder="Kullanıcı adınız" id="username" />
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.username}
+                        type="text"
+                        className={`${styles["form__input"]} ${errors.username && touched.username && styles["form__input-error"]}`}
+                        placeholder="Kullanıcı adınız"
+                        id="username" />
+                        {errors.username && touched.username && <p className={styles["form__input-error-p"]}>{errors.username}</p>}
                     </div>
                     <div className={styles["form__input-container"]}>
-                        <label htmlFor="email" className={styles["form__input-label"]}>Email</label>
+                        <label htmlFor="email"
+                        className={`${styles["form__input-label"]} ${errors.email && touched.email && styles["form__input-label-error"]}`}
+                        >Email</label>
                         <input
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        type="email" className={styles["form__input"]} placeholder="Email adresiniz" id="email"/>
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                        type="email"
+                        className={`${styles["form__input"]} ${errors.email && touched.email && styles["form__input-error"]}`}
+                        placeholder="Email adresiniz"
+                        id="email"/>
+                        {errors.email && touched.email && <p className={styles["form__input-error-p"]}>{errors.email}</p>}
                     </div>
-                    <div className={styles["form__input-container"]}>
-                        <label htmlFor="password" className={styles["form__input-label"]}>Şifre</label>
+                    <div className={`${styles["form__input-container"]} ${errors.password && touched.password && styles["password__error"]}`}>
+                        <label htmlFor="password"
+                        className={`${styles["form__input-label"]} ${errors.password && touched.password && styles["form__input-label-error"]}`}
+                        >Şifre</label>
                         <input
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        type="password" className={styles["form__input"]} placeholder="Şifreniz" id="password" value={password} autoComplete="true" />
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.password}
+                        type="password"
+                        className={`${styles["form__input"]} ${errors.password && touched.password && styles["form__input-error"]}`}
+                        placeholder="Şifreniz"
+                        id="password" />
+                        {errors.password && touched.password && <p className={styles["form__input-error-p"]}>{errors.password}</p>}
                     </div>
-                    <div className={styles["form__input-container"]}>
-                        <label htmlFor="password_confirm" className={styles["form__input-label"]}>Şifre Tekrar</label>
-                        <input type="password" className={styles["form__input"]} placeholder="Şifrenizin tekrarı" id="password_confirm" />
+                    <div className={`${styles["form__input-container"]} `}>
+                        <label htmlFor="confirmPassword"
+                        className={`${styles["form__input-label"]} ${errors.confirmPassword && touched.confirmPassword && styles["form__input-label-error"]}`}
+                        >Şifre Tekrar</label>
+                        <input
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.confirmPassword}
+                        type="password"
+                        className={`${styles["form__input"]} ${errors.confirmPassword && touched.confirmPassword && styles["form__input-error"]}`}
+                        placeholder="Şifrenizin tekrarı"
+                        id="confirmPassword" />
+                        {errors.confirmPassword && touched.confirmPassword && <p className={styles["form__input-error-p"]}>{errors.confirmPassword}</p>}
                     </div>
               </div>
-                <button className={styles["form__button"]} type="submit">Kayıt Olun</button>
+                <button disabled={isSubmitting} className={styles["form__button"]} type="submit">{isSubmitting ? <Spinner /> : "Kayıt Olun"}</button>
             </form>
             <div className={styles["or__container"]}>
                 <span>Ya da</span>
