@@ -63,7 +63,11 @@ function LoginPage() {
                         {errors.email && touched.email && <p className={styles["form__input-error-p"]}>{errors.email}</p>}
                     </div>
                     <div className={styles["form__input-container"]}>
-                        <label for="password" className={styles["form__input-label"]}>Şifre</label>
+                        <label
+                        htmlFor="password"
+                        className={`${styles["form__input-label"]} ${errors.password && touched.password && styles["form__input-label-error"]}`}>
+                            Şifre
+                            </label>
                         <input
                         className={`${styles["form__input"]} ${errors.password && touched.password && styles["form__input-error"]}`}
                         value={values.password}
