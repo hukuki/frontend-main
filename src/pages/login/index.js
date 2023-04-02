@@ -77,8 +77,8 @@ function LoginPage() {
               </div>
                 <button
                 disabled={isSubmitting}
-                className={styles["form__button"]}
-                type="submit" class="button">
+                className={`${styles["form__button"]} button`}
+                type="submit">
                     {isSubmitting ? <Spinner /> : "Giriş Yapın"}
                 </button>
             </form>

@@ -1,7 +1,4 @@
 import Head from "next/head";
-import Hero from "../components/hero.tsx";
-import styles from "./HomePage.module.css";
-import Image from "next/image";
 
 import { Flex } from "../components/base/layout"
 import { Text } from "../components/base/Text.tsx"
@@ -32,10 +29,9 @@ export default function Home() {
       overflow="hidden"
       position="relative"
       zIndex="1"
-      bgColor="background.dark"
+      bgColor="background.black"
       boxShadow="0 2rem 3rem primary.400"
       >
-        <svg className={styles["container__background-svg"]} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill-opacity="1" d="M0,64L80,90.7C160,117,320,171,480,165.3C640,160,800,96,960,96C1120,96,1280,160,1360,192L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
         <Flex
         alignSelf="center"
         alignItems="center"
@@ -44,19 +40,17 @@ export default function Home() {
         px="4rem"
         py="1.25rem"
         marginTop="2rem"
-        maxW="100rem"
-        width="100%"
+        width="90vw"
         zIndex="2"
         fontFamily="Poppins"
         bgColor="container.dark"
         boxShadow="dark-lg"
         >
           <Text
-          fontSize="3.5rem"
-          fontWeight="700"
+          fontSize="4.5rem"
+          fontWeight="300"
           letterSpacing="-.3rem"
           cursor="pointer"
-          flex="1"
           color="primary.400"
           onClick={() => router.push("/")}
           >
@@ -69,7 +63,7 @@ export default function Home() {
             <Text
             height="100%"
             cursor="pointer"
-            fontSize="1.75rem"
+            fontSize="2.5rem"
             fontWeight="200"
             transition="all .2s ease-in"
             marginRight="3rem"
@@ -84,7 +78,7 @@ export default function Home() {
             <Text
             height="100%"
             cursor="pointer"
-            fontSize="1.75rem"
+            fontSize="2.5rem"
             fontWeight="200"
             transition="all .2s ease-in"
             marginRight="3rem"
@@ -95,63 +89,67 @@ export default function Home() {
             >
               Takım
             </Text>
-            <Button
+          </Flex>
+          <Button
             variant="outline"
-            fontSize="1.75rem"
+            fontSize="2.5rem"
             fontWeight="200"
-            padding="2rem"
+            padding="2.5rem"
             borderRadius="1.5rem"
             onClick={() => router.push("/login")}
             >
               Giriş Yap
             </Button>
-          </Flex>
         </Flex>
         <Grid
-        alignSelf="center"
-        maxW="120rem"
-        width="100%"
-        templateColumns="1fr 1fr"
+        alignSelf="start"
+        width="100vw"
+        templateColumns="70% 1fr"
         alignItems="center"
         justifyContent="center"
         position="relative"
+        px="4rem"
         >
           <Flex
           flexDir="column"
           justifyContent="space-between"
           alignItems="flex-start"
-          marginLeft="3rem"
+          marginLeft="10rem"
           >
             <Text
             fontFamily="Poppins"
-            fontSize="4.75rem"
+            fontSize="12.8rem"
             lineHeight="1.4"
+            fontWeight="300"
+            background="linear-gradient(90.13deg,#d1aad7 .11%,#c88bc4 25.06%,#7b8fdd 50%,#86bff2 74.8%,#bbdef2 99.76%)"
+            backgroundClip="text"
             >
-              Döküman aramanın
+              Döküman
             </Text>
             <Text
             fontFamily="Poppins"
-            fontSize="4.75rem"
+            fontSize="8rem"
+            fontWeight="300"
             >
-              kısa yolu
+               aramanın kısa yolu
             </Text>
             <Text
             fontFamily="Poppins"
-            fontSize="2rem"
-            maxW="60rem"
-            lineHeight="2.5rem"
-            marginTop="2rem"
-            marginBottom="2rem"
+            fontSize="2.5rem"
+            maxW="100rem"
+            lineHeight="5rem"
+            marginTop="3rem"
+            marginBottom="5rem"
             fontWeight="200"
             >
             DeepLex, legal döküman arama sürecinizi hızlandırarak verimliliğinizi artırır. Yapay zeka modelimiz ile işinize yarayan dökümanları bulmanız artık çok daha kolay
             </Text>
             <Button
-            fontSize="2rem"
-            fontWeight="400"
-            px="1.5rem"
-            py="2.5rem"
-            borderRadius="1rem"
+            fontSize="2.5rem"
+            fontWeight="300"
+            px="2.5rem"
+            py="3.5rem"
+            borderRadius="10rem"
             onClick={() => router.push("/search")}
             >
               DeepLex'i Dene

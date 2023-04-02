@@ -110,8 +110,8 @@ meter {
     --color-blue-800: #002A4D;
     --color-blue-900: #000F1F;
 
-    --background-color-dark: #000F1F;
-    --background-color-light: #FAFAFA;
+    --background-color-dark: #000;
+    --background-color-light: #0D0D0D;
 
     --container-color-dark: #151C28;
     --container-color-light: #FFFFFF;
@@ -149,5 +149,5 @@ html,
 body,
 body > div:first-of-type { /* the div is the root div (id="__next") */
     height: 100%;
-    background-color: #25274D;
+    background-color: #000;
 }

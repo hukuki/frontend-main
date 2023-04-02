@@ -22,11 +22,11 @@ const colors = {
     900: "#000F1F",
   },
   background: {
-    dark: "#000F1F",
-    light: "#FAFAFA"
+    dark: "#000",
+    light: "#FAFAFA",
   },
   container: {
-    dark: "#151C28",
+    dark: "#0D0D0D",
     light: "#FFFFFF"
   },
   text: {
