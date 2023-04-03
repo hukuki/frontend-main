@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import "@/styles/globals.css";
 import theme from "@/theme";
+import { UserContextProvider } from "../context/UserContextProvider";
 
 export default function App({ Component, pageProps: { session, ...pageProps }, router }) {
 
@@ -10,9 +11,11 @@ export default function App({ Component, pageProps: { session, ...pageProps }, r
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
         <AnimatePresence mode="wait" initial={false}>
-          <LayoutGroup>
-            <Component {...pageProps} key={router.asPath} />
-          </LayoutGroup>
+          <UserContextProvider>
+            <LayoutGroup>
+              <Component {...pageProps} key={router.asPath} />
+            </LayoutGroup>
+          </UserContextProvider>
         </AnimatePresence>
       </ChakraProvider>
     </SessionProvider>
