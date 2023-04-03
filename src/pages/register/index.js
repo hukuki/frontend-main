@@ -1,14 +1,70 @@
 import styles from "./RegisterPage.module.css"
-
 import { useFormik } from "formik";
-
 import { RegistrationSchema } from "../../form-schemas"
-
 import { Spinner } from '../../components/base/Spinner'
+import { useGoogleLogin  } from "@react-oauth/google";
+import { useState } from "react"
+import { generate } from "generate-password"
+import { useRouter } from "next/router"
 
 function RegisterPage() {
 
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const router = useRouter()
+
+    const handleGoogleSignupSucess = async  (token) => {
+        setIsSubmitting(true)
+        try {
+            const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token.access_token}`,{
+                headers: {
+                    Authorization: `Bearer ${token.access_token}`,
+                    Accept: 'application/json'
+                }
+            })
+            const data = await res.json()
+            const registerRes = await fetch("/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: data.email,
+                    firstname: data.given_name,
+                    lastname: data.family_name,
+                    password: generate({
+                        length: 18,
+                        numbers: true,
+                        symbols: true,
+                        uppercase: true,
+                        lowercase: true,
+
+                    }),
+                })
+            })
+            const registerData = await registerRes.json()
+            setIsSubmitting(false)
+            router.push("/")
+        } catch(err) {
+            setIsSubmitting(false)
+            // TODO: Show a toast message including the error
+            console.log(err)
+            router.push("/error")
+        }
+    }
+
+    const handleGoogleSingnupError = (err) => {
+        console.log(err)
+    }
+
+
+    const handleGoogleSignup = useGoogleLogin({
+        onSuccess: handleGoogleSignupSucess,
+        onError: handleGoogleSingnupError
+    })
+
     const handleRegistration = async (values, actions) => {
+        setIsSubmitting(true)
         const res = await fetch("/api/register", {
             method: "POST",
             body: JSON.stringify({
@@ -23,11 +79,11 @@ function RegisterPage() {
             }
         })
         const data = await res.json()
-        actions.setSubmitting(false)
+        setIsSubmitting(false)
         actions.resetForm()
     }
 
-    const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+    const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: {
             firstname: "",
             lastname: "",
@@ -146,7 +202,7 @@ function RegisterPage() {
                 <span>Ya da</span>
             </div>
             <div className={styles["google-signin"]}>
-                <button>Google ile kayıt olun</button>
+                <button onClick={() => handleGoogleSignup()}>Google ile kayıt olun</button>
             </div>
         </div>
     </div>
