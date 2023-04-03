@@ -1,31 +1,58 @@
 import styles from "./LoginPage.module.css"
-
 import { useFormik } from "formik"
-
 import { Spinner } from "../../components/base/Spinner"
-
 import { LoginSchema } from "../../form-schemas"
+import { useRouter } from "next/router"
+import { auth, googleAuthProvider } from "../../utils/firebase/firebase"
+import { signInWithPopup } from "firebase/auth"
+import { useState } from "react"
 
 function LoginPage() {
 
-    const handleLogin = async (values, actions) => {
-        const res = await fetch("/api/login", {
-            method: "POST",
-            body: JSON.stringify({
-                email: values.email,
-                password: values.password
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        const data = await res.json();
-        console.log(data)
-        actions.setSubmitting(false);
-        actions.resetForm()
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const handleGoogleLogin = async () => {
+        setIsSubmitting(true)
+        try {
+            const res = await signInWithPopup(auth, googleAuthProvider)
+            const registerRes = await fetch("/api/google-login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(res)
+            })
+            const data = await registerRes.json()
+        } catch (err) {
+            // TODO: Show a toast message for error
+            console.log(err)
+            setIsSubmitting(false)
+        }
     }
 
-    const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+    const handleLogin = async (values, actions) => {
+        setIsSubmitting(true)
+        try {
+            const res = await fetch("/api/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: values.email,
+                    password: values.password
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            setIsSubmitting(false)
+            actions.resetForm()
+        } catch (err) {
+            // TODO: Show an error toast message
+            console.log(err)
+            setIsSubmitting(false)
+        }
+    }
+
+    const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: {
             email: "",
             password: "",
@@ -90,7 +117,7 @@ function LoginPage() {
                 <span>Ya da</span>
             </div>
             <div className={styles["google-signin"]}>
-                <button>Google ile giriş yapın</button>
+                <button onClick={() => handleGoogleLogin()}>Google ile giriş yapın</button>
             </div>
         </div>
     </div>

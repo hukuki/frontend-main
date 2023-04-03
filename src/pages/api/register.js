@@ -5,8 +5,6 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send();
   try {
     const {email, password} = req.body;
-    console.log(email)
-    console.log(password)
     const response = await createUserWithEmailAndPassword(auth, email, password)
     res.send(JSON.stringify(response))
   } catch (err) {

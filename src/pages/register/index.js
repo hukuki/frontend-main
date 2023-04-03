@@ -2,10 +2,11 @@ import styles from "./RegisterPage.module.css"
 import { useFormik } from "formik";
 import { RegistrationSchema } from "../../form-schemas"
 import { Spinner } from '../../components/base/Spinner'
-import { useGoogleLogin  } from "@react-oauth/google";
 import { useState } from "react"
 import { generate } from "generate-password"
 import { useRouter } from "next/router"
+import { auth, googleAuthProvider } from "../../utils/firebase/firebase"
+import { signInWithPopup } from "firebase/auth";
 
 function RegisterPage() {
 
@@ -13,25 +14,19 @@ function RegisterPage() {
 
     const router = useRouter()
 
-    const handleGoogleSignupSucess = async  (token) => {
+    const handleGoogleSignup = async () => {
         setIsSubmitting(true)
         try {
-            const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token.access_token}`,{
-                headers: {
-                    Authorization: `Bearer ${token.access_token}`,
-                    Accept: 'application/json'
-                }
-            })
-            const data = await res.json()
+            const res = await signInWithPopup(auth, googleAuthProvider)
             const registerRes = await fetch("/api/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    email: data.email,
-                    firstname: data.given_name,
-                    lastname: data.family_name,
+                    email: res._tokenResponse.email,
+                    firstname: res._tokenResponse.firstname,
+                    lastname: res._tokenResponse.lastname,
                     password: generate({
                         length: 18,
                         numbers: true,
@@ -42,26 +37,16 @@ function RegisterPage() {
                     }),
                 })
             })
-            const registerData = await registerRes.json()
+            // TODO: Store the User information in App Wide state and Session
             setIsSubmitting(false)
             router.push("/")
         } catch(err) {
             setIsSubmitting(false)
-            // TODO: Show a toast message including the error
+            // TODO: Show a toast message about the error
             console.log(err)
-            router.push("/error")
+            router.push("/_error")
         }
     }
-
-    const handleGoogleSingnupError = (err) => {
-        console.log(err)
-    }
-
-
-    const handleGoogleSignup = useGoogleLogin({
-        onSuccess: handleGoogleSignupSucess,
-        onError: handleGoogleSingnupError
-    })
 
     const handleRegistration = async (values, actions) => {
         setIsSubmitting(true)
