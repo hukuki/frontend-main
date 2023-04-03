@@ -1,14 +1,55 @@
 import styles from "./RegisterPage.module.css"
-
 import { useFormik } from "formik";
-
 import { RegistrationSchema } from "../../form-schemas"
-
 import { Spinner } from '../../components/base/Spinner'
+import { useState } from "react"
+import { generate } from "generate-password"
+import { useRouter } from "next/router"
+import { auth, googleAuthProvider } from "../../utils/firebase/firebase"
+import { signInWithPopup } from "firebase/auth";
 
 function RegisterPage() {
 
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const router = useRouter()
+
+    const handleGoogleSignup = async () => {
+        setIsSubmitting(true)
+        try {
+            const res = await signInWithPopup(auth, googleAuthProvider)
+            const registerRes = await fetch("/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: res._tokenResponse.email,
+                    firstname: res._tokenResponse.firstname,
+                    lastname: res._tokenResponse.lastname,
+                    password: generate({
+                        length: 18,
+                        numbers: true,
+                        symbols: true,
+                        uppercase: true,
+                        lowercase: true,
+
+                    }),
+                })
+            })
+            // TODO: Store the User information in App Wide state and Session
+            setIsSubmitting(false)
+            router.push("/")
+        } catch(err) {
+            setIsSubmitting(false)
+            // TODO: Show a toast message about the error
+            console.log(err)
+            router.push("/_error")
+        }
+    }
+
     const handleRegistration = async (values, actions) => {
+        setIsSubmitting(true)
         const res = await fetch("/api/register", {
             method: "POST",
             body: JSON.stringify({
@@ -23,11 +64,11 @@ function RegisterPage() {
             }
         })
         const data = await res.json()
-        actions.setSubmitting(false)
+        setIsSubmitting(false)
         actions.resetForm()
     }
 
-    const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+    const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: {
             firstname: "",
             lastname: "",
@@ -146,7 +187,7 @@ function RegisterPage() {
                 <span>Ya da</span>
             </div>
             <div className={styles["google-signin"]}>
-                <button>Google ile kayıt olun</button>
+                <button onClick={() => handleGoogleSignup()}>Google ile kayıt olun</button>
             </div>
         </div>
     </div>
