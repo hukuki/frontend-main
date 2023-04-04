@@ -15,7 +15,7 @@ function RegisterPage() {
     const handleGoogleSignup = async () => {
         setIsSubmitting(true)
         try {
-            const { error, user } = await signUpWithGoogle("/")
+            const { error, user } = await signUpWithGoogle("/search")
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
@@ -33,7 +33,7 @@ function RegisterPage() {
         setIsSubmitting(true)
         try {
             const { email, password } = values;
-            const { error, user } = await signUpWithEmailAndPassword({email, password}, "/")
+            const { error, user } = await signUpWithEmailAndPassword({email, password}, "/search")
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
