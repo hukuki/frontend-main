@@ -18,6 +18,14 @@ export default function Home() {
     await signOutWithGoogle(null)
   }
 
+  const handleLogout = async () => {
+    await signOutWithGoogle(null)
+  }
+
+  const handleLogin = () => {
+    router.push("/login")
+  }
+
   return (
     <>
       <Head>
@@ -103,7 +111,7 @@ export default function Home() {
             fontWeight="200"
             padding="2.5rem"
             borderRadius="1.5rem"
-            onClick={() => router.push("/login")}
+            onClick={user ? handleLogout : handleLogin}
             >
               {user ? "Çıkış Yap" : "Giriş Yap"}
             </Button>
@@ -156,20 +164,10 @@ export default function Home() {
             fontWeight="300"
             px="2.5rem"
             py="3.5rem"
-            borderRadius="10rem"
+            borderRadius="2rem"
             onClick={() => router.push("/search")}
             >
               DeepLex'i Dene
-            </Button>
-            <Button
-            fontSize="2.5rem"
-            fontWeight="300"
-            px="2.5rem"
-            py="3.5rem"
-            borderRadius="10rem"
-            onClick={handleSignOut}
-            >
-              Çıkış
             </Button>
           </Flex>
         </Grid>
