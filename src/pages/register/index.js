@@ -1,15 +1,29 @@
 import styles from "./RegisterPage.module.css"
 import { useFormik } from "formik";
 import { RegistrationSchema } from "../../form-schemas"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import useAuthContext from "../../context/AuthContextProvider";
-import { Progress } from '@chakra-ui/react'
+import {
+    Progress,
+    AlertDialog,
+    useDisclosure,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    AlertDialogFooter,
+    Button
+ } from '@chakra-ui/react'
 import { useRouter } from "next/router";
 
 function RegisterPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const { signUpWithGoogle, signUpWithEmailAndPassword } = useAuthContext()
+    const [alertMessage, setAlertMessage] = useState("")
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = useRef()
+
     const router = useRouter()
 
     const handleDirectLoginPage = () =>  {
@@ -23,12 +37,14 @@ function RegisterPage() {
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
+                setAlertMessage(error.message)
+                onOpen()
                 console.log(error)
-            } else {
-                actions.resetForm()
             }
         } catch(err) {
             setIsSubmitting(false)
+            onOpen()
+            setAlertMessage(err.message)
             console.log(err)
         }
     }
@@ -41,12 +57,16 @@ function RegisterPage() {
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
+                setAlertMessage(error)
+                onOpen()
                 console.log(error)
             } else {
                 actions.resetForm()
             }
         } catch (err) {
             setIsSubmitting(false)
+            setAlertMessage(err)
+            onOpen()
             console.log(err)
         }
     }
@@ -66,6 +86,27 @@ function RegisterPage() {
 
   return (
   <>
+    <AlertDialog
+     isOpen={isOpen}
+     isCentered={true}
+     leastDestructiveRef={cancelRef}
+     onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='3rem' fontWeight='600'>
+              Hata
+            </AlertDialogHeader>
+            <AlertDialogBody fontSize="2rem">
+                {alertMessage}
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button borderRadius="1.2rem" fontSize="2.5rem" fontFamily="Poppins, sans-serif" py="2.5rem" px="1.5rem" ref={cancelRef} onClick={onClose}>
+                Geri
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+    </AlertDialog>
     <div className={styles.container}>
         <div className={styles["hero__container"]}>
             <div className={styles["hero__content"]}>
@@ -164,7 +205,7 @@ function RegisterPage() {
                         id="confirmPassword" />
                         {errors.confirmPassword && touched.confirmPassword && <p className={styles["form__input-error-p"]}>{errors.confirmPassword}</p>}
                     </div>
-                    <p className={styles["form__prompt-login"]}>Zaten bir hesabınız var mı? <button onClick={handleDirectLoginPage} className={styles["form__login-cta"]}>Giriş yapın</button></p>
+                    <p className={styles["form__prompt-login"]}>Zaten bir hesabınız var mı? <span onClick={handleDirectLoginPage} className={styles["form__login-cta"]}>Giriş yapın</span></p>
               </div>
               {isSubmitting ?
                     <Progress

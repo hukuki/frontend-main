@@ -164,6 +164,7 @@
 .form__register-cta {
     cursor: pointer;
     color: var(--color-blue-400);
+    font-size: 1.75rem;
 }
 
 

@@ -90,7 +90,7 @@
     transition: margin .2s ease;
 }
 
-.form__input-container:last-of-type {
+.form__input-area > .form__input-container:last-of-type {
     margin-bottom: 3rem;
 }
 
