@@ -164,20 +164,10 @@ export default function Home() {
             fontWeight="300"
             px="2.5rem"
             py="3.5rem"
-            borderRadius="10rem"
+            borderRadius="2rem"
             onClick={() => router.push("/search")}
             >
               DeepLex'i Dene
-            </Button>
-            <Button
-            fontSize="2.5rem"
-            fontWeight="300"
-            px="2.5rem"
-            py="3.5rem"
-            borderRadius="10rem"
-            onClick={handleSignOut}
-            >
-              Çıkış
             </Button>
           </Flex>
         </Grid>
