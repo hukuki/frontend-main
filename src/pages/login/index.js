@@ -5,12 +5,17 @@ import { LoginSchema } from "../../form-schemas"
 import { useState } from "react"
 import useAuthContext from "../../context/AuthContextProvider"
 import { Progress } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 
 function LoginPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
-
     const { signInWithGoogle, signInWithEmailAndPasswordFirebase } = useAuthContext()
+    const router = useRouter()
+
+    const handleDirectRegisterPage = () => {
+        router.push("/register")
+    }
 
     const handleGoogleLogin = async () => {
         setIsSubmitting(true)
@@ -69,7 +74,7 @@ function LoginPage() {
             <h3 className={styles["form__header"]}>Giriş Yapın</h3>
             <form action="" className={styles["login__form"]} onSubmit={handleSubmit} autoComplete="off">
                 <div className={styles["form__input-area"]}>
-                    <div className={styles["form__input-container"]}>
+                    <div className={`${styles["form__input-container"]} ${errors.email && touched.email && styles["form__input-container-error"]}`}>
                         <label
                         className={`${styles["form__input-label"]} ${errors.email && touched.email && styles["form__input-label-error"]}`}
                         htmlFor="email"
@@ -84,7 +89,7 @@ function LoginPage() {
                         id="email" />
                         {errors.email && touched.email && <p className={styles["form__input-error-p"]}>{errors.email}</p>}
                     </div>
-                    <div className={styles["form__input-container"]}>
+                    <div className={`${styles["form__input-container"]} ${errors.password && touched.password && styles["form__input-container-error"]}`}>
                         <label
                         htmlFor="password"
                         className={`${styles["form__input-label"]} ${errors.password && touched.password && styles["form__input-label-error"]}`}>
@@ -100,6 +105,7 @@ function LoginPage() {
                         id="password" />
                         {errors.password && touched.password && <p className={styles["form__input-error-p"]}>{errors.password}</p>}
                     </div>
+                    <p className={styles["form__prompt-register"]}>Hesabınız yok mu? <button onClick={handleDirectRegisterPage} className={styles["form__register-cta"]}>Hesap oluşturun</button></p>
               </div>
               {isSubmitting ?
                     <Progress

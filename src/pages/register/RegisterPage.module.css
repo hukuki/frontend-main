@@ -63,9 +63,9 @@
 
 .form__header {
     font-family: "Poppins", sans-serif;
-    font-size: 5rem;
+    font-size: 4rem;
     margin-bottom: 6rem;
-    font-weight: 200;
+    font-weight: 400;
 }
 
 .login__form {
@@ -88,6 +88,10 @@
     height: 8rem;
     margin-bottom: 5rem;
     transition: margin .2s ease;
+}
+
+.form__input-container:last-of-type {
+    margin-bottom: 3rem;
 }
 
 .form__input-names-container {
@@ -190,6 +194,18 @@
 
 .password__error {
     margin-bottom: 8rem;
+}
+
+.form__prompt-login {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.75rem;
+    margin-bottom: 2em;
+}
+
+.form__login-cta {
+    cursor: pointer;
+    font-size: 1.75rem;
+    color: var(--color-blue-400);
 }
 
 /* OR LINES */

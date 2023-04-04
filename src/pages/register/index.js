@@ -4,13 +4,17 @@ import { RegistrationSchema } from "../../form-schemas"
 import { useState } from "react"
 import useAuthContext from "../../context/AuthContextProvider";
 import { Progress } from '@chakra-ui/react'
+import { useRouter } from "next/router";
 
 function RegisterPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
-
-
     const { signUpWithGoogle, signUpWithEmailAndPassword } = useAuthContext()
+    const router = useRouter()
+
+    const handleDirectLoginPage = () =>  {
+        router.push("/login")
+    }
 
     const handleGoogleSignup = async () => {
         setIsSubmitting(true)
@@ -160,6 +164,7 @@ function RegisterPage() {
                         id="confirmPassword" />
                         {errors.confirmPassword && touched.confirmPassword && <p className={styles["form__input-error-p"]}>{errors.confirmPassword}</p>}
                     </div>
+                    <p className={styles["form__prompt-login"]}>Zaten bir hesabınız var mı? <button onClick={handleDirectLoginPage} className={styles["form__login-cta"]}>Giriş yapın</button></p>
               </div>
               {isSubmitting ?
                     <Progress
