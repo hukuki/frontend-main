@@ -7,16 +7,20 @@ import { Grid } from "../components/base/Grid.tsx"
 
 import { useRouter } from 'next/router'
 import useAuthContext from "../context/AuthContextProvider";
+import {
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Spinner,
+} from '@chakra-ui/react'
 
 export default function Home() {
 
   const router = useRouter()
 
   const { user, loading, signOutWithGoogle } = useAuthContext()
-
-  const handleSignOut = async () => {
-    await signOutWithGoogle(null)
-  }
 
   const handleLogout = async () => {
     await signOutWithGoogle(null)
@@ -105,6 +109,16 @@ export default function Home() {
               Takım
             </Text>
           </Flex>
+          {loading ? <Spinner size="xl" /> : user ?
+          <Menu>
+          <MenuButton>
+            <Avatar size="xl" src={user.photoURL} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem px="1.5rem"  py="1.5rem" onClick={handleLogout} fontSize="2rem">Çıkış Yap</MenuItem>
+          </MenuList>
+        </Menu>
+          :
           <Button
             variant="outline"
             fontSize="2.5rem"
@@ -113,8 +127,9 @@ export default function Home() {
             borderRadius="1.5rem"
             onClick={user ? handleLogout : handleLogin}
             >
-              {user ? "Çıkış Yap" : "Giriş Yap"}
+              Giriş Yap
             </Button>
+            }
         </Flex>
         <Grid
         alignSelf="start"
