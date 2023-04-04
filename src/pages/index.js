@@ -12,7 +12,7 @@ export default function Home() {
 
   const router = useRouter()
 
-  const { signOutWithGoogle } = useAuthContext()
+  const { user, loading, signOutWithGoogle } = useAuthContext()
 
   const handleSignOut = async () => {
     await signOutWithGoogle(null)
@@ -105,7 +105,7 @@ export default function Home() {
             borderRadius="1.5rem"
             onClick={() => router.push("/login")}
             >
-              Giriş Yap
+              {user ? "Çıkış Yap" : "Giriş Yap"}
             </Button>
         </Flex>
         <Grid

@@ -15,7 +15,7 @@ function LoginPage() {
     const handleGoogleLogin = async () => {
         setIsSubmitting(true)
         try {
-            const { error, user } = await signInWithGoogle("/")
+            const { error, user } = await signInWithGoogle("/search")
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
@@ -33,7 +33,7 @@ function LoginPage() {
         setIsSubmitting(true)
         try {
             const { email, password } = values
-            const { error, user } = await signInWithEmailAndPasswordFirebase({email, password}, "/")
+            const { error, user } = await signInWithEmailAndPasswordFirebase({email, password}, "/search")
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
