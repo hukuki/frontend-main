@@ -2,16 +2,30 @@ import styles from "./LoginPage.module.css"
 import { useFormik } from "formik"
 import { Spinner } from "../../components/base/Spinner"
 import { LoginSchema } from "../../form-schemas"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import useAuthContext from "../../context/AuthContextProvider"
-import { Progress } from "@chakra-ui/react"
 import { useRouter } from "next/router"
+import {
+    Progress,
+    AlertDialog,
+    useDisclosure,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    AlertDialogFooter,
+    Button
+ } from '@chakra-ui/react'
 
 function LoginPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const { signInWithGoogle, signInWithEmailAndPasswordFirebase } = useAuthContext()
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [alertMessage, setAlertMessage] = useState(null)
+    const cancelRef = useRef()
     const router = useRouter()
+
 
     const handleDirectRegisterPage = () => {
         router.push("/register")
@@ -20,16 +34,19 @@ function LoginPage() {
     const handleGoogleLogin = async () => {
         setIsSubmitting(true)
         try {
-            const { error, user } = await signInWithGoogle("/search")
+            const { error, user } = await signInWithGoogle(null)
+            console.log(error)
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
                 console.log(error)
-            } else {
-                actions.resetForm()
+                setAlertMessage(error.message)
+                onOpen()
             }
         } catch (err) {
             setIsSubmitting(false)
+            setAlertMessage(err.message)
+            onOpen()
             console.log(err)
         }
     }
@@ -43,11 +60,15 @@ function LoginPage() {
             if (error) {
                 // TODO: Show a toast message
                 console.log(error)
+                setAlertMessage(error.message)
+                onOpen()
             } else  {
                 actions.resetForm()
             }
         } catch (err) {
             console.log(err)
+            setAlertMessage(err.message)
+            onOpen()
             setIsSubmitting(false)
         }
     }
@@ -62,6 +83,28 @@ function LoginPage() {
     })
 
   return (
+    <>
+    <AlertDialog
+     isOpen={isOpen}
+     isCentered={true}
+     leastDestructiveRef={cancelRef}
+     onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='3rem' fontWeight='600'>
+              Hata
+            </AlertDialogHeader>
+            <AlertDialogBody fontSize="2rem">
+                {alertMessage}
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button borderRadius="1.2rem" fontSize="2.5rem" fontFamily="Poppins, sans-serif" py="2.5rem" px="1.5rem" ref={cancelRef} onClick={onClose}>
+                Geri
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+    </AlertDialog>
     <div className={styles.container}>
         <div className={styles["hero__container"]}>
             <div className={styles["hero__content"]}>
@@ -105,7 +148,7 @@ function LoginPage() {
                         id="password" />
                         {errors.password && touched.password && <p className={styles["form__input-error-p"]}>{errors.password}</p>}
                     </div>
-                    <p className={styles["form__prompt-register"]}>Hesabınız yok mu? <button onClick={handleDirectRegisterPage} className={styles["form__register-cta"]}>Hesap oluşturun</button></p>
+                    <p className={styles["form__prompt-register"]}>Hesabınız yok mu? <span onClick={handleDirectRegisterPage} className={styles["form__register-cta"]}>Hesap oluşturun</span></p>
               </div>
               {isSubmitting ?
                     <Progress
@@ -138,6 +181,7 @@ function LoginPage() {
             }
         </div>
     </div>
+    </>
   )
 }
 
