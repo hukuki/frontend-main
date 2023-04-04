@@ -6,10 +6,17 @@ import { Button } from "../components/base/forms"
 import { Grid } from "../components/base/Grid.tsx"
 
 import { useRouter } from 'next/router'
+import useAuthContext from "../context/AuthContextProvider";
 
 export default function Home() {
 
   const router = useRouter()
+
+  const { signOutWithGoogle } = useAuthContext()
+
+  const handleSignOut = async () => {
+    await signOutWithGoogle(null)
+  }
 
   return (
     <>
@@ -153,6 +160,16 @@ export default function Home() {
             onClick={() => router.push("/search")}
             >
               DeepLex'i Dene
+            </Button>
+            <Button
+            fontSize="2.5rem"
+            fontWeight="300"
+            px="2.5rem"
+            py="3.5rem"
+            borderRadius="10rem"
+            onClick={handleSignOut}
+            >
+              Çıkış
             </Button>
           </Flex>
         </Grid>
