@@ -2,51 +2,46 @@ import styles from "./LoginPage.module.css"
 import { useFormik } from "formik"
 import { Spinner } from "../../components/base/Spinner"
 import { LoginSchema } from "../../form-schemas"
-import { useRouter } from "next/router"
-import { auth, googleAuthProvider } from "../../utils/firebase/firebase"
-import { signInWithPopup } from "firebase/auth"
 import { useState } from "react"
+import useAuthContext from "../../context/AuthContextProvider"
+import { Progress } from "@chakra-ui/react"
 
 function LoginPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
+    const { signInWithGoogle, signInWithEmailAndPasswordFirebase } = useAuthContext()
+
     const handleGoogleLogin = async () => {
         setIsSubmitting(true)
         try {
-            const res = await signInWithPopup(auth, googleAuthProvider)
-            const registerRes = await fetch("/api/google-login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(res)
-            })
-            const data = await registerRes.json()
-        } catch (err) {
-            // TODO: Show a toast message for error
-            console.log(err)
+            const { error, user } = await signInWithGoogle("/")
             setIsSubmitting(false)
+            if (error) {
+                // TODO: Show a toast message
+                console.log(error)
+            } else {
+                actions.resetForm()
+            }
+        } catch (err) {
+            setIsSubmitting(false)
+            console.log(err)
         }
     }
 
     const handleLogin = async (values, actions) => {
         setIsSubmitting(true)
         try {
-            const res = await fetch("/api/login", {
-                method: "POST",
-                body: JSON.stringify({
-                    email: values.email,
-                    password: values.password
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
+            const { email, password } = values
+            const { error, user } = await signInWithEmailAndPasswordFirebase({email, password}, "/")
             setIsSubmitting(false)
-            actions.resetForm()
+            if (error) {
+                // TODO: Show a toast message
+                console.log(error)
+            } else  {
+                actions.resetForm()
+            }
         } catch (err) {
-            // TODO: Show an error toast message
             console.log(err)
             setIsSubmitting(false)
         }
@@ -106,19 +101,35 @@ function LoginPage() {
                         {errors.password && touched.password && <p className={styles["form__input-error-p"]}>{errors.password}</p>}
                     </div>
               </div>
-                <button
+              {isSubmitting ?
+                    <Progress
+                    isIndeterminate
+                    height="1rem"
+                    width="100%"
+                    marginBottom="2rem"
+                    />
+              : <button
                 disabled={isSubmitting}
                 className={`${styles["form__button"]} button`}
                 type="submit">
                     {isSubmitting ? <Spinner /> : "Giriş Yapın"}
                 </button>
+                }
             </form>
             <div className={styles["or__container"]}>
                 <span>Ya da</span>
             </div>
+            {isSubmitting ?
+                <Progress
+                isIndeterminate
+                height="1rem"
+                width= "60%"
+                marginBottom="2rem"
+                /> :
             <div className={styles["google-signin"]}>
                 <button onClick={() => handleGoogleLogin()}>Google ile giriş yapın</button>
             </div>
+            }
         </div>
     </div>
   )

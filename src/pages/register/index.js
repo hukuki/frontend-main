@@ -1,71 +1,50 @@
 import styles from "./RegisterPage.module.css"
 import { useFormik } from "formik";
 import { RegistrationSchema } from "../../form-schemas"
-import { Spinner } from '../../components/base/Spinner'
 import { useState } from "react"
-import { generate } from "generate-password"
-import { useRouter } from "next/router"
-import { auth, googleAuthProvider } from "../../utils/firebase/firebase"
-import { signInWithPopup } from "firebase/auth";
+import useAuthContext from "../../context/AuthContextProvider";
+import { Progress } from '@chakra-ui/react'
 
 function RegisterPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const router = useRouter()
+
+    const { signUpWithGoogle, signUpWithEmailAndPassword } = useAuthContext()
 
     const handleGoogleSignup = async () => {
         setIsSubmitting(true)
         try {
-            const res = await signInWithPopup(auth, googleAuthProvider)
-            const registerRes = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: res._tokenResponse.email,
-                    firstname: res._tokenResponse.firstname,
-                    lastname: res._tokenResponse.lastname,
-                    password: generate({
-                        length: 18,
-                        numbers: true,
-                        symbols: true,
-                        uppercase: true,
-                        lowercase: true,
-
-                    }),
-                })
-            })
-            // TODO: Store the User information in App Wide state and Session
+            const { error, user } = await signUpWithGoogle("/")
             setIsSubmitting(false)
-            router.push("/")
+            if (error) {
+                // TODO: Show a toast message
+                console.log(error)
+            } else {
+                actions.resetForm()
+            }
         } catch(err) {
             setIsSubmitting(false)
-            // TODO: Show a toast message about the error
             console.log(err)
-            router.push("/_error")
         }
     }
 
     const handleRegistration = async (values, actions) => {
         setIsSubmitting(true)
-        const res = await fetch("/api/register", {
-            method: "POST",
-            body: JSON.stringify({
-                email: values.email,
-                password: values.password,
-                firstname: values.firstname,
-                lastname: values.lastname,
-                username: values.username
-            }),
-            headers: {
-                "Content-Type": "application/json"
+        try {
+            const { email, password } = values;
+            const { error, user } = await signUpWithEmailAndPassword({email, password}, "/")
+            setIsSubmitting(false)
+            if (error) {
+                // TODO: Show a toast message
+                console.log(error)
+            } else {
+                actions.resetForm()
             }
-        })
-        const data = await res.json()
-        setIsSubmitting(false)
-        actions.resetForm()
+        } catch (err) {
+            setIsSubmitting(false)
+            console.log(err)
+        }
     }
 
     const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
@@ -82,6 +61,7 @@ function RegisterPage() {
     })
 
   return (
+  <>
     <div className={styles.container}>
         <div className={styles["hero__container"]}>
             <div className={styles["hero__content"]}>
@@ -181,17 +161,36 @@ function RegisterPage() {
                         {errors.confirmPassword && touched.confirmPassword && <p className={styles["form__input-error-p"]}>{errors.confirmPassword}</p>}
                     </div>
               </div>
-                <button disabled={isSubmitting} className={styles["form__button"]} type="submit">{isSubmitting ? <Spinner /> : "Kayıt Olun"}</button>
+              {isSubmitting ?
+                    <Progress
+                    isIndeterminate
+                    height="1rem"
+                    width="100%"
+                    marginBottom="2rem"
+                    />
+                :
+                <button disabled={isSubmitting} className={styles["form__button"]} type="submit">
+                    Kayıt Olun</button>
+                }
             </form>
             <div className={styles["or__container"]}>
                 <span>Ya da</span>
             </div>
+            {isSubmitting ?
+                    <Progress
+                    isIndeterminate
+                    height="1rem"
+                    width= "60%"
+                    marginBottom="2rem"
+                    />
+                :
             <div className={styles["google-signin"]}>
                 <button onClick={() => handleGoogleSignup()}>Google ile kayıt olun</button>
             </div>
+            }
         </div>
     </div>
-  )
+    </>)
 }
 
 export default RegisterPage

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../../utils/firebase/firebase"
 
 export default async function handler(req, res) {
@@ -6,6 +6,7 @@ export default async function handler(req, res) {
   try {
     const {email, password} = req.body;
     const response = await createUserWithEmailAndPassword(auth, email, password)
+    //await sendEmailVerification(auth.currentUser)
     res.send(JSON.stringify(response))
   } catch (err) {
     console.log(err)
