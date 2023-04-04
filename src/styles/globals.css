@@ -150,6 +150,7 @@ body,
 body > div:first-of-type { /* the div is the root div (id="__next") */
     height: 100%;
     scrollbar-gutter: auto;
+    background-color: #000;
 }
 
 /* Customize scrollbar */
