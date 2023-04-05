@@ -67,7 +67,6 @@ const useFirebaseAuth = () => {
       }
       return { error: null, user };
     } catch (error) {
-      console.log(error);
       return { error: error.message, user: null };
     }
   };
