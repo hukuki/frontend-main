@@ -30,14 +30,10 @@ const useFirebaseAuth = () => {
 
   const handleUser = (user) => {
     if (user) {
-      console.log('User changed!');
-      console.log(user);
       setUser(user);
       setLoading(false);
       return user;
     } else {
-      console.log('User is null');
-      console.log(user);
       setUser(null);
       setLoading(false);
       return false;
@@ -56,7 +52,6 @@ const useFirebaseAuth = () => {
       }
       return { error: null, user };
     } catch (error) {
-      console.log(error);
       return { error: error.message, user: null };
     }
   };
