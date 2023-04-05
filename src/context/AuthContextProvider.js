@@ -76,7 +76,6 @@ const useFirebaseAuth = () => {
       await signOut(auth);
       return { error: null };
     } catch (error) {
-      console.log(error);
       return { error: error.message };
     }
   };
@@ -95,7 +94,6 @@ const useFirebaseAuth = () => {
       }
       return { error: null, user };
     } catch (error) {
-      console.log(error);
       return { error: error.message, user: null };
     }
   };
@@ -114,7 +112,6 @@ const useFirebaseAuth = () => {
       }
       return { error: null, user };
     } catch (error) {
-      console.log(error);
       return { error: error.message, user: null };
     }
   };

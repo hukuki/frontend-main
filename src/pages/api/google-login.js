@@ -8,6 +8,6 @@ export default async function handler(req, res) {
     const response = await signInWithCredential(auth, credential);
     res.send(response);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 }

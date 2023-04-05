@@ -38,13 +38,11 @@ function RegisterPage() {
         // TODO: Show a toast message
         setAlertMessage(error.message);
         onOpen();
-        console.log(error);
       }
     } catch (err) {
       setIsSubmitting(false);
       onOpen();
       setAlertMessage(err.message);
-      console.log(err);
     }
   };
 
@@ -58,7 +56,6 @@ function RegisterPage() {
         // TODO: Show a toast message
         setAlertMessage(error);
         onOpen();
-        console.log(error);
       } else {
         actions.resetForm();
       }
@@ -66,7 +63,6 @@ function RegisterPage() {
       setIsSubmitting(false);
       setAlertMessage(err);
       onOpen();
-      console.log(err);
     }
   };
 

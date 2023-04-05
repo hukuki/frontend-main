@@ -33,11 +33,9 @@ function LoginPage() {
     setIsSubmitting(true);
     try {
       const { error } = await signInWithGoogle(null);
-      console.log(error);
       setIsSubmitting(false);
       if (error) {
         // TODO: Show a toast message
-        console.log(error);
         setAlertMessage(error.message);
         onOpen();
       }
@@ -45,7 +43,6 @@ function LoginPage() {
       setIsSubmitting(false);
       setAlertMessage(err.message);
       onOpen();
-      console.log(err);
     }
   };
 
@@ -57,14 +54,12 @@ function LoginPage() {
       setIsSubmitting(false);
       if (error) {
         // TODO: Show a toast message
-        console.log(error);
         setAlertMessage(error.message);
         onOpen();
       } else {
         actions.resetForm();
       }
     } catch (err) {
-      console.log(err);
       setAlertMessage(err.message);
       onOpen();
       setIsSubmitting(false);
