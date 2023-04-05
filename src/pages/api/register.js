@@ -9,7 +9,6 @@ export default async function handler(req, res) {
     //await sendEmailVerification(auth.currentUser)
     res.send(JSON.stringify(response));
   } catch (err) {
-    console.log(err);
     res.status(500).send(err);
   }
 }
