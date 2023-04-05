@@ -2,39 +2,38 @@
 /* -------------- */
 
 .container {
-    width: 100%;
-    min-height: 100vh;
-    background: var(--body-color);
+  width: 100%;
+  min-height: 100vh;
+  background: var(--body-color);
 
-    display: grid;
-    grid-template-columns: 30% 1fr;
-    gap: 2rem;
-    padding: 2rem 4rem;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  gap: 2rem;
+  padding: 2rem 4rem;
 }
 
 /* FILTERS */
 /* ---------------- */
 .filters__container {
-    background: var(--container-color);
-    border-radius: 2rem;
+  background: var(--container-color);
+  border-radius: 2rem;
 }
 
 /* RESULTS */
 /* ---------------- */
 .results__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .result__container {
-    background: var(--container-color);
-    margin-bottom: 2rem;
-    height: 100%;
-    border-radius: 2rem;
+  background: var(--container-color);
+  margin-bottom: 2rem;
+  height: 100%;
+  border-radius: 2rem;
 }
 
 .result__container:last-of-type {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
-

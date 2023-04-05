@@ -5,7 +5,7 @@ import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 import { Card } from './components/dataDisplay';
 import { Menu } from './components/overlay';
 import { Input } from './components/forms';
-import { Button} from './components/base';
+import { Button } from './components/base';
 
 // Colors
 const colors = {
@@ -27,15 +27,15 @@ const colors = {
   },
   container: {
     dark: '#0D0D0D',
-    light: '#FFFFFF'
+    light: '#FFFFFF',
   },
   text: {
-    primaryLight:'#FFFFFF',
+    primaryLight: '#FFFFFF',
     secondaryLight: '#E6E6E6',
     ternaryLight: '#CCCCCC',
     primaryDark: '#000F1F',
     secondaryDark: '#002752',
-    ternaryDark: '#004085'
+    ternaryDark: '#004085',
   },
   grey: {
     50: '#F1F1F3',
@@ -47,8 +47,8 @@ const colors = {
     600: '#52525A',
     700: '#3B3B40',
     800: '#232326',
-    900: '#0C0C0E'
-  }
+    900: '#0C0C0E',
+  },
 };
 
 const config: ThemeConfig = {

@@ -5,29 +5,29 @@ export const buttonTheme = defineStyleConfig({
   baseStyle: {
     fontFamily: 'Poppins',
     cursor: 'pointer',
-    transition:'all .2s ease-in',
+    transition: 'all .2s ease-in',
   },
   // Styles for the size variations
   sizes: {},
   // Styles for the visual style variations
   variants: {
     outline: {
-      border:'2px solid',
-      borderColor:'primary.400',
-      background:'none',
+      border: '2px solid',
+      borderColor: 'primary.400',
+      background: 'none',
       _hover: {
-        bgColor: 'primary.500'
-      }
+        bgColor: 'primary.500',
+      },
     },
     solid: {
       bgColor: 'primary.400',
       color: (props) => (props.colorMode === 'dark' ? props.colors.text.primaryLight : props.colors.text.primaryDark),
       cursor: 'pointer',
       transition: 'all .2s ease',
-      _hover:{
-        bgColor: 'primary.600'
-      }
-    }
+      _hover: {
+        bgColor: 'primary.600',
+      },
+    },
   },
   // The default `size` or `variant` values
   defaultProps: {
