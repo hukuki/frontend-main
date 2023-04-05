@@ -74,7 +74,6 @@ const useFirebaseAuth = () => {
   const signOutWithGoogle = async () => {
     try {
       await signOut(auth);
-      console.log('Signed Out');
       return { error: null };
     } catch (error) {
       console.log(error);
