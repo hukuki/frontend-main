@@ -1,1 +1,1 @@
-export { ColorModeProvider } from "@chakra-ui/react";
+export { ColorModeProvider } from '@chakra-ui/react';

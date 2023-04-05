@@ -1,1 +1,1 @@
-export { ControlBox } from "@chakra-ui/react";
+export { ControlBox } from '@chakra-ui/react';

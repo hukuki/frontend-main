@@ -1,35 +1,35 @@
-import styles from "./hero.module.css";
-import { useRouter } from "next/router";
-import { Flex, Container, Heading, Stack, Text, Button, Icon, IconProps } from "@chakra-ui/react";
+import styles from './hero.module.css';
+import { useRouter } from 'next/router';
+import { Flex, Container, Heading, Stack, Text, Button, Icon, IconProps } from '@chakra-ui/react';
 
 export default function Hero() {
   const router = useRouter();
 
   return (
-    <Container maxW={"5xl"} onClick={() => router.push("/home")} bg="dark.secondary">
-      <Stack textAlign={"center"} align={"center"} spacing={{ base: 8, md: 10 }} py={{ base: 20, md: 28 }}>
-        <Heading fontWeight={600} fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }} lineHeight={"110%"}>
-          <Text as={"span"} className={styles.cover} color={"main.primary"} style={{ position: "relative" }}>
+    <Container maxW={'5xl'} onClick={() => router.push('/home')} bg="dark.secondary">
+      <Stack textAlign={'center'} align={'center'} spacing={{ base: 8, md: 10 }} py={{ base: 20, md: 28 }}>
+        <Heading fontWeight={600} fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }} lineHeight={'110%'}>
+          <Text as={'span'} className={styles.cover} color={'main.primary'} style={{ position: 'relative' }}>
             <span className={styles.spin}></span>
             <span className={styles.blinkingCursor}>|</span> aramak
-          </Text>{" "}
+          </Text>{' '}
           hiç bu kadar kolay olmamıştı!
         </Heading>
-        <Text color={"gray.500"} maxW={"3xl"}>
+        <Text color={'gray.500'} maxW={'3xl'}>
           Yapay zeka destekli yasal belge arama motorumuz, size çeşitli kaynaklardan doğru ve alakalı yasal belgeler sağlamak için en son yapay zeka
           teknolojisini kullanır. Sezgisel bir arama çubuğu ve özenle seçilmiş güncel yasal belgeler koleksiyonuyla ihtiyacınız olan bilgileri hızlı
           bir şekilde bulabilirsiniz.
         </Text>
-        <Stack spacing={6} direction={"row"}>
-          <Button rounded={"full"} px={6} colorScheme={"main.primary"} bg={"main.primary"} _hover={{ bg: "main.secondary" }}>
+        <Stack spacing={6} direction={'row'}>
+          <Button rounded={'full'} px={6} colorScheme={'main.primary'} bg={'main.primary'} _hover={{ bg: 'main.secondary' }}>
             Hemen Başla
           </Button>
-          <Button rounded={"full"} px={6}>
+          <Button rounded={'full'} px={6}>
             Daha Fazla
           </Button>
         </Stack>
-        <Flex w={"full"}>
-          <Illustration height={{ sm: "24rem", lg: "28rem" }} mt={{ base: 12, sm: 16 }} />
+        <Flex w={'full'}>
+          <Illustration height={{ sm: '24rem', lg: '28rem' }} mt={{ base: 12, sm: 16 }} />
         </Flex>
       </Stack>
     </Container>

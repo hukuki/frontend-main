@@ -1,1 +1,1 @@
-export { Fade } from "@chakra-ui/react";
+export { Fade } from '@chakra-ui/react';

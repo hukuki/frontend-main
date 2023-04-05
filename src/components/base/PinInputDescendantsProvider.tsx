@@ -1,1 +1,1 @@
-export { PinInputDescendantsProvider } from "@chakra-ui/react";
+export { PinInputDescendantsProvider } from '@chakra-ui/react';

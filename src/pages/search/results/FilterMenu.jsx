@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 // Components
-import { Card } from "@/components/base/dataDisplay";
+import { Card } from '@/components/base/dataDisplay';
 
 const FilterMenu = () => {
   return (

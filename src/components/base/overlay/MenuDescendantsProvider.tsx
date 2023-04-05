@@ -1,1 +1,1 @@
-export { MenuDescendantsProvider } from "@chakra-ui/react";
+export { MenuDescendantsProvider } from '@chakra-ui/react';

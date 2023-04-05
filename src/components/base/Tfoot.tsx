@@ -1,1 +1,1 @@
-export { Tfoot } from "@chakra-ui/react";
+export { Tfoot } from '@chakra-ui/react';

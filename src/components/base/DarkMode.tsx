@@ -1,1 +1,1 @@
-export { DarkMode } from "@chakra-ui/react";
+export { DarkMode } from '@chakra-ui/react';

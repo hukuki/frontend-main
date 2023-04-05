@@ -1,1 +1,1 @@
-export { ModalCloseButton } from "@chakra-ui/react";
+export { ModalCloseButton } from '@chakra-ui/react';

@@ -1,1 +1,1 @@
-export { DrawerContent } from "@chakra-ui/react";
+export { DrawerContent } from '@chakra-ui/react';

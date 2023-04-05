@@ -1,1 +1,1 @@
-export { AvatarBadge } from "@chakra-ui/react";
+export { AvatarBadge } from '@chakra-ui/react';

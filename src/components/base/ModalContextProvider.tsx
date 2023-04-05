@@ -1,1 +1,1 @@
-export { ModalContextProvider } from "@chakra-ui/react";
+export { ModalContextProvider } from '@chakra-ui/react';

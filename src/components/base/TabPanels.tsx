@@ -1,1 +1,1 @@
-export { TabPanels } from "@chakra-ui/react";
+export { TabPanels } from '@chakra-ui/react';

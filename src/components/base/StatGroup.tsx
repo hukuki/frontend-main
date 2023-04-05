@@ -1,1 +1,1 @@
-export { StatGroup } from "@chakra-ui/react";
+export { StatGroup } from '@chakra-ui/react';

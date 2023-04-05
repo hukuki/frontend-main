@@ -1,1 +1,1 @@
-export { CardHeader } from "@chakra-ui/react";
+export { CardHeader } from '@chakra-ui/react';

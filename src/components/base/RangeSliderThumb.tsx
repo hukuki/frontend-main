@@ -1,1 +1,1 @@
-export { RangeSliderThumb } from "@chakra-ui/react";
+export { RangeSliderThumb } from '@chakra-ui/react';

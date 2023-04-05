@@ -1,1 +1,1 @@
-export { ToastOptionProvider } from "@chakra-ui/react";
+export { ToastOptionProvider } from '@chakra-ui/react';

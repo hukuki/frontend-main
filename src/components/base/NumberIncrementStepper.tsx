@@ -1,1 +1,1 @@
-export { NumberIncrementStepper } from "@chakra-ui/react";
+export { NumberIncrementStepper } from '@chakra-ui/react';

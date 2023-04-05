@@ -1,1 +1,1 @@
-export { Img } from "@chakra-ui/react";
+export { Img } from '@chakra-ui/react';

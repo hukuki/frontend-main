@@ -1,1 +1,1 @@
-export { BreadcrumbSeparator } from "@chakra-ui/react";
+export { BreadcrumbSeparator } from '@chakra-ui/react';

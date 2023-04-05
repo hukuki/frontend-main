@@ -1,1 +1,1 @@
-export { SkeletonText } from "@chakra-ui/react";
+export { SkeletonText } from '@chakra-ui/react';

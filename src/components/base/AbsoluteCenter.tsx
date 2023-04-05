@@ -1,1 +1,1 @@
-export { AbsoluteCenter } from "@chakra-ui/react";
+export { AbsoluteCenter } from '@chakra-ui/react';

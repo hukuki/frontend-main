@@ -1,1 +1,1 @@
-export { TableContainer } from "@chakra-ui/react";
+export { TableContainer } from '@chakra-ui/react';

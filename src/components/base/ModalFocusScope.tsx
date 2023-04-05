@@ -1,1 +1,1 @@
-export { ModalFocusScope } from "@chakra-ui/react";
+export { ModalFocusScope } from '@chakra-ui/react';

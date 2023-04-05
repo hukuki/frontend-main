@@ -1,1 +1,1 @@
-export { InputGroup } from "@chakra-ui/react";
+export { InputGroup } from '@chakra-ui/react';

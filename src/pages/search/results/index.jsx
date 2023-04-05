@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 
 // Components
-import { Card, CardHeader, CardFooter } from "@/components/base/dataDisplay";
-import { CircularProgress } from "@/components/base/feedback";
-import { Flex, Box } from "@/components/base/layout";
-import { SearchBar } from "@/components/common/search-bar";
+import { Card, CardHeader, CardFooter } from '@/components/base/dataDisplay';
+import { CircularProgress } from '@/components/base/feedback';
+import { Flex, Box } from '@/components/base/layout';
+import { SearchBar } from '@/components/common/search-bar';
 
 // Mock Data
-import { SearchResults as mockSearchResults } from "@/mocks/search";
+import { SearchResults as mockSearchResults } from '@/mocks/search';
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -55,7 +55,7 @@ const SearchResults = () => {
         />
       </Box>
 
-      <Box flex={1} style={{ overflow: "auto" }} borderRadius="10px" paddingRight="5px">
+      <Box flex={1} style={{ overflow: 'auto' }} borderRadius="10px" paddingRight="5px">
         {loading && (
           <Flex height="100%" width="100%" justifyContent="center" alignItems="center">
             <CircularProgress isIndeterminate color="dark.secondary" />

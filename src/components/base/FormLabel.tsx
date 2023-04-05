@@ -1,1 +1,1 @@
-export { FormLabel } from "@chakra-ui/react";
+export { FormLabel } from '@chakra-ui/react';

@@ -1,1 +1,1 @@
-export { ScaleFade } from "@chakra-ui/react";
+export { ScaleFade } from '@chakra-ui/react';

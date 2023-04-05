@@ -1,1 +1,1 @@
-export { GlobalStyle } from "@chakra-ui/react";
+export { GlobalStyle } from '@chakra-ui/react';

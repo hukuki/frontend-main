@@ -1,1 +1,1 @@
-export { ThemeProvider } from "@chakra-ui/react";
+export { ThemeProvider } from '@chakra-ui/react';

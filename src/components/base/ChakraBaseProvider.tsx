@@ -1,1 +1,1 @@
-export { ChakraBaseProvider } from "@chakra-ui/react";
+export { ChakraBaseProvider } from '@chakra-ui/react';
