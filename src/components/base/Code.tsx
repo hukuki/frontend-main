@@ -1,1 +1,1 @@
-export { Code } from "@chakra-ui/react";
+export { Code } from '@chakra-ui/react';

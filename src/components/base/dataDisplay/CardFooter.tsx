@@ -1,1 +1,1 @@
-export { CardFooter } from "@chakra-ui/react";
+export { CardFooter } from '@chakra-ui/react';

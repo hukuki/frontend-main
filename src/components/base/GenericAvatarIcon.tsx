@@ -1,1 +1,1 @@
-export { GenericAvatarIcon } from "@chakra-ui/react";
+export { GenericAvatarIcon } from '@chakra-ui/react';

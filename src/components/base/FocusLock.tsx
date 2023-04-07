@@ -1,1 +1,1 @@
-export { FocusLock } from "@chakra-ui/react";
+export { FocusLock } from '@chakra-ui/react';

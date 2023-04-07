@@ -1,1 +1,1 @@
-export { MenuCommand } from "@chakra-ui/react";
+export { MenuCommand } from '@chakra-ui/react';

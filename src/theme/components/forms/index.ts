@@ -1,1 +1,1 @@
-export { inputTheme as Input } from "./Input";
+export { inputTheme as Input } from './Input';

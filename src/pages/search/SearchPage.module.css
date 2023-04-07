@@ -1,23 +1,23 @@
 /* CONTAINER */
 /* ------------- */
 .container {
-    background: var(--body-color);
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  background: var(--body-color);
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* LOGO */
 /* ------------- */
 .logo {
-    font-family: "Poppins", sans-serif;
-    font-size: 5rem;
-    font-weight: 200;
-    color: var(--first-color);
-    margin-bottom: 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 5rem;
+  font-weight: 200;
+  color: var(--first-color);
+  margin-bottom: 3rem;
 }
 
 /* SEARCH BAR */
@@ -57,5 +57,5 @@
 
 */
 .searchbar__container {
-    width: 50%;
+  width: 50%;
 }

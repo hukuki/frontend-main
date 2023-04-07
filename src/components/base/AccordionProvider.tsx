@@ -1,1 +1,1 @@
-export { AccordionProvider } from "@chakra-ui/react";
+export { AccordionProvider } from '@chakra-ui/react';

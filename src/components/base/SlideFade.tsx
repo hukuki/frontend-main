@@ -1,1 +1,1 @@
-export { SlideFade } from "@chakra-ui/react";
+export { SlideFade } from '@chakra-ui/react';

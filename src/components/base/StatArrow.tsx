@@ -1,1 +1,1 @@
-export { StatArrow } from "@chakra-ui/react";
+export { StatArrow } from '@chakra-ui/react';

@@ -1,1 +1,1 @@
-export { EnvironmentProvider } from "@chakra-ui/react";
+export { EnvironmentProvider } from '@chakra-ui/react';

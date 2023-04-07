@@ -1,29 +1,26 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { motion } from "framer-motion";
+import React from 'react';
+import { useRouter } from 'next/router';
 
 // Components
-import { GoLaw } from "react-icons/go";
-import { Icon } from "@chakra-ui/icons";
-import { Box, Flex } from "@/components/base/layout";
-import { SearchBar } from "@/components/common/search-bar";
+import { SearchBar } from '@/components/common/search-bar';
 
 // CSS
-import styles from "./SearchPage.module.css"
+import styles from './SearchPage.module.css';
 
 const SearchPage = () => {
   const router = useRouter();
 
-  const handleSubmit = (e) => {
-    router.push("/search/results")
-  }
-    return (
+  const handleSubmit = () => {
+    router.push('/search/results');
+  };
+
+  return (
     <>
       <div className={styles.container}>
-        <div className={styles["logo__container"]}>
+        <div className={styles['logo__container']}>
           <h1 className={styles.logo}>DeepLex</h1>
         </div>
-        <div className={styles["searchbar__container"]}>
+        <div className={styles['searchbar__container']}>
           <SearchBar onSubmit={handleSubmit} />
         </div>
       </div>

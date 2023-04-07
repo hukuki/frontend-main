@@ -1,1 +1,1 @@
-export { AccordionPanel } from "@chakra-ui/react";
+export { AccordionPanel } from '@chakra-ui/react';

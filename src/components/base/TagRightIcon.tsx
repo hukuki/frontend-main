@@ -1,1 +1,1 @@
-export { TagRightIcon } from "@chakra-ui/react";
+export { TagRightIcon } from '@chakra-ui/react';

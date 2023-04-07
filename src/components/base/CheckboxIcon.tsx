@@ -1,1 +1,1 @@
-export { CheckboxIcon } from "@chakra-ui/react";
+export { CheckboxIcon } from '@chakra-ui/react';

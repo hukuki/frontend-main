@@ -1,1 +1,1 @@
-export { ProgressLabel } from "@chakra-ui/react";
+export { ProgressLabel } from '@chakra-ui/react';

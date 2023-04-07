@@ -1,1 +1,1 @@
-export { RangeSliderProvider } from "@chakra-ui/react";
+export { RangeSliderProvider } from '@chakra-ui/react';

@@ -1,1 +1,1 @@
-export { CircularProgressLabel } from "@chakra-ui/react";
+export { CircularProgressLabel } from '@chakra-ui/react';

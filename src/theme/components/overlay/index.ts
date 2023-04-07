@@ -1,1 +1,1 @@
-export { menuTheme as Menu } from "./Menu";
+export { menuTheme as Menu } from './Menu';
