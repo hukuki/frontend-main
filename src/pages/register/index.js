@@ -29,40 +29,50 @@ function RegisterPage() {
     router.push('/login');
   };
 
-  const handleGoogleSignup = async () => {
-    setIsSubmitting(true);
-    try {
-      const { error } = await signUpWithGoogle('/search');
-      setIsSubmitting(false);
-      if (error) {
-        // TODO: Show a toast message
-        setAlertMessage(error.message);
-        onOpen();
-      }
-    } catch (err) {
-      setIsSubmitting(false);
-      onOpen();
-      setAlertMessage(err.message);
+    const handleGoogleSignup = async () => {
+        setIsSubmitting(true)
+        try {
+            const { error, user } = await signUpWithGoogle("/search")
+            setIsSubmitting(false)
+            if (error) {
+                // TODO: Show a toast message
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
+                onOpen()
+                console.log(error)
+            }
+        } catch(err) {
+            setIsSubmitting(false)
+            const message = convertFirebaseErrorCodeToMessage(error.code)
+            setAlertMessage(message)
+            onOpen()
+            console.log(err)
+        }
     }
   };
 
-  const handleRegistration = async (values, actions) => {
-    setIsSubmitting(true);
-    try {
-      const { email, password } = values;
-      const { error } = await signUpWithEmailAndPassword({ email, password }, '/search');
-      setIsSubmitting(false);
-      if (error) {
-        // TODO: Show a toast message
-        setAlertMessage(error);
-        onOpen();
-      } else {
-        actions.resetForm();
-      }
-    } catch (err) {
-      setIsSubmitting(false);
-      setAlertMessage(err);
-      onOpen();
+    const handleRegistration = async (values, actions) => {
+        setIsSubmitting(true)
+        try {
+            const { email, password } = values;
+            const { error, user } = await signUpWithEmailAndPassword({email, password}, "/search")
+            setIsSubmitting(false)
+            if (error) {
+                // TODO: Show a toast message
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
+                onOpen()
+                console.log(error)
+            } else {
+                actions.resetForm()
+            }
+        } catch (err) {
+            setIsSubmitting(false)
+            const message = convertFirebaseErrorCodeToMessage(error.code)
+            setAlertMessage(message)
+            onOpen()
+            console.log(err)
+        }
     }
   };
 
@@ -80,8 +90,14 @@ function RegisterPage() {
   });
 
   return (
-    <>
-      <AlertDialog isOpen={isOpen} isCentered={true} leastDestructiveRef={cancelRef} onClose={onClose}>
+  <>
+    <AlertDialog
+     isOpen={isOpen}
+     isCentered={true}
+     leastDestructiveRef={cancelRef}
+     onClose={onClose}
+     size="xl"
+     >
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="3rem" fontWeight="600">
