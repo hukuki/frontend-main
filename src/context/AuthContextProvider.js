@@ -56,7 +56,6 @@ const useFirebaseAuth = () => {
             return {error: error , user:null}
         }
     }
-  };
 
     const signUpWithGoogle = async (redirectPath) => {
         setLoading(true)
@@ -73,7 +72,6 @@ const useFirebaseAuth = () => {
             return { error: error, user: null }
         }
     }
-  };
 
     const signOutWithGoogle = async () => {
         try {
@@ -85,7 +83,6 @@ const useFirebaseAuth = () => {
             return { error: error }
         }
     }
-  };
 
     const signUpWithEmailAndPassword = async (credentials, redirectPath) => {
         if (!credentials) {
@@ -105,7 +102,6 @@ const useFirebaseAuth = () => {
             return { error: error, user: null }
         }
     }
-  };
 
     const signInWithEmailAndPasswordFirebase = async (credentials, redirectPath) => {
         if (!credentials) {
@@ -125,7 +121,6 @@ const useFirebaseAuth = () => {
             return { error: error, user:null }
         }
     }
-  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, handleUser);

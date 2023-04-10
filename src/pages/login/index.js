@@ -50,7 +50,6 @@ function LoginPage() {
             console.log(err)
         }
     }
-  };
 
     const handleLogin = async (values, actions) => {
         setIsSubmitting(true)
@@ -73,7 +72,6 @@ function LoginPage() {
             setIsSubmitting(false)
         }
     }
-  };
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: {

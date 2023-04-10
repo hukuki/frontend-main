@@ -49,7 +49,6 @@ function RegisterPage() {
             console.log(err)
         }
     }
-  };
 
     const handleRegistration = async (values, actions) => {
         setIsSubmitting(true)
@@ -74,7 +73,6 @@ function RegisterPage() {
             console.log(err)
         }
     }
-  };
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: {
