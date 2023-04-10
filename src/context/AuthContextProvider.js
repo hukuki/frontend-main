@@ -61,7 +61,7 @@ const useFirebaseAuth = () => {
             return {error: null, user}
         } catch (error) {
             console.log(error)
-            return {error: error.message , user:null}
+            return {error: error , user:null}
         }
     }
 
@@ -77,7 +77,7 @@ const useFirebaseAuth = () => {
             return { error: null,  user}
         } catch (error) {
             console.log(error)
-            return { error: error.message, user: null }
+            return { error: error, user: null }
         }
     }
 
@@ -88,7 +88,7 @@ const useFirebaseAuth = () => {
             return { error: null }
         } catch (error) {
             console.log(error)
-            return { error: error.message }
+            return { error: error }
         }
     }
 
@@ -107,7 +107,7 @@ const useFirebaseAuth = () => {
             return { error: null, user }
         } catch (error) {
             console.log(error)
-            return { error: error.message, user: null }
+            return { error: error, user: null }
         }
     }
 
@@ -126,7 +126,7 @@ const useFirebaseAuth = () => {
             return { error: null, user }
         } catch (error) {
             console.log(error)
-            return { error: error.message, user:null }
+            return { error: error, user:null }
         }
     }
 

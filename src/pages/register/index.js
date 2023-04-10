@@ -37,14 +37,16 @@ function RegisterPage() {
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
-                setAlertMessage(error.message)
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
                 onOpen()
                 console.log(error)
             }
         } catch(err) {
             setIsSubmitting(false)
+            const message = convertFirebaseErrorCodeToMessage(error.code)
+            setAlertMessage(message)
             onOpen()
-            setAlertMessage(err.message)
             console.log(err)
         }
     }
@@ -57,7 +59,8 @@ function RegisterPage() {
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
-                setAlertMessage(error)
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
                 onOpen()
                 console.log(error)
             } else {
@@ -65,7 +68,8 @@ function RegisterPage() {
             }
         } catch (err) {
             setIsSubmitting(false)
-            setAlertMessage(err)
+            const message = convertFirebaseErrorCodeToMessage(error.code)
+            setAlertMessage(message)
             onOpen()
             console.log(err)
         }
@@ -90,7 +94,9 @@ function RegisterPage() {
      isOpen={isOpen}
      isCentered={true}
      leastDestructiveRef={cancelRef}
-     onClose={onClose}>
+     onClose={onClose}
+     size="xl"
+     >
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='3rem' fontWeight='600'>

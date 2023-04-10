@@ -16,6 +16,7 @@ import {
     AlertDialogFooter,
     Button
  } from '@chakra-ui/react'
+import { convertFirebaseErrorCodeToMessage } from "../../utils/alerts/convert_firebase_error"
 
 function LoginPage() {
 
@@ -39,13 +40,14 @@ function LoginPage() {
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
-                console.log(error)
-                setAlertMessage(error.message)
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
                 onOpen()
             }
         } catch (err) {
             setIsSubmitting(false)
-            setAlertMessage(err.message)
+            const message = convertFirebaseErrorCodeToMessage(err.code)
+            setAlertMessage(message)
             onOpen()
             console.log(err)
         }
@@ -59,15 +61,15 @@ function LoginPage() {
             setIsSubmitting(false)
             if (error) {
                 // TODO: Show a toast message
-                console.log(error)
-                setAlertMessage(error.message)
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
                 onOpen()
             } else  {
                 actions.resetForm()
             }
         } catch (err) {
-            console.log(err)
-            setAlertMessage(err.message)
+            const message = convertFirebaseErrorCodeToMessage(err.code)
+            setAlertMessage(message)
             onOpen()
             setIsSubmitting(false)
         }
@@ -88,7 +90,9 @@ function LoginPage() {
      isOpen={isOpen}
      isCentered={true}
      leastDestructiveRef={cancelRef}
-     onClose={onClose}>
+     onClose={onClose}
+     size="xl"
+     >
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='3rem' fontWeight='600'>
