@@ -40,79 +40,90 @@ const useFirebaseAuth = () => {
     }
   };
 
-  const signInWithGoogle = async (redirectPath) => {
-    setLoading(true);
-    try {
-      const res = await signInWithPopup(auth, googleAuthProvider);
-      const credential = GoogleAuthProvider.credentialFromResult(res);
-      const response = await signInWithCredential(auth, credential);
-      const user = handleUser(response.user);
-      if (redirectPath) {
-        router.push(redirectPath);
-      }
-      return { error: null, user };
-    } catch (error) {
-      return { error: error.message, user: null };
+    const signInWithGoogle = async (redirectPath) => {
+        setLoading(true)
+        try {
+            const res = await signInWithPopup(auth, googleAuthProvider)
+            const credential = GoogleAuthProvider.credentialFromResult(res)
+            const response = await signInWithCredential(auth, credential)
+            const user = handleUser(response.user)
+            if (redirectPath) {
+                router.push(redirectPath)
+            }
+            return {error: null, user}
+        } catch (error) {
+            console.log(error)
+            return {error: error , user:null}
+        }
     }
   };
 
-  const signUpWithGoogle = async (redirectPath) => {
-    setLoading(true);
-    try {
-      const res = await signInWithPopup(auth, googleAuthProvider);
-      const rawUser = res.user;
-      const user = handleUser(rawUser);
-      if (redirectPath) {
-        router.push(redirectPath);
-      }
-      return { error: null, user };
-    } catch (error) {
-      return { error: error.message, user: null };
+    const signUpWithGoogle = async (redirectPath) => {
+        setLoading(true)
+        try {
+            const res = await signInWithPopup(auth, googleAuthProvider)
+            const rawUser = res.user
+            const user = handleUser(rawUser)
+            if (redirectPath) {
+                router.push(redirectPath)
+            }
+            return { error: null,  user}
+        } catch (error) {
+            console.log(error)
+            return { error: error, user: null }
+        }
     }
   };
 
-  const signOutWithGoogle = async () => {
-    try {
-      await signOut(auth);
-      return { error: null };
-    } catch (error) {
-      return { error: error.message };
+    const signOutWithGoogle = async () => {
+        try {
+            const _ = await signOut(auth)
+            console.log("Signed Out")
+            return { error: null }
+        } catch (error) {
+            console.log(error)
+            return { error: error }
+        }
     }
   };
 
-  const signUpWithEmailAndPassword = async (credentials, redirectPath) => {
-    if (!credentials) {
-      return { error: 'User object cannot be null', user: null };
-    }
-    try {
-      const { email, password } = credentials;
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      const rawUser = res.user;
-      const user = handleUser(rawUser);
-      if (redirectPath) {
-        router.push(redirectPath);
-      }
-      return { error: null, user };
-    } catch (error) {
-      return { error: error.message, user: null };
+    const signUpWithEmailAndPassword = async (credentials, redirectPath) => {
+        if (!credentials) {
+            return {error: "User object cannot be null", user: null}
+        }
+        try {
+            const { email, password } = credentials
+            const res = await createUserWithEmailAndPassword(auth, email, password)
+            const rawUser = res.user
+            const user = handleUser(rawUser)
+            if (redirectPath) {
+                router.push(redirectPath)
+            }
+            return { error: null, user }
+        } catch (error) {
+            console.log(error)
+            return { error: error, user: null }
+        }
     }
   };
 
-  const signInWithEmailAndPasswordFirebase = async (credentials, redirectPath) => {
-    if (!credentials) {
-      return { error: 'Credentials cannot be null', user: null };
-    }
-    try {
-      const { email, password } = credentials;
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      const rawUser = response.user;
-      const user = handleUser(rawUser);
-      if (redirectPath) {
-        router.push(redirectPath);
-      }
-      return { error: null, user };
-    } catch (error) {
-      return { error: error.message, user: null };
+    const signInWithEmailAndPasswordFirebase = async (credentials, redirectPath) => {
+        if (!credentials) {
+            return { error: "Credentials cannot be null", user: null }
+        }
+        try {
+            const { email, password } = credentials;
+            const response = await signInWithEmailAndPassword(auth, email, password)
+            const rawUser = response.user
+            const user = handleUser(rawUser)
+            if (redirectPath) {
+                router.push(redirectPath)
+            }
+            return { error: null, user }
+        } catch (error) {
+            console.log(error)
+            return { error: error, user:null }
+        }
     }
   };
 

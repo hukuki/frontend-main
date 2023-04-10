@@ -6,16 +6,17 @@ import { useRef, useState } from 'react';
 import useAuthContext from '../../context/AuthContextProvider';
 import { useRouter } from 'next/router';
 import {
-  Progress,
-  AlertDialog,
-  useDisclosure,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  AlertDialogFooter,
-  Button,
-} from '@chakra-ui/react';
+    Progress,
+    AlertDialog,
+    useDisclosure,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    AlertDialogFooter,
+    Button
+ } from '@chakra-ui/react'
+import { convertFirebaseErrorCodeToMessage } from "../../utils/alerts/convert_firebase_error"
 
 function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,40 +30,48 @@ function LoginPage() {
     router.push('/register');
   };
 
-  const handleGoogleLogin = async () => {
-    setIsSubmitting(true);
-    try {
-      const { error } = await signInWithGoogle(null);
-      setIsSubmitting(false);
-      if (error) {
-        // TODO: Show a toast message
-        setAlertMessage(error.message);
-        onOpen();
-      }
-    } catch (err) {
-      setIsSubmitting(false);
-      setAlertMessage(err.message);
-      onOpen();
+    const handleGoogleLogin = async () => {
+        setIsSubmitting(true)
+        try {
+            const { error, user } = await signInWithGoogle(null)
+            console.log(error)
+            setIsSubmitting(false)
+            if (error) {
+                // TODO: Show a toast message
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
+                onOpen()
+            }
+        } catch (err) {
+            setIsSubmitting(false)
+            const message = convertFirebaseErrorCodeToMessage(err.code)
+            setAlertMessage(message)
+            onOpen()
+            console.log(err)
+        }
     }
   };
 
-  const handleLogin = async (values, actions) => {
-    setIsSubmitting(true);
-    try {
-      const { email, password } = values;
-      const { error } = await signInWithEmailAndPasswordFirebase({ email, password }, '/search');
-      setIsSubmitting(false);
-      if (error) {
-        // TODO: Show a toast message
-        setAlertMessage(error.message);
-        onOpen();
-      } else {
-        actions.resetForm();
-      }
-    } catch (err) {
-      setAlertMessage(err.message);
-      onOpen();
-      setIsSubmitting(false);
+    const handleLogin = async (values, actions) => {
+        setIsSubmitting(true)
+        try {
+            const { email, password } = values
+            const { error, user } = await signInWithEmailAndPasswordFirebase({email, password}, "/search")
+            setIsSubmitting(false)
+            if (error) {
+                // TODO: Show a toast message
+                const message = convertFirebaseErrorCodeToMessage(error.code)
+                setAlertMessage(message)
+                onOpen()
+            } else  {
+                actions.resetForm()
+            }
+        } catch (err) {
+            const message = convertFirebaseErrorCodeToMessage(err.code)
+            setAlertMessage(message)
+            onOpen()
+            setIsSubmitting(false)
+        }
     }
   };
 
@@ -77,7 +86,13 @@ function LoginPage() {
 
   return (
     <>
-      <AlertDialog isOpen={isOpen} isCentered={true} leastDestructiveRef={cancelRef} onClose={onClose}>
+    <AlertDialog
+     isOpen={isOpen}
+     isCentered={true}
+     leastDestructiveRef={cancelRef}
+     onClose={onClose}
+     size="xl"
+     >
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="3rem" fontWeight="600">
