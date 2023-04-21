@@ -21,7 +21,7 @@ export const buttonTheme = defineStyleConfig({
     },
     solid: {
       bgColor: 'primary.400',
-      color: (props) => (props.colorMode === 'dark' ? props.colors.text.primaryLight : props.colors.text.primaryDark),
+      color: (props) => props.colors.text.primaryLight,
       cursor: 'pointer',
       transition: 'all .2s ease',
       _hover: {

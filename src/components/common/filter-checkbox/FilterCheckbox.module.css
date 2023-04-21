@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 3rem;
+}
+
+.checkbox-label {
+  color: var(--text-color-primary-dark);
+}
+
+.container input[type='checkbox'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.15rem;
+  margin-right: 0.5rem;
+  border: 0.15rem solid var(--color-blue-400);
+  outline: none;
+  cursor: pointer;
+}
+
+.input-container {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+input.checked {
+  background-color: var(--color-blue-400);
+  position: relative;
+}
+
+.check-icon {
+  position: absolute;
+  font-size: 2.25rem;
+  top: 0;
+  left: 0;
+}

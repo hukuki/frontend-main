@@ -9,7 +9,7 @@ export default function App({ Component, pageProps: { session, ...pageProps }, r
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="wait" initial={true}>
           <LayoutGroup>
             <AuthContextProvider>
               <Component {...pageProps} key={router.asPath} />

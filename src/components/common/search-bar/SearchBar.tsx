@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import { FormControl, MenuOptionGroup } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 // Components
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
@@ -12,23 +12,41 @@ type SearchBarProps = {
   onSubmit: (search: string, category: string) => void;
   initialSearch?: string;
   initialCategory?: 'mevzuat' | 'içtihat' | 'literatür';
+  colorMode?: string;
 };
 
 // Component CSS
 import styles from './SearchBar.module.css';
+import { useTheme } from '@chakra-ui/react';
+
+// Animation Variants
+
+const searchBar = {
+  initial: {
+    scale: 0.98,
+  },
+  focus: {
+    scale: 1,
+  },
+};
 
 // Component
 export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initialSearch, initialCategory }) => {
   const [search, setSearch] = useState(initialSearch ?? '');
   const [category, setCategory] = useState(initialCategory ?? 'mevzuat');
+  const theme = useTheme();
+
+  useEffect(() => {
+    console.log(theme);
+  });
 
   return (
-    <motion.div layout layoutId="motionSearchBar" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+    <motion.div layout layoutId="motionSearchBar">
       <FormControl className={styles['searchbar__form']}>
         <InputGroup className={styles['searchbar__input-group']}>
           <div className={styles['searchbar__container']}>
             <input
-              className={styles['searchbar__input']}
+              className={`${styles[`searchbar__input`]}`}
               placeholder={`${category.toLocaleUpperCase().charAt(0) + category.substring(1)} arayın`}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -37,7 +55,12 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
                   onSubmit(search, category);
                 }
               }}
-              autoFocus
+              style={{
+                border: '2px solid',
+                borderColor: theme.colors.blue['400'],
+                background: theme.colorMode === 'dark' ? theme.colors.container.dark : theme.colors.container.light,
+                color: theme.colorMode === 'dark' ? theme.colors.text.primaryLight : theme.colors.text.primaryDark,
+              }}
             />
           </div>
           <div className={styles['filter-options__container']}>
@@ -60,7 +83,13 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
                 </MenuOptionGroup>
               </MenuList>
             </Menu>
-            <button className={styles['search__button']} type="submit">
+            <button
+              className={styles['search__button']}
+              type="submit"
+              style={{
+                color: theme.colorMode === 'dark' ? theme.colors.blue['600'] : theme.colors.blue['800'],
+              }}
+            >
               <SearchIcon />
             </button>
           </div>

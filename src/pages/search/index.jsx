@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 
 // Components
@@ -8,10 +7,11 @@ import { SearchBar } from '@/components/common/search-bar';
 import styles from './SearchPage.module.css';
 
 const SearchPage = () => {
+
   const router = useRouter();
 
   const handleSubmit = () => {
-    router.push('/search/results');
+    router.push('/search-results');
   };
 
   return (

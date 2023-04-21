@@ -2,38 +2,199 @@
 /* -------------- */
 
 .container {
-  width: 100%;
-  min-height: 100vh;
-  background: var(--body-color);
-
+  min-height: 100%;
+  background: var(--background-color-light);
   display: grid;
-  grid-template-columns: 30% 1fr;
+  grid-template-columns: 25% 1fr;
   gap: 2rem;
   padding: 2rem 4rem;
+  position: relative;
 }
 
 /* FILTERS */
 /* ---------------- */
+
 .filters__container {
-  background: var(--container-color);
+  position: sticky;
+  top: 2rem;
+  left: 0;
+  justify-self: center;
+  align-self: start;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.filter__options-container {
+  background: var(--container-color-light);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
   border-radius: 2rem;
+  min-width: 100%;
+  min-height: 100%;
+  padding: 1rem 2rem;
+}
+
+.filters__logo-title {
+  font-size: 4rem;
+  color: var(--color-blue-400);
+  font-weight: 600;
+  letter-spacing: -0.25rem;
+  margin-bottom: 1rem;
+}
+
+.filters__skeleton-container {
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.filters__title {
+  font-size: 2.25rem;
+  color: var(--text-color-primary-dark);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.filter__options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.filters__type-container,
+.filters__valid-container,
+.filters__organization-container,
+.filters__mevzuat-container,
+.filters__date-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.filters__type-checkbox {
+  font-size: 2rem;
+  color: var(--text-color-primary-dark);
+}
+
+.filters__type-title,
+.filters__valid-title,
+.filters__organization-title,
+.filters__mevzuat-title,
+.filters__date-title {
+  font-size: 2rem;
+  color: var(--text-color-primary-dark);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.filters__organization-input {
+  margin-right: 1rem;
+}
+
+.filters__organization-input-button-container,
+.filters__mevzuat-input-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filters__organization-button,
+.filters__mevzuat-button {
+  background: var(--color-blue-400);
+  padding: 1rem 2rem;
+  font-size: 1.75rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filters__mevzuat-input,
+.filters__mevzuat-madde-input {
+  margin-right: 1rem;
+  width: 180px;
+}
+
+.filters__type-checkbox-group {
+  padding-left: 2rem;
+}
+
+.filters__date-inputs-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filters__date-input {
+  margin-right: 1rem;
+  width: 180px;
+  color: var(--text-color-primary-dark);
+  color-scheme: light;
 }
 
 /* RESULTS */
 /* ---------------- */
+.results__title-sort-container {
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-color-primary-dark);
+  margin-bottom: 1rem;
+}
+
+.results__title {
+  font-weight: 600;
+}
+
+.results__sort {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+
+.results__sort-type {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
 .results__container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
-.result__container {
-  background: var(--container-color);
+.result__cards-container {
+  background: var(--container-color-light);
   margin-bottom: 2rem;
   height: 100%;
   border-radius: 2rem;
 }
 
-.result__container:last-of-type {
+.result__cards-container:last-of-type {
   margin-bottom: 0;
+}
+
+.result-card__container:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+
+/* SEARCH BAR */
+/* ---------------- */
+.searchbar__container {
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 2rem;
+  left: 0;
+  z-index: 10;
 }
