@@ -108,13 +108,21 @@
 }
 
 .filters__organization-button,
-.filters__mevzuat-button {
+.filters__mevzuat-button,
+.filters__date-button {
   background: var(--color-blue-400);
   padding: 1rem 2rem;
   font-size: 1.75rem;
   border-radius: 1rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.filters__organization-button:hover,
+.filters__mevzuat-button:hover,
+.filters__date-button:hover {
+  background: var(--color-blue-500);
 }
 
 .filters__mevzuat-input,
@@ -123,7 +131,8 @@
   width: 180px;
 }
 
-.filters__type-checkbox-group {
+.filters__type-checkbox-group,
+.filters__valid-checkbox-group {
   padding-left: 2rem;
 }
 

@@ -32,6 +32,27 @@ const item = {
 const SearchResultsPage = () => {
   const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
+  const [mevzuatFilters, setMevzuatFilters] = useState({
+    kanun_khk: true,
+    teblig: true,
+    yonetmelik: true,
+  });
+
+  const [validFilters, setValidFilters] = useState({
+    mulga: true,
+    yururluk: true,
+    yonetmelik: true,
+  });
+
+  const [organizationName, setOrganizationName] = useState('');
+  const [mevzuatSearchInput, setMevzuatSearchInput] = useState({
+    mevzuat: '',
+    madde: '',
+  });
+  const [dateFilters, setDateFilters] = useState({
+    startDate: '',
+    endDate: '',
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -42,9 +63,17 @@ const SearchResultsPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    console.log(mevzuatFilters);
+  }, [mevzuatFilters]);
+
   const handleCardClick = (id) => {
     router.push(`/document/${id}`);
   };
+
+  const handleOrganizationSearch = () => {};
+  const handleMevzuatSearch = () => {};
+  const handleDateSearch = () => {};
 
   return (
     <div className={styles.container}>
@@ -62,39 +91,171 @@ const SearchResultsPage = () => {
             <div className={styles['filters__type-container']}>
               <p className={styles['filters__type-title']}>Mevzuat Türü</p>
               <div className={styles['filters__type-checkbox-group']}>
-                <FilterCheckbox label="Kanun / KHK" isChecked={true} />
-                <FilterCheckbox label="Tebliğ" isChecked={true} />
-                <FilterCheckbox label="Yönetmelik" isChecked={true} />
+                <FilterCheckbox
+                  label="Kanun / KHK"
+                  isChecked={true}
+                  onChecked={() =>
+                    setMevzuatFilters((prev) => {
+                      return {
+                        ...prev,
+                        kanun_khk: !prev.kanun_khk,
+                      };
+                    })
+                  }
+                />
+                <FilterCheckbox
+                  label="Tebliğ"
+                  isChecked={true}
+                  onChecked={() =>
+                    setMevzuatFilters((prev) => {
+                      return {
+                        ...prev,
+                        teblig: !prev.teblig,
+                      };
+                    })
+                  }
+                />
+                <FilterCheckbox
+                  label="Yönetmelik"
+                  isChecked={true}
+                  onChecked={() =>
+                    setMevzuatFilters((prev) => {
+                      return {
+                        ...prev,
+                        yonetmelik: !prev.yonetmelik,
+                      };
+                    })
+                  }
+                />
               </div>
             </div>
             <div className={styles['filters__valid-container']}>
               <p className={styles['filters__valid-title']}>Yürürlülük Durumu</p>
-              <div className={styles['filters__type-checkbox-group']}>
-                <FilterCheckbox label="Mülga" isChecked={true} />
-                <FilterCheckbox label="Yürürlülükte" isChecked={true} />
-                <FilterCheckbox label="Yönetmelik" isChecked={true} />
+              <div className={styles['filters__valid-checkbox-group']}>
+                <FilterCheckbox
+                  label="Mülga"
+                  isChecked={true}
+                  onChecked={() =>
+                    setValidFilters((prev) => {
+                      return {
+                        ...prev,
+                        mulga: !prev.mulga,
+                      };
+                    })
+                  }
+                />
+                <FilterCheckbox
+                  label="Yürürlülükte"
+                  isChecked={true}
+                  onChecked={() =>
+                    setValidFilters((prev) => {
+                      return {
+                        ...prev,
+                        yururluk: !prev.yururluk,
+                      };
+                    })
+                  }
+                />
+                <FilterCheckbox
+                  label="Yönetmelik"
+                  isChecked={true}
+                  onChecked={() =>
+                    setValidFilters((prev) => {
+                      return {
+                        ...prev,
+                        yonetmelik: !prev.yonetmelik,
+                      };
+                    })
+                  }
+                />
               </div>
             </div>
             <div className={styles['filters__organization-container']}>
               <p className={styles['filters__organization-title']}>Kuruma Göre</p>
               <div className={styles['filters__organization-input-button-container']}>
-                <FilterInput className={styles['filters__organization-input']} placeholder="Kurum Adı" type="text" />
-                <button className={styles['filters__organization-button']}>Ara</button>
+                <FilterInput
+                  className={styles['filters__organization-input']}
+                  placeholder="Kurum Adı"
+                  type="text"
+                  onSubmit={handleOrganizationSearch}
+                  onChange={(e) => setOrganizationName(e.target.value)}
+                  value={organizationName}
+                />
+                <button className={styles['filters__organization-button']} onClick={handleOrganizationSearch}>
+                  Ara
+                </button>
               </div>
             </div>
             <div className={styles['filters__mevzuat-container']}>
               <p className={styles['filters__mevzuat-title']}>Mevzuata Göre</p>
               <div className={styles['filters__mevzuat-input-button-container']}>
-                <FilterInput className={styles['filters__mevzuat-input']} placeholder="Mevzuat" type="text" />
-                <FilterInput className={styles['filters__mevzuat-madde-input']} placeholder="Madde" type="number" />
-                <button className={styles['filters__mevzuat-button']}>Ara</button>
+                <FilterInput
+                  className={styles['filters__mevzuat-input']}
+                  placeholder="Mevzuat"
+                  type="text"
+                  onChange={(e) =>
+                    setMevzuatSearchInput((prev) => {
+                      return {
+                        ...prev,
+                        mevzuat: e.target.value,
+                      };
+                    })
+                  }
+                  value={mevzuatSearchInput.mevzuat}
+                />
+                <FilterInput
+                  className={styles['filters__mevzuat-madde-input']}
+                  placeholder="Madde"
+                  type="number"
+                  onChange={(e) =>
+                    setMevzuatSearchInput((prev) => {
+                      return {
+                        ...prev,
+                        madde: e.target.value,
+                      };
+                    })
+                  }
+                  value={mevzuatSearchInput.madde}
+                />
+                <button className={styles['filters__mevzuat-button']} onClick={handleMevzuatSearch}>
+                  Ara
+                </button>
               </div>
             </div>
             <div className={styles['filters__date-container']}>
               <p className={styles['filters__date-title']}>Değişiklik Tarihi</p>
               <div className={styles['filters__date-inputs-container']}>
-                <FilterInput className={styles['filters__date-input']} placeholder="Başlangıç" type="date" />
-                <FilterInput className={styles['filters__date-input']} placeholder="Bitiş" type="date" />
+                <FilterInput
+                  className={styles['filters__date-input']}
+                  placeholder="Başlangıç"
+                  type="date"
+                  onChange={(e) =>
+                    setDateFilters((prev) => {
+                      return {
+                        ...prev,
+                        startDate: e.target.value,
+                      };
+                    })
+                  }
+                  value={dateFilters.startDate}
+                />
+                <FilterInput
+                  className={styles['filters__date-input']}
+                  placeholder="Bitiş"
+                  type="date"
+                  onChange={(e) =>
+                    setDateFilters((prev) => {
+                      return {
+                        ...prev,
+                        endDate: e.target.value,
+                      };
+                    })
+                  }
+                  value={dateFilters.endDate}
+                />
+                <button className={styles['filters__date-button']} onClick={handleDateSearch}>
+                  Ara
+                </button>
               </div>
             </div>
           </div>
