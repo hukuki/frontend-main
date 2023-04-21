@@ -16,21 +16,16 @@
   font-family: 'Poppins', sans-serif;
   font-size: 2rem;
   padding: 1rem 3rem;
-  border: 2px solid var(--color-blue-400);
   border-radius: 10rem;
   width: 100%;
 }
 
 .search__button {
   font-size: 3.5rem;
-  color: var(--text-color-primary-light);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.search__button:hover {
-  color: var(--color-blue-400);
+  cursor: pointer;
 }
 
 .searchbar__input-group {

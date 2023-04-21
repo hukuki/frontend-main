@@ -66,7 +66,7 @@ const overrides = {
     Button,
   },
   config,
-  colorMode: 'dark',
+  colorMode: 'light',
 };
 
 export default extendTheme(overrides);
