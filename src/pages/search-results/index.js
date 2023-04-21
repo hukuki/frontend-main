@@ -14,7 +14,7 @@ import { FilterCheckbox } from '../../components/common/filter-checkbox';
 
 const item = {
   hover: {
-    scale: 1.02,
+    scale: 1.015,
     transition: {
       ease: 'easeOut',
       duration: 0.5,
@@ -63,10 +63,6 @@ const SearchResultsPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    console.log(mevzuatFilters);
-  }, [mevzuatFilters]);
-
   const handleCardClick = (id) => {
     router.push(`/document/${id}`);
   };
@@ -74,6 +70,9 @@ const SearchResultsPage = () => {
   const handleOrganizationSearch = () => {};
   const handleMevzuatSearch = () => {};
   const handleDateSearch = () => {};
+
+  const handleDocumentBookarmarkAdd = () => {};
+  const handleDocumentBookmarkRemove = () => {};
 
   return (
     <div className={styles.container}>
@@ -181,9 +180,6 @@ const SearchResultsPage = () => {
                   onChange={(e) => setOrganizationName(e.target.value)}
                   value={organizationName}
                 />
-                <button className={styles['filters__organization-button']} onClick={handleOrganizationSearch}>
-                  Ara
-                </button>
               </div>
             </div>
             <div className={styles['filters__mevzuat-container']}>
@@ -217,9 +213,6 @@ const SearchResultsPage = () => {
                   }
                   value={mevzuatSearchInput.madde}
                 />
-                <button className={styles['filters__mevzuat-button']} onClick={handleMevzuatSearch}>
-                  Ara
-                </button>
               </div>
             </div>
             <div className={styles['filters__date-container']}>
@@ -253,11 +246,9 @@ const SearchResultsPage = () => {
                   }
                   value={dateFilters.endDate}
                 />
-                <button className={styles['filters__date-button']} onClick={handleDateSearch}>
-                  Ara
-                </button>
               </div>
             </div>
+            <button className={styles['overall__search-button']}>Ara</button>
           </div>
         )}
       </div>
@@ -297,7 +288,6 @@ const SearchResultsPage = () => {
                     onClick={() => handleCardClick(result.id)}
                     variants={item}
                     whileHover="hover"
-                    whileTap="tap"
                     className={styles['result-card__container']}
                     zIndex={-1}
                   >
@@ -309,6 +299,8 @@ const SearchResultsPage = () => {
                       }}
                       key={index}
                       document={result}
+                      onBookmarkAdd={handleDocumentBookarmarkAdd}
+                      onBookmarkRemove={handleDocumentBookmarkRemove}
                     />
                   </motion.div>
                 );
