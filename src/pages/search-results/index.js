@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 
 // CSS
 import styles from './SearchResultsPage.module.css';
-import SearchResults from '../../mocks/search-results/search.ts';
 import { SkeletonText, Box, Progress, Button } from '@chakra-ui/react';
 import { SearchBar } from '../../components/common/search-bar';
 import { SearchResultCard } from '../../components/common/search-result-card';
@@ -11,6 +10,7 @@ import { useRouter } from 'next/router';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FilterInput } from '../../components/common/filter-input';
 import { FilterCheckbox } from '../../components/common/filter-checkbox';
+import useAuthContext from '../../context/AuthContextProvider';
 
 const item = {
   hover: {
@@ -29,9 +29,15 @@ const item = {
   },
 };
 
-const SearchResultsPage = () => {
+const SearchResultsPage = ({ data }) => {
   const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setResulsts(data.documents);
+    setLoading(false);
+  }, [data]);
+
   const [mevzuatFilters, setMevzuatFilters] = useState({
     kanun_khk: true,
     teblig: true,
@@ -45,23 +51,18 @@ const SearchResultsPage = () => {
   });
 
   const [organizationName, setOrganizationName] = useState('');
+
   const [mevzuatSearchInput, setMevzuatSearchInput] = useState({
     mevzuat: '',
     madde: '',
   });
+
   const [dateFilters, setDateFilters] = useState({
     startDate: '',
     endDate: '',
   });
-  const router = useRouter();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-      setResulsts(SearchResults.documents);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  const router = useRouter();
 
   const handleCardClick = (id) => {
     router.push(`/document/${id}`);
@@ -70,9 +71,6 @@ const SearchResultsPage = () => {
   const handleOrganizationSearch = () => {};
   const handleMevzuatSearch = () => {};
   const handleDateSearch = () => {};
-
-  const handleDocumentBookarmarkAdd = () => {};
-  const handleDocumentBookmarkRemove = () => {};
 
   return (
     <div className={styles.container}>
@@ -299,8 +297,6 @@ const SearchResultsPage = () => {
                       }}
                       key={index}
                       document={result}
-                      onBookmarkAdd={handleDocumentBookarmarkAdd}
-                      onBookmarkRemove={handleDocumentBookmarkRemove}
                     />
                   </motion.div>
                 );
@@ -312,5 +308,23 @@ const SearchResultsPage = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const query = context.query.query;
+  const body = { query: query };
+  try {
+    const res = await fetch('http://localhost:8080/query', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+    return {
+      props: { data },
+    };
+  } catch (err) {}
+}
 
 export default SearchResultsPage;

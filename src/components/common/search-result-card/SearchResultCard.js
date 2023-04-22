@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './SearchResultCard.module.css';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
+import useAuthContext from '../../../context/AuthContextProvider';
 
-export const SearchResultCard = ({ document, reveal, onBookmarkAdd, onBookmarkRemove }) => {
+export const SearchResultCard = ({ document, reveal }) => {
+  const { user } = useAuthContext();
+
   const ref = reveal !== undefined ? useRef(null) : null;
 
   const [bookmarked, setBookmarked] = useState(false);
@@ -19,14 +22,40 @@ export const SearchResultCard = ({ document, reveal, onBookmarkAdd, onBookmarkRe
     }
   }, []);
 
-  const handleBookmarkChange = (e) => {
-    e.stopPropagation();
-    if (bookmarked) {
-      onBookmarkRemove(document);
-    } else {
-      onBookmarkAdd(document);
+  useEffect(() => {
+    if (user) {
+      console.log(user.accessToken);
     }
-    setBookmarked((prev) => !prev);
+  }, [user]);
+
+  const handleBookmarkChange = async (e) => {
+    e.stopPropagation();
+    try {
+      if (bookmarked) {
+        const res = await fetch('/api/remove-bookmark', {
+          method: 'DELETE',
+          body: JSON.stringify({
+            documentId: document.id,
+            accessToken: user.accessToken,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      } else {
+        const res = await fetch('/api/add-bookmark', {
+          method: 'POST',
+          body: JSON.stringify({
+            documentId: document.id,
+            accessToken: user.accessToken,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      }
+      setBookmarked((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
