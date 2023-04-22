@@ -7,11 +7,10 @@ import { SearchBar } from '@/components/common/search-bar';
 import styles from './SearchPage.module.css';
 
 const SearchPage = () => {
-
   const router = useRouter();
 
-  const handleSubmit = () => {
-    router.push('/search-results');
+  const handleSubmit = (query, category) => {
+    router.push(`/search-results?query=${query}?category=${category}`);
   };
 
   return (

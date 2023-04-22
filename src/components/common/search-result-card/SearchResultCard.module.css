@@ -31,6 +31,22 @@
   color: var(--text-color-primary-dark);
 }
 
+/* HEADER */
+/* -------------------- */
+.result-card__header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* BOOKMARK ICON */
+/* -------------------- */
+.bookmark-icon {
+  font-size: 2.75rem;
+  color: var(--color-blue-400);
+}
+
 /* TITLE */
 /* -------------------- */
 .result-card__title {

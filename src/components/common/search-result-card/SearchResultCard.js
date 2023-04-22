@@ -1,8 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './SearchResultCard.module.css';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
+import useAuthContext from '../../../context/AuthContextProvider';
 
 export const SearchResultCard = ({ document, reveal }) => {
+  const { user } = useAuthContext();
+
   const ref = reveal !== undefined ? useRef(null) : null;
+
+  const [bookmarked, setBookmarked] = useState(false);
 
   useEffect(() => {
     if (reveal !== undefined) {
@@ -16,11 +22,52 @@ export const SearchResultCard = ({ document, reveal }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      console.log(user.accessToken);
+    }
+  }, [user]);
+
+  const handleBookmarkChange = async (e) => {
+    e.stopPropagation();
+    try {
+      if (bookmarked) {
+        const res = await fetch('/api/remove-bookmark', {
+          method: 'DELETE',
+          body: JSON.stringify({
+            documentId: document.id,
+            accessToken: user.accessToken,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      } else {
+        const res = await fetch('/api/add-bookmark', {
+          method: 'POST',
+          body: JSON.stringify({
+            documentId: document.id,
+            accessToken: user.accessToken,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      }
+      setBookmarked((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div ref={ref || null} className={styles['container']}>
       <div className={styles['container__line']}></div>
       <div className={styles['result-card__container']}>
-        <h4 className={styles['result-card__title']}>{document.meta.title}</h4>
+        <div className={styles['result-card__header-container']}>
+          <h4 className={styles['result-card__title']}>{document.meta.title}</h4>
+          <div className={styles['result-card__bookmark-icons-container']} onClick={handleBookmarkChange}>
+            {bookmarked ? <FaBookmark className={styles['bookmark-icon']} /> : <FaRegBookmark className={styles['bookmark-icon']} />}
+          </div>
+        </div>
         <div className={styles['result-card__metadata-container']}>
           <p className={styles['metadata__date-number']}>
             RG. {document.meta.resmiGazeteTarihi} / {document.meta.resmiGazeteSayisi}

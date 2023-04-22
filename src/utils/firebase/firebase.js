@@ -5,13 +5,13 @@ import { GoogleAuthProvider } from 'firebase/auth';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyDr1O0lEMyMC8tU4JO5_oCp5-k7lrW-DmA',
-  authDomain: 'deeplex1234.firebaseapp.com',
-  projectId: 'deeplex1234',
-  storageBucket: 'deeplex1234.appspot.com',
-  messagingSenderId: '526028600216',
-  appId: '1:526028600216:web:3c8d89f4ebfef8815cb1ed',
-  measurementId: 'G-YME1WC0F1E',
+  apiKey: 'AIzaSyBBBx9T3Ts8mJJ_YcpCOOx4uCfojboI004',
+  authDomain: 'hukuki-dc783.firebaseapp.com',
+  projectId: 'hukuki-dc783',
+  storageBucket: 'hukuki-dc783.appspot.com',
+  messagingSenderId: '788459500346',
+  appId: '1:788459500346:web:96c4ab4754f3882c4e9603',
+  measurementId: 'G-9FBEME1STV',
 };
 
 // Initialize Firebase
