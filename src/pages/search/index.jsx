@@ -10,7 +10,7 @@ const SearchPage = () => {
   const router = useRouter();
 
   const handleSubmit = (query, category) => {
-    router.push(`/search-results?query=${query}?category=${category}`);
+    router.push(`/search-results?search=${query}?category=${category}`);
   };
 
   return (

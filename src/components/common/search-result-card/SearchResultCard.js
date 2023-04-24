@@ -9,6 +9,7 @@ export const SearchResultCard = ({ document, reveal }) => {
   const ref = reveal !== undefined ? useRef(null) : null;
 
   const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarkId, setBookmarkId] = useState(null);
 
   useEffect(() => {
     if (reveal !== undefined) {
@@ -22,27 +23,22 @@ export const SearchResultCard = ({ document, reveal }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      console.log(user.accessToken);
-    }
-  }, [user]);
-
   const handleBookmarkChange = async (e) => {
     e.stopPropagation();
     try {
       if (bookmarked) {
-        const res = await fetch('/api/remove-bookmark', {
+        console.log(bookmarkId);
+        const res = await fetch('/api/delete_bookmark', {
           method: 'DELETE',
           body: JSON.stringify({
-            documentId: document.id,
+            bookmarkId: bookmarkId,
             accessToken: user.accessToken,
           }),
         });
         const data = await res.json();
         console.log(data);
       } else {
-        const res = await fetch('/api/add-bookmark', {
+        const res = await fetch('/api/create_bookmark', {
           method: 'POST',
           body: JSON.stringify({
             documentId: document.id,
@@ -50,6 +46,7 @@ export const SearchResultCard = ({ document, reveal }) => {
           }),
         });
         const data = await res.json();
+        setBookmarkId(data._id);
         console.log(data);
       }
       setBookmarked((prev) => !prev);

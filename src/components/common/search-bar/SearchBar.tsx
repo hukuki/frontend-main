@@ -36,10 +36,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
   const [category, setCategory] = useState(initialCategory ?? 'mevzuat');
   const theme = useTheme();
 
-  useEffect(() => {
-    console.log(theme);
-  });
-
   return (
     <motion.div layout layoutId="motionSearchBar">
       <FormControl className={styles['searchbar__form']}>
