@@ -17,7 +17,7 @@ const SearchPage = () => {
     <>
       <div className={styles.container}>
         <div className={styles['logo__container']}>
-          <h1 className={styles.logo}>DeepLex</h1>
+          <h1 className={styles.logo}>deeplex</h1>
         </div>
         <div className={styles['searchbar__container']}>
           <SearchBar onSubmit={handleSubmit} />
