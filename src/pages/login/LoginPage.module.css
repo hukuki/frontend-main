@@ -2,13 +2,13 @@
 /* ------------------ */
 
 .container {
-    width: 100vw;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 40%;
-    gap: 2rem;
-    padding: 1rem 2rem;
-    background: var(--color-blue-400);
+  width: 100vw;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 40%;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  background: var(--background-color-dark);
 }
 
 /* HERO */
@@ -18,7 +18,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: var(--color-blue-400);
+  background-color: var(--background-color-dark);
   border-radius: 2rem;
   padding: 5rem 2rem;
 }
@@ -56,7 +56,7 @@
   align-items: center;
   justify-self: center;
   width: 100%;
-  background-color: var(--container-color-dark);
+  background-color: var(--container-color-light);
   border-radius: 2rem;
 }
 
@@ -65,6 +65,7 @@
   font-size: 4rem;
   margin-bottom: 6rem;
   font-weight: 400;
+  color: var(--color-blue-700);
 }
 
 .login__form {
@@ -104,7 +105,8 @@
   top: -2.5rem;
   left: 2rem;
   padding: 0.25rem;
-  background-color: var(--container-color-dark);
+  background-color: var(--container-color-light);
+  color: var(--text-color-primary-dark);
   z-index: 10;
 }
 
@@ -114,12 +116,13 @@
   height: 100%;
   background: none;
   outline: none;
-  border: 2px solid var(--text-color-primary-light);
+  border: 2px solid var(--text-color-primary-dark);
   border-radius: 1.5rem;
   color: var(--text-color);
   padding: 2.25rem;
   z-index: 1;
   font-size: 2rem;
+  color: var(--text-color-primary-dark);
 }
 
 .form__button {
@@ -157,12 +160,14 @@
   font-family: 'Poppins', sans-serif;
   font-size: 1.75rem;
   margin-bottom: 2rem;
+  color: var(--text-color-primary-dark);
 }
 
 .form__register-cta {
   cursor: pointer;
   color: var(--color-blue-400);
   font-size: 1.75rem;
+  text-decoration: underline;
 }
 
 /* OR LINES */
@@ -177,7 +182,7 @@
 
 .or__container span {
   font-size: 2rem;
-  color: var(--text-color-primary-light);
+  color: var(--text-color-primary-dark);
 }
 
 .or__container span::before {

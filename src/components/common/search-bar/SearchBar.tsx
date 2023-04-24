@@ -43,7 +43,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
           <div className={styles['searchbar__container']}>
             <input
               className={`${styles[`searchbar__input`]}`}
-              placeholder={`${category.toLocaleUpperCase().charAt(0) + category.substring(1)} arayın`}
+              placeholder="Döküman arayın"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => {
@@ -51,34 +51,9 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
                   onSubmit(search, category);
                 }
               }}
-              style={{
-                border: '2px solid',
-                borderColor: theme.colors.blue['400'],
-                background: theme.colorMode === 'dark' ? theme.colors.container.dark : theme.colors.container.light,
-                color: theme.colorMode === 'dark' ? theme.colors.text.primaryLight : theme.colors.text.primaryDark,
-              }}
             />
           </div>
           <div className={styles['filter-options__container']}>
-            <Menu computePositionOnMount={true}>
-              <MenuButton>
-                {category}
-                <ChevronDownIcon />
-              </MenuButton>
-              <MenuList className={styles['menu-list']}>
-                <MenuOptionGroup defaultValue="mevzuat" type="radio">
-                  <MenuItemOption onClick={() => setCategory('mevzuat')} value="mevzuat" fontSize={'4rem'}>
-                    Mevzuat
-                  </MenuItemOption>
-                  <MenuItemOption onClick={() => setCategory('içtihat')} value="içtihat" fontSize={'4rem'}>
-                    İçtihat
-                  </MenuItemOption>
-                  <MenuItemOption onClick={() => setCategory('literatür')} value="literatür" fontSize={'4rem'}>
-                    Literatür
-                  </MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
-            </Menu>
             <button
               className={styles['search__button']}
               type="submit"

@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  background-color: var(--background-color-light);
+  box-shadow: 0 2rem 3rem var(--color-blue-400);
+}
+
+.navbar__container {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5rem;
+  padding: 1.25rem 4rem;
+  margin-top: 2rem;
+  width: 90vw;
+  z-index: 2;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--container-color-light);
+  box-shadow: 0 1rem 2rem var(--color-grey-100);
+}
+
+.navbar__logo {
+  font-size: 4.5rem;
+  font-weight: 300;
+  letter-spacing: -0.3rem;
+  cursor: pointer;
+  color: var(--color-blue-400);
+}
+
+.navbar__links_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__link {
+  height: 100%;
+  cursor: pointer;
+  font-size: 2.5rem;
+  font-weight: 200;
+  transition: all 0.2s ease-in;
+  margin-right: 3rem;
+  color: var(--text-color-primary-dark);
+}
+
+.navbar__link:hover {
+  color: var(--color-blue-400);
+  transform: scale(1.05);
+}
+
+.content__container {
+  display: grid;
+  align-self: start;
+  width: 100vw;
+  grid-template-columns: 70% 1fr;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0 4rem;
+}
+
+.content__right_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-left: 10rem;
+}
+
+.content__right_header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12.8rem;
+  line-height: 1.4;
+  font-weight: 300;
+  background: rgb(37, 150, 244);
+  background: linear-gradient(90deg, rgba(37, 150, 244, 1) 0%, rgba(0, 97, 171, 1) 25%, rgba(0, 15, 31, 1) 100%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.content__right_subheader {
+  font-family: 'Poppins', sans-serif;
+  font-size: 8rem;
+  font-weight: 300;
+  color: var(--color-blue-900);
+}
+
+.content__right_parag {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  max-width: 100rem;
+  line-height: 5rem;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  font-weight: 200;
+  color: var(--text-color-primary-dark);
+}

@@ -1,13 +1,12 @@
 import React from 'react';
 
 import { Flex } from '../components/base/layout';
-import { Text } from '../components/base/Text.tsx';
 import { Button } from '../components/base/forms';
-import { Grid } from '../components/base/Grid.tsx';
 
 import { useRouter } from 'next/router';
 import useAuthContext from '../context/AuthContextProvider';
 import { Avatar, Menu, MenuButton, MenuList, MenuItem, Spinner } from '@chakra-ui/react';
+import styles from './HomePage.module.css';
 
 export default function Home() {
   const router = useRouter();
@@ -24,66 +23,19 @@ export default function Home() {
 
   return (
     <>
-      <Flex
-        flexDirection="column"
-        justifyContent="space-between"
-        alignItems="center"
-        width="100%"
-        minH="100vh"
-        overflow="hidden"
-        position="relative"
-        zIndex="1"
-        bgColor="background.black"
-        boxShadow="0 2rem 3rem primary.400"
-      >
-        <Flex
-          alignSelf="center"
-          alignItems="center"
-          justifyContent="space-between"
-          borderRadius="5rem"
-          px="4rem"
-          py="1.25rem"
-          marginTop="2rem"
-          width="90vw"
-          zIndex="2"
-          fontFamily="Poppins"
-          bgColor="container.dark"
-          boxShadow="dark-lg"
-        >
-          <Text fontSize="4.5rem" fontWeight="300" letterSpacing="-.3rem" cursor="pointer" color="primary.400" onClick={() => router.push('/')}>
+      <div className={styles.container}>
+        <div className={styles.navbar__container}>
+          <span className={styles.navbar__logo} onClick={() => router.push('/')}>
             DeepLex
-          </Text>
-          <Flex justifyContent="center" alignItems="center">
-            <Text
-              height="100%"
-              cursor="pointer"
-              fontSize="2.5rem"
-              fontWeight="200"
-              transition="all .2s ease-in"
-              marginRight="3rem"
-              _hover={{
-                color: 'primary.400',
-                transform: 'scale(1.05)',
-              }}
-              onClick={() => router.push('/about')}
-            >
+          </span>
+          <div className={styles.navbar__links_container}>
+            <span className={styles.navbar__link} onClick={() => router.push('/about')}>
               Neden DeepLex
-            </Text>
-            <Text
-              height="100%"
-              cursor="pointer"
-              fontSize="2.5rem"
-              fontWeight="200"
-              transition="all .2s ease-in"
-              marginRight="3rem"
-              _hover={{
-                color: 'primary.400',
-                transform: 'scale(1.05)',
-              }}
-            >
+            </span>
+            <span className={styles.navbar__link} onClick={() => router.push('/team')}>
               Takım
-            </Text>
-          </Flex>
+            </span>
+          </div>
           {loading ? (
             <Spinner size="xl" />
           ) : user ? (
@@ -98,42 +50,24 @@ export default function Home() {
               </MenuList>
             </Menu>
           ) : (
-            <Button
-              variant="outline"
-              fontSize="2.5rem"
-              fontWeight="200"
-              padding="2.5rem"
-              borderRadius="1.5rem"
-              onClick={user ? handleLogout : handleLogin}
-            >
+            <Button variant="outline" fontSize="2.5rem" fontWeight="200" padding="2.5rem" borderRadius="1.5rem" onClick={handleLogin}>
               Giriş Yap
             </Button>
           )}
-        </Flex>
-        <Grid alignSelf="start" width="100vw" templateColumns="70% 1fr" alignItems="center" justifyContent="center" position="relative" px="4rem">
-          <Flex flexDir="column" justifyContent="space-between" alignItems="flex-start" marginLeft="10rem">
-            <Text
-              fontFamily="Poppins"
-              fontSize="12.8rem"
-              lineHeight="1.4"
-              fontWeight="300"
-              background="linear-gradient(90.13deg,#d1aad7 .11%,#c88bc4 25.06%,#7b8fdd 50%,#86bff2 74.8%,#bbdef2 99.76%)"
-              backgroundClip="text"
-            >
-              Döküman
-            </Text>
-            <Text fontFamily="Poppins" fontSize="8rem" fontWeight="300">
-              aramanın kısa yolu
-            </Text>
-            <Text fontFamily="Poppins" fontSize="2.5rem" maxW="100rem" lineHeight="5rem" marginTop="3rem" marginBottom="5rem" fontWeight="200">
+        </div>
+        <div className={styles.content__container}>
+          <div className={styles.content__right_container}>
+            <span className={styles.content__right_header}>Döküman</span>
+            <span className={styles.content__right_subheader}>aramanın kısa yolu</span>
+            <span className={styles.content__right_parag}>
               DeepLex, legal döküman arama sürecinizi hızlandırarak verimliliğinizi artırır. Yapay zeka modelimiz ile işinize yarayan dökümanları
               bulmanız artık çok daha kolay
-            </Text>
+            </span>
             <Button fontSize="2.5rem" fontWeight="300" px="2.5rem" py="3.5rem" borderRadius="2rem" onClick={() => router.push('/search')}>
               DeepLex&apos;i Dene
             </Button>
-          </Flex>
-        </Grid>
+          </div>
+        </div>
         <Flex
           maxWidth="81rem"
           width="100%"
@@ -150,7 +84,7 @@ export default function Home() {
         >
           &copy; 2023. All rights reserved.
         </Flex>
-      </Flex>
+      </div>
     </>
   );
 }
