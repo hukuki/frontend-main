@@ -28,6 +28,10 @@ const useFirebaseAuth = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const handleUser = (user) => {
     if (user) {
       setUser(user);

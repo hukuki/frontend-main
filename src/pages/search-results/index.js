@@ -68,6 +68,10 @@ const SearchResultsPage = ({ data }) => {
     router.push(`/document/${id}`);
   };
 
+  const handleSearchSubmit = (query, category) => {
+    router.push(`/search-results?search=${query}?category=${category}`);
+  };
+
   const handleOrganizationSearch = () => {};
   const handleMevzuatSearch = () => {};
   const handleDateSearch = () => {};
@@ -257,7 +261,7 @@ const SearchResultsPage = ({ data }) => {
               <Progress width="100%" isIndeterminate />
             </div>
           ) : (
-            <SearchBar colorMode="light" />
+            <SearchBar onSubmit={handleSearchSubmit} colorMode="light" />
           )}
         </div>
         <div className={styles['results__cards-container']}>
@@ -310,10 +314,13 @@ const SearchResultsPage = ({ data }) => {
 };
 
 export async function getServerSideProps(context) {
-  const query = context.query.query;
-  const body = { query: query };
+  const backend_url = process.env.BACKEND_URL;
+  console.log(backend_url);
+  const search = context.query.search;
+  const body = { query: search };
+
   try {
-    const res = await fetch('http://localhost:8080/query', {
+    const res = await fetch(`${backend_url}/query`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -324,7 +331,10 @@ export async function getServerSideProps(context) {
     return {
       props: { data },
     };
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+    return { props: { data: new Array() } };
+  }
 }
 
 export default SearchResultsPage;
