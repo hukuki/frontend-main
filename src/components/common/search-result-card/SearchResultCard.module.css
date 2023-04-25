@@ -34,7 +34,8 @@
 /* HEADER */
 /* -------------------- */
 .result-card__header-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 80% 1fr;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -45,6 +46,10 @@
 .bookmark-icon {
   font-size: 2.75rem;
   color: var(--color-blue-400);
+}
+
+.bookmark-icon:hover {
+  color: var(--color-blue-700);
 }
 
 /* TITLE */
@@ -85,4 +90,46 @@
 
 .content__paragraph {
   font-size: 1.75rem;
+}
+
+.action_icons__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.space_button {
+  font-size: 4.5rem;
+  color: var(--color-blue-400);
+  cursor: pointer;
+}
+
+.space_button:hover {
+  color: var(--color-blue-700);
+}
+
+.space_button__container {
+  background: var(--container-color-light);
+}
+
+.space_button_item {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  background: var(--background-color-light);
+  min-width: max-content;
+  text-align: center;
+  border-radius: 1rem;
+}
+
+.space_button_item:hover {
+  color: var(--color-blue-400);
+}
+
+.share_button {
+  font-size: 4.5rem;
+  color: var(--color-blue-400);
+  cursor: pointer;
 }
