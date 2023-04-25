@@ -8,6 +8,7 @@ import useAuthContext from '../../context/AuthContextProvider';
 import { SpaceCard } from '../../components/common/space-card/SpaceCard';
 import { SkeletonSpaceCard } from '../../components/common/skeleton-space-card/SkeletonSpaceCard';
 import { motion } from 'framer-motion';
+import { SearchBar } from '../../components/common/search-bar';
 
 const item = {
   hover: {
@@ -50,6 +51,13 @@ const item = {
 
     */
 
+/*
+    <button className={styles.spaces_search_icon}>
+              <SearchIcon />
+            </button>
+            <input className={styles.spaces_search_input} placeholder="Ara" ref={inputRef} />
+            */
+
 function DashboardPage() {
   const { user } = useAuthContext();
   const inputRef = useRef(null);
@@ -78,6 +86,8 @@ function DashboardPage() {
     }
   }, [user]);
 
+  const handleSpaceSearch = () => {};
+
   return (
     <div className={styles.page__container}>
       <div className={styles.container}>
@@ -98,10 +108,7 @@ function DashboardPage() {
         </div>
         <div className={styles.spaces__container}>
           <div className={styles.spaces_search_button__container}>
-            <button className={styles.spaces_search_icon}>
-              <SearchIcon />
-            </button>
-            <input className={styles.spaces_search_input} placeholder="Ara" ref={inputRef} />
+            <SearchBar onSubmit={handleSpaceSearch} />
           </div>
           <div className={styles.space_cards_container}>
             <motion.div className={styles.new_space_card} variants={item} whileHover="hover" zIndex={-1}>
