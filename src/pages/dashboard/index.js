@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import styles from './DashboardPage.module.css';
 import { FaPlus } from 'react-icons/fa';
 import { SearchIcon } from '@chakra-ui/icons';
-import { Avatar } from '@chakra-ui/react';
+import { Avatar, Box, SkeletonCircle, SkeletonText, Flex } from '@chakra-ui/react';
 import useAuthContext from '../../context/AuthContextProvider';
 import { SpaceCard } from '../../components/common/space-card/SpaceCard';
+import { SkeletonSpaceCard } from '../../components/common/skeleton-space-card/SkeletonSpaceCard';
 import { motion } from 'framer-motion';
 
 const item = {
@@ -25,11 +26,9 @@ const item = {
   },
 };
 
-function DashboardPage() {
-  const { user } = useAuthContext();
-  const inputRef = useRef(null);
-  const [activeLink, setActiveLink] = useState('spaces');
-  const [spaces, setSpaces] = useState(
+/* MOCK DATA */
+/*
+
     new Array(100).fill({
       name: 'Client 1',
       description: 'Merge and Acquisition',
@@ -48,7 +47,37 @@ function DashboardPage() {
         },
       ],
     })
-  );
+
+    */
+
+function DashboardPage() {
+  const { user } = useAuthContext();
+  const inputRef = useRef(null);
+  const [activeLink, setActiveLink] = useState('spaces');
+  const [loading, setLoading] = useState(true);
+  const [spaces, setSpaces] = useState([]);
+  useEffect(() => {
+    async function fetchSpaces() {
+      const response = await fetch(`/api/get_spaces`, {
+        method: 'POST',
+        body: JSON.stringify({
+          accessToken: user.accessToken,
+        }),
+      });
+      const { error, data } = await response.json();
+      console.log(error);
+      console.log(data);
+      if (!error) {
+        setLoading(false);
+        setSpaces(data);
+      }
+    }
+    if (user) {
+      fetchSpaces();
+      console.log(spaces);
+    }
+  }, [user]);
+
   return (
     <div className={styles.page__container}>
       <div className={styles.container}>
@@ -79,21 +108,31 @@ function DashboardPage() {
               <FaPlus />
               <span className={styles.new_space_card_parag}>Yeni bir proje yarat</span>
             </motion.div>
-            {spaces.map((space, index) => {
-              return (
-                <motion.div variants={item} whileHover="hover" zIndex={-1}>
-                  <SpaceCard
-                    reveal={{
-                      duration: 500,
-                      delay: 350,
-                      reset: true,
-                    }}
-                    key={index}
-                    space={space}
-                  />
-                </motion.div>
-              );
-            })}
+            {loading ? (
+              <>
+                {new Array(20).fill({}).map((item) => {
+                  return <SkeletonSpaceCard />;
+                })}
+              </>
+            ) : (
+              <>
+                {spaces.map((space, index) => {
+                  return (
+                    <motion.div variants={item} whileHover="hover" zIndex={-1}>
+                      <SpaceCard
+                        reveal={{
+                          duration: 500,
+                          delay: 350,
+                          reset: true,
+                        }}
+                        key={index}
+                        space={space}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </>
+            )}
           </div>
         </div>
       </div>

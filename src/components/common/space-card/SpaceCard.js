@@ -31,9 +31,10 @@ export const SpaceCard = ({ space, reveal }) => {
             <span className={styles.people_title}>Kişiler: </span>
             <div className={styles.avatar__container}>
               <AvatarGroup max={3} size="xl">
-                {space.contacts.map((contact, index) => {
-                  return <Avatar key={index} name={contact.name} src={contact.photoURL} />;
-                })}
+                {space.contacts &&
+                  space.contacts.map((contact, index) => {
+                    return <Avatar key={index} name={contact.name} src={contact.photoURL} />;
+                  })}
               </AvatarGroup>
             </div>
           </div>

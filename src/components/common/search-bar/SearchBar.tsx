@@ -33,7 +33,6 @@ const searchBar = {
 // Component
 export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initialSearch, initialCategory }) => {
   const [search, setSearch] = useState(initialSearch ?? '');
-  const [category, setCategory] = useState(initialCategory ?? 'mevzuat');
   const theme = useTheme();
 
   return (
@@ -48,7 +47,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  onSubmit(search, category);
+                  onSubmit(search);
                 }
               }}
             />

@@ -68,8 +68,8 @@ const SearchResultsPage = ({ data }) => {
     router.push(`/document/${id}`);
   };
 
-  const handleSearchSubmit = (query, category) => {
-    router.push(`/search-results?search=${query}?category=${category}`);
+  const handleSearchSubmit = (query) => {
+    router.push(`/search-results?search=${query}`);
   };
 
   const handleOrganizationSearch = () => {};
@@ -315,8 +315,7 @@ const SearchResultsPage = ({ data }) => {
 
 export async function getServerSideProps(context) {
   const backend_url = process.env.BACKEND_URL;
-  console.log(backend_url);
-  const search = context.query.search;
+  const search = context.query.search.split('%20').join(' ');
   const body = { query: search };
 
   try {
