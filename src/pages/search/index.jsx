@@ -9,8 +9,8 @@ import styles from './SearchPage.module.css';
 const SearchPage = () => {
   const router = useRouter();
 
-  const handleSubmit = (query, category) => {
-    router.push(`/search-results?search=${query}?category=${category}`);
+  const handleSubmit = (query) => {
+    router.push(`/search-results?search=${query}`);
   };
 
   return (

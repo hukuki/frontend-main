@@ -5,6 +5,7 @@
   align-items: center;
   width: 100%;
   position: relative;
+  background: var(--container-color-light);
 }
 
 .searchbar__container {
@@ -20,13 +21,11 @@
   border-radius: 10rem;
   width: 100%;
   color: var(--text-color-primary-dark);
-  border: 2px solid var(--color-blue-800);
   transition: all 0.1s ease-in;
 }
 
 .searchbar__input:focus {
-  border-width: 4px;
-  box-shadow: 0 1.5rem 1rem var(--color-grey-100);
+  box-shadow: 0 0 10px var(--color-blue-400);
 }
 
 .search__button {
