@@ -1,7 +1,7 @@
 const backend_url = process.env.BACKEND_URL;
 
 export default async function (req, res) {
-  if (req.method !== 'GET') return res.status(400).send('Invalid operation');
+  if (req.method !== 'POST') return res.status(400).send('Invalid operation');
   try {
     const { accessToken } = JSON.parse(req.body);
     const response = await fetch(`${backend_url}/users`, {
@@ -12,10 +12,19 @@ export default async function (req, res) {
       },
     });
     const data = await response.json();
+    console.log('USERS');
     console.log(data);
-    res.send(JSON.stringify(data));
+    res.send(
+      JSON.stringify({
+        error: null,
+        data,
+      })
+    );
   } catch (err) {
     console.log(err);
-    res.status(500).send(err);
+    res.status(500).send({
+      error: err,
+      data: null,
+    });
   }
 }

@@ -1,32 +1,30 @@
 const backend_url = process.env.BACKEND_URL;
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(400).send('Invalid operation');
+  if (req.method !== 'POST') return res.status(400).send('Invalid operation!');
   try {
-    console.log('CREATE SPACE');
-    const { name, description, people, accessToken } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/spaces/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        name,
-        description,
-        people,
-      }),
+    const { accessToken, query } = JSON.parse(req.body);
+    const response = await fetch(`${backend_url}/users`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
     });
     const data = await response.json();
-    console.log(data);
+    const people = data.filter((user) => {
+      if (user.email.startsWith(query)) {
+        return true;
+      }
+    });
+    console.log(people);
     res.send(
       JSON.stringify({
         error: null,
-        data,
+        data: people,
       })
     );
   } catch (err) {
-    console.log(err);
     res.status(500).send(
       JSON.stringify({
         error: err,
