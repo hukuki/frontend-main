@@ -8,30 +8,16 @@ import { SkeletonSpaceCard } from '../../components/common/skeleton-space-card/S
 import { CreateSpaceCard } from '../../components/common/create-space-card';
 import { motion } from 'framer-motion';
 import { SearchBar } from '../../components/common/search-bar';
-
-const item = {
-  hover: {
-    scale: 1.05,
-    transition: {
-      ease: 'easeIn',
-      duration: 0.3,
-    },
-  },
-  tap: {
-    scale: 0.99,
-    transition: {
-      ease: 'easeOut',
-      duration: 0.5,
-    },
-  },
-};
+import DashboardSearchbar from '../../components/common/dashboard-searchbar/DashboardSearchbar';
+import DashboardSpacesContainer from '../../components/common/dashboard-spaces-container/DashboardSpacesContainer';
 
 function DashboardPage() {
   const { user } = useAuthContext();
   const inputRef = useRef(null);
   const [activeLink, setActiveLink] = useState('spaces');
   const [loading, setLoading] = useState(true);
-  const [spaces, setSpaces] = useState([]);
+  const [allSpaces, setAllSpaces] = useState([]);
+  const [filteredSpaces, setFilteredSpaces] = useState([]);
 
   useEffect(() => {
     async function fetchSpaces() {
@@ -46,17 +32,47 @@ function DashboardPage() {
       console.log(data);
       if (!error) {
         setLoading(false);
-        setSpaces(data);
+        setAllSpaces(data);
+        setFilteredSpaces(data);
       }
     }
     if (user) {
       fetchSpaces();
-      console.log(spaces);
     }
   }, [user]);
 
-  const handleSpaceSearch = () => {};
-  const handleSubmit = () => {};
+  useEffect(() => {
+    if (activeLink === 'spaces') {
+      console.log(allSpaces);
+      setFilteredSpaces(allSpaces);
+    }
+  }, [activeLink]);
+
+  const handleSearchTermChange = (term) => {
+    if (term == '') {
+      setFilteredSpaces(allSpaces);
+    } else {
+      const filtered = allSpaces.filter((space) => space.name.toLowerCase().includes(term));
+      setFilteredSpaces(filtered);
+    }
+  };
+
+  const changeActiveLink = (name) => {
+    switch (name) {
+      case 'spaces':
+        setActiveLink('spaces');
+        break;
+      case 'people':
+        setActiveLink('people');
+        break;
+      case 'shared_spaces':
+        setActiveLink('shared_spaces');
+        break;
+      case 'saved':
+        setActiveLink('saved');
+        break;
+    }
+  };
 
   return (
     <>
@@ -71,46 +87,40 @@ function DashboardPage() {
               </div>
             )}
             <div className={styles.links__container}>
-              <button className={`${styles.spaces_sidebar_button} ${activeLink === 'spaces' && styles.active}`}>Projeler</button>
-              <button className={styles.people_button}>Kişiler</button>
-              <button className={styles.shared_spaces_button}>Paylaşılanlar</button>
-              <button className={styles.saved_documents_button}>Kaydedilenler</button>
+              <button
+                onClick={() => changeActiveLink('spaces')}
+                className={`${styles.spaces_sidebar_button} ${activeLink === 'spaces' && styles.active}`}
+              >
+                Projeler
+              </button>
+              <button onClick={() => changeActiveLink('people')} className={`${styles.people_button} ${activeLink === 'people' && styles.active}`}>
+                Kişiler
+              </button>
+              <button
+                onClick={() => changeActiveLink('shared_spaces')}
+                className={`${styles.shared_spaces_button} ${activeLink === 'shared_spaces' && styles.active}`}
+              >
+                Paylaşılanlar
+              </button>
+              <button
+                onClick={() => changeActiveLink('saved')}
+                className={`${styles.saved_documents_button} ${activeLink === 'saved' && styles.active}`}
+              >
+                Kaydedilenler
+              </button>
             </div>
             <div className={styles.footer}>&copy; 2023. All rights reserved.</div>
           </div>
-          <div className={styles.spaces__container}>
-            <div className={styles.spaces_search_button__container}>
-              <SearchBar onSubmit={handleSpaceSearch} />
+          {activeLink === 'spaces' && (
+            <div className={styles.spaces__container}>
+              <DashboardSpacesContainer
+                loading={loading}
+                spaces={filteredSpaces}
+                onSubmit={handleSearchTermChange}
+                onSearchTermChanged={handleSearchTermChange}
+              />
             </div>
-            <div className={styles.space_cards_container}>
-              <CreateSpaceCard />
-              {loading ? (
-                <>
-                  {new Array(20).fill({}).map((item) => {
-                    return <SkeletonSpaceCard />;
-                  })}
-                </>
-              ) : (
-                <>
-                  {spaces.map((space, index) => {
-                    return (
-                      <motion.div variants={item} whileHover="hover" zIndex={-1}>
-                        <SpaceCard
-                          reveal={{
-                            duration: 500,
-                            delay: 350,
-                            reset: true,
-                          }}
-                          key={index}
-                          space={space}
-                        />
-                      </motion.div>
-                    );
-                  })}
-                </>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>

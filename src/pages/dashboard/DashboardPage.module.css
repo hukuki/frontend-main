@@ -28,7 +28,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  background: var(--color-blue-700);
+  background: var(--color-blue-500);
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
 }
@@ -103,8 +103,9 @@
 
 .spaces_search_button__container {
   width: 100%;
-  padding: 1rem 2rem;
-  position: relative;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
 }
 
 .spaces_search_input {

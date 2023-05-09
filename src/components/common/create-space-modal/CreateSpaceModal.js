@@ -94,10 +94,10 @@ export const CreateSpaceModal = ({ setIsOpen }) => {
           </div>
           <div className={styles.buttons__container}>
             <button type="submit" className={styles.save__button} onClick={handleSubmit}>
-              Save
+              Kaydet
             </button>
             <button className={styles.close__button} onClick={() => setIsOpen(false)}>
-              Close
+              Kapat
             </button>
           </div>
         </form>
