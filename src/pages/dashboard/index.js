@@ -74,6 +74,7 @@ function DashboardPage() {
               <button className={`${styles.spaces_sidebar_button} ${activeLink === 'spaces' && styles.active}`}>Projeler</button>
               <button className={styles.people_button}>Kişiler</button>
               <button className={styles.shared_spaces_button}>Paylaşılanlar</button>
+              <button className={styles.saved_documents_button}>Kaydedilenler</button>
             </div>
             <div className={styles.footer}>&copy; 2023. All rights reserved.</div>
           </div>

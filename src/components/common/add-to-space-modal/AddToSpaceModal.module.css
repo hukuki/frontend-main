@@ -1,0 +1,118 @@
+.background {
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__container {
+  z-index: 10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.form__container {
+  padding: 2rem 4rem;
+  min-width: 30vw;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--container-color-light);
+}
+
+.title {
+  font-size: 4rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color-primary-dark);
+}
+
+.header__container {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.header__close_button {
+  font-size: 4rem;
+  color: var(--color-blue-800);
+  cursor: pointer;
+}
+
+.inputs__container {
+  min-width: 100%;
+  margin-bottom: 4rem;
+}
+
+.input__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.input_label {
+  font-size: 2rem;
+  color: var(--text-color-primary-dark);
+  margin-bottom: 1rem;
+}
+
+.input {
+  min-width: 100%;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  color: var(--text-color-primary-dark);
+  border: 1px solid var(--color-blue-400);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.buttons__container {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.save__button {
+  padding: 1rem 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  background: var(--color-blue-500);
+  color: var(--text-color-primary-light);
+  font-size: 2.25rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.save__button:hover {
+  background: var(--color-blue-400);
+}
+
+.close__button {
+  padding: 1rem 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color-primary-dark);
+  font-size: 2.25rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.close__button:hover {
+  text-decoration: underline;
+}

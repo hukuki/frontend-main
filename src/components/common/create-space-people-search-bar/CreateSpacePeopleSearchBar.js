@@ -25,7 +25,7 @@ function CreateSpacePeopleSearchBar({ onClickPerson }) {
       }
     }, 500);
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, user]);
 
   return (
     <div className={styles.relative}>
