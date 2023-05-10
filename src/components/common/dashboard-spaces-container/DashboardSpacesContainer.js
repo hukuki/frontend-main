@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import DashboardSearchbar from '../dashboard-searchbar/DashboardSearchbar';
 import { CreateSpaceCard } from '../create-space-card/CreateSpaceCard';
 import { SkeletonSpaceCard } from '../skeleton-space-card/SkeletonSpaceCard';
 import { SpaceCard } from '../space-card/SpaceCard';
 import { motion } from 'framer-motion';
 import styles from './DashboardSpacesContainer.module.css';
+import useAuthContext from '../../../context/AuthContextProvider';
 
 const item = {
   hover: {
@@ -23,17 +24,60 @@ const item = {
   },
 };
 
-function DashboardSpacesContainer({ spaces, onSubmit, onSearchTermChanged, loading }) {
+function DashboardSpacesContainer() {
+  const { user } = useAuthContext();
+  const [allSpaces, setAllSpaces] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function getSpaces() {
+    const response = await fetch('/api/get_spaces', {
+      method: 'POST',
+      body: JSON.stringify({
+        accessToken: user.accessToken,
+      }),
+    });
+    const { error, data } = await response.json();
+    if (!error) {
+      setAllSpaces(data);
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
-    console.log(spaces);
-  });
+    if (user) {
+      getSpaces();
+    }
+  }, [user]);
+
+  const [filterTerm, setFilterTerm] = useState('');
+
+  const filteredSpaces = useMemo(() => {
+    if (filterTerm === '') {
+      return allSpaces;
+    } else {
+      return allSpaces.filter((space) => {
+        if (space.name.toLowerCase().includes(filterTerm)) {
+          return true;
+        }
+      });
+    }
+  }, [filterTerm, allSpaces]);
+
+  const handleSearchTermChange = async (term) => {
+    setFilterTerm(term);
+  };
+
+  const handleNewSpaceCreated = async () => {
+    await getSpaces();
+  };
+
   return (
     <>
       <div className={styles.spaces_search_button__container}>
-        <DashboardSearchbar onSubmit={onSubmit} onSearchTermChanged={onSearchTermChanged} />
+        <DashboardSearchbar onSubmit={handleSearchTermChange} onSearchTermChanged={handleSearchTermChange} />
       </div>
       <div className={styles.space_cards_container}>
-        <CreateSpaceCard />
+        <CreateSpaceCard onSubmit={handleNewSpaceCreated} />
         {loading ? (
           <>
             {new Array(20).fill({}).map((item) => {
@@ -42,7 +86,7 @@ function DashboardSpacesContainer({ spaces, onSubmit, onSearchTermChanged, loadi
           </>
         ) : (
           <>
-            {spaces.map((space, index) => {
+            {filteredSpaces.map((space, index) => {
               return (
                 <motion.div variants={item} whileHover="hover" zIndex={-1}>
                   <SpaceCard

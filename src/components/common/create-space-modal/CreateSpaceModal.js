@@ -3,21 +3,19 @@ import { FaTimes } from 'react-icons/fa';
 import styles from './CreateSpaceModal.module.css';
 import useAuthContext from '../../../context/AuthContextProvider';
 import CreateSpacePeopleSearchBar from '../create-space-people-search-bar/CreateSpacePeopleSearchBar';
+import { Progress } from '@chakra-ui/react';
+import { SpaceSchema } from '../../../form-schemas';
+import { useFormik } from 'formik';
 
-export const CreateSpaceModal = ({ setIsOpen }) => {
+export const CreateSpaceModal = ({ setIsOpen, onSubmit }) => {
   const { user } = useAuthContext();
-  const nameRef = useRef(null);
-  const descriptionRef = useRef(null);
   const [peopleToShare, setPeopleToShare] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(peopleToShare);
-  }, [peopleToShare]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const projectName = nameRef.current.value;
-    const description = descriptionRef.current.value;
+  const handleCreateSpace = async (values, actions) => {
+    setLoading(true);
+    const projectName = values.name;
+    const description = values.description;
     const peopleIds = peopleToShare.map((person) => person._id);
     const response = await fetch('/api/create_space', {
       method: 'POST',
@@ -25,7 +23,7 @@ export const CreateSpaceModal = ({ setIsOpen }) => {
         accessToken: user.accessToken,
         name: projectName,
         description,
-        peopleIds,
+        people: peopleIds,
       }),
     });
     console.log(response);
@@ -35,7 +33,9 @@ export const CreateSpaceModal = ({ setIsOpen }) => {
     if (!error) {
       console.log(data);
     }
+    onSubmit();
     setIsOpen(false);
+    setLoading(false);
   };
 
   const addToShareList = (person) => {
@@ -56,6 +56,26 @@ export const CreateSpaceModal = ({ setIsOpen }) => {
     }
   };
 
+  const removeFromShareList = (person) => {
+    if (peopleToShare.length > 0) {
+      const ids = peopleToShare.map((p) => p._id);
+      if (ids.includes(person._id)) {
+        setPeopleToShare((prev) => {
+          return prev.filter((p) => p._id !== person._id);
+        });
+      }
+    }
+  };
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: {
+      name: '',
+      description: '',
+    },
+    validationSchema: SpaceSchema,
+    onSubmit: handleCreateSpace,
+  });
+
   return (
     <>
       <div className={styles.background} onClick={() => setIsOpen(false)}></div>
@@ -70,17 +90,32 @@ export const CreateSpaceModal = ({ setIsOpen }) => {
               <label className={styles.input_label} htmlFor="name">
                 Proje İsmi
               </label>
-              <input className={styles.input} name="description" type="text" ref={nameRef} placeholder="Projenize bir isim verin" required />
+              <input
+                disabled={loading}
+                className={styles.input}
+                name="name"
+                type="text"
+                id="name"
+                values={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Projenize bir isim verin"
+                required
+              />
             </div>
             <div className={styles.input__container}>
               <label className={styles.input_label} htmlFor="description">
                 Özet
               </label>
               <input
+                disabled={loading}
                 className={styles.input}
                 name="description"
+                id="description"
                 type="text"
-                ref={descriptionRef}
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Diğer çalışanlar için projenize bir açıklama girin"
                 required
               />
@@ -89,17 +124,28 @@ export const CreateSpaceModal = ({ setIsOpen }) => {
               <label className={styles.input_label} htmlFor="share">
                 Paylaş
               </label>
-              <CreateSpacePeopleSearchBar onClickPerson={(person) => addToShareList(person)} />
+              <CreateSpacePeopleSearchBar
+                onRemovePersonFromShare={removeFromShareList}
+                isDisabled={loading}
+                peopleToShare={peopleToShare}
+                onAddPerson={(person) => addToShareList(person)}
+              />
             </div>
           </div>
-          <div className={styles.buttons__container}>
-            <button type="submit" className={styles.save__button} onClick={handleSubmit}>
-              Kaydet
-            </button>
-            <button className={styles.close__button} onClick={() => setIsOpen(false)}>
-              Kapat
-            </button>
-          </div>
+          {loading ? (
+            <div className={styles.progress_bar__container}>
+              <Progress isIndeterminate height="1rem" width="100%" marginBottom="2rem" marginTop="2rem" />
+            </div>
+          ) : (
+            <div className={styles.buttons__container}>
+              <button type="submit" className={styles.save__button} onClick={handleSubmit}>
+                Kaydet
+              </button>
+              <button className={styles.close__button} onClick={() => setIsOpen(false)}>
+                Kapat
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </>

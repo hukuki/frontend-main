@@ -13,6 +13,10 @@ function DashboardSearchbar({ onSubmit, onSearchTermChanged }) {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
+  useEffect(() => {
+    onSearchTermChanged('');
+  }, []);
+
   return (
     <motion.div className={styles.container}>
       <form

@@ -32,3 +32,8 @@ export const LoginSchema = yup.object().shape({
   email: yup.string().email('Lütfen geçerli bir e-posta adresi giriniz.').required('Lütfen e-postanızı giriniz.'),
   password: yup.string().required('Lütfen şifrenizi giriniz'),
 });
+
+export const SpaceSchema = yup.object().shape({
+  name: yup.string().required('Lütfen bir proje ismi giriniz'),
+  description: yup.string(),
+});

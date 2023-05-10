@@ -22,11 +22,11 @@ const item = {
   },
 };
 
-export const CreateSpaceCard = () => {
+export const CreateSpaceCard = ({ onSubmit }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      {isOpen && <CreateSpaceModal setIsOpen={setIsOpen} />}
+      {isOpen && <CreateSpaceModal setIsOpen={setIsOpen} onSubmit={onSubmit} />}
       <motion.div onClick={() => setIsOpen(true)} className={styles.new_space_card} variants={item} whileHover="hover" zIndex={-1}>
         <FaPlus />
         <span className={styles.new_space_card_parag}>Yeni bir proje yarat</span>

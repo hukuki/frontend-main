@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FilterInput } from '../../components/common/filter-input';
 import { FilterCheckbox } from '../../components/common/filter-checkbox';
-import useAuthContext from '../../context/AuthContextProvider';
 import AddToSpaceModal from '../../components/common/add-to-space-modal/AddToSpaceModal';
 
 const item = {
@@ -342,7 +341,7 @@ export async function getServerSideProps(context) {
     };
   } catch (err) {
     console.log(err);
-    return { props: { data: new Array() } };
+    return { props: { data: new Array(10).fill({}) } };
   }
 }
 

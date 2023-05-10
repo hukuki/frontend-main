@@ -3,59 +3,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import styles from './DashboardPage.module.css';
 import { Avatar } from '@chakra-ui/react';
 import useAuthContext from '../../context/AuthContextProvider';
-import { SpaceCard } from '../../components/common/space-card/SpaceCard';
-import { SkeletonSpaceCard } from '../../components/common/skeleton-space-card/SkeletonSpaceCard';
-import { CreateSpaceCard } from '../../components/common/create-space-card';
-import { motion } from 'framer-motion';
-import { SearchBar } from '../../components/common/search-bar';
-import DashboardSearchbar from '../../components/common/dashboard-searchbar/DashboardSearchbar';
 import DashboardSpacesContainer from '../../components/common/dashboard-spaces-container/DashboardSpacesContainer';
+import DashboardBookmarksContainer from '../../components/common/dashboard-bookmarks-container/DashboardBookmarksContainer';
 
 function DashboardPage() {
   const { user } = useAuthContext();
-  const inputRef = useRef(null);
   const [activeLink, setActiveLink] = useState('spaces');
-  const [loading, setLoading] = useState(true);
-  const [allSpaces, setAllSpaces] = useState([]);
-  const [filteredSpaces, setFilteredSpaces] = useState([]);
-
-  useEffect(() => {
-    async function fetchSpaces() {
-      const response = await fetch(`/api/get_spaces`, {
-        method: 'POST',
-        body: JSON.stringify({
-          accessToken: user.accessToken,
-        }),
-      });
-      const { error, data } = await response.json();
-      console.log(error);
-      console.log(data);
-      if (!error) {
-        setLoading(false);
-        setAllSpaces(data);
-        setFilteredSpaces(data);
-      }
-    }
-    if (user) {
-      fetchSpaces();
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (activeLink === 'spaces') {
-      console.log(allSpaces);
-      setFilteredSpaces(allSpaces);
-    }
-  }, [activeLink]);
-
-  const handleSearchTermChange = (term) => {
-    if (term == '') {
-      setFilteredSpaces(allSpaces);
-    } else {
-      const filtered = allSpaces.filter((space) => space.name.toLowerCase().includes(term));
-      setFilteredSpaces(filtered);
-    }
-  };
 
   const changeActiveLink = (name) => {
     switch (name) {
@@ -113,12 +66,12 @@ function DashboardPage() {
           </div>
           {activeLink === 'spaces' && (
             <div className={styles.spaces__container}>
-              <DashboardSpacesContainer
-                loading={loading}
-                spaces={filteredSpaces}
-                onSubmit={handleSearchTermChange}
-                onSearchTermChanged={handleSearchTermChange}
-              />
+              <DashboardSpacesContainer />
+            </div>
+          )}
+          {activeLink === 'saved' && (
+            <div className={styles.spaces__container}>
+              <DashboardBookmarksContainer />
             </div>
           )}
         </div>
