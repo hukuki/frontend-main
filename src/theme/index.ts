@@ -51,11 +51,6 @@ const colors = {
   },
 };
 
-const config: ThemeConfig = {
-  initialColorMode: 'light',
-  useSystemColorMode: false,
-};
-
 const overrides = {
   colors,
   components: {
@@ -65,8 +60,6 @@ const overrides = {
     // Other components go here
     Button,
   },
-  config,
-  colorMode: 'light',
 };
 
 export default extendTheme(overrides);

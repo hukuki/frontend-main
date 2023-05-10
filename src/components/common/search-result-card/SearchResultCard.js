@@ -3,8 +3,9 @@ import styles from './SearchResultCard.module.css';
 import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
 import useAuthContext from '../../../context/AuthContextProvider';
+import AddToSpaceModal from '../add-to-space-modal/AddToSpaceModal';
 
-export const SearchResultCard = ({ document, reveal }) => {
+export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
   const { user } = useAuthContext();
 
   const ref = reveal !== undefined ? useRef(null) : null;
@@ -57,69 +58,64 @@ export const SearchResultCard = ({ document, reveal }) => {
   };
 
   return (
-    <div ref={ref || null} className={styles['container']}>
-      <div className={styles['container__line']}></div>
-      <div className={styles['result-card__container']}>
-        <div className={styles['result-card__header-container']}>
-          <h4 className={styles['result-card__title']}>{document.meta.title}</h4>
-          <div className={styles.action_icons__container}>
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <Menu
+    <>
+      <div ref={ref || null} className={styles['container']}>
+        <div className={styles['container__line']}></div>
+        <div className={styles['result-card__container']}>
+          <div className={styles['result-card__header-container']}>
+            <h4 className={styles['result-card__title']}>{document.meta.title}</h4>
+            <div className={styles.action_icons__container}>
+              <div
                 onClick={(e) => {
-                  e.stopPropagation = true;
+                  e.stopPropagation();
                 }}
-                onItemClick={(e) => {
-                  e.stopPropagation = true;
-                }}
-                className={styles.space_button__container}
-                menuButton={
-                  <MenuButton className={styles.space_button}>
-                    <FaPlus />
-                  </MenuButton>
-                }
-                transition
               >
-                <MenuItem
-                  value="space"
-                  onClick={(e) => {
-                    e.stopPropagation = true;
-                    console.log('SPACE');
-                  }}
-                  className={styles.space_button_item}
+                <Menu
+                  className={styles.space_button__container}
+                  menuButton={
+                    <MenuButton className={styles.space_button}>
+                      <FaPlus />
+                    </MenuButton>
+                  }
+                  transition
                 >
-                  Projeye Ekle
-                </MenuItem>
-              </Menu>
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              className={styles.share_button}
-            >
-              <FaShare />
-            </button>
-            <div className={styles['result-card__bookmark-icons-container']} onClick={handleBookmarkChange}>
-              {bookmarked ? <FaBookmark className={styles['bookmark-icon']} /> : <FaRegBookmark className={styles['bookmark-icon']} />}
+                  <MenuItem
+                    value="space"
+                    onClick={(e) => {
+                      onAddToSpace();
+                    }}
+                    className={styles.space_button_item}
+                  >
+                    Projeye Ekle
+                  </MenuItem>
+                </Menu>
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className={styles.share_button}
+              >
+                <FaShare />
+              </button>
+              <div className={styles['result-card__bookmark-icons-container']} onClick={handleBookmarkChange}>
+                {bookmarked ? <FaBookmark className={styles['bookmark-icon']} /> : <FaRegBookmark className={styles['bookmark-icon']} />}
+              </div>
             </div>
           </div>
-        </div>
-        <div className={styles['result-card__metadata-container']}>
-          <p className={styles['metadata__date-number']}>
-            RG. {document.meta.resmiGazeteTarihi} / {document.meta.resmiGazeteSayisi}
-          </p>
-          <p className={styles['metadata__mevzuat-no']}>Mevzuat No: {document.meta.mevzuatNo}</p>
-          <p className={styles['metadata__document-type']}>Tür: {document.meta.mevzuatTurEnumString}</p>
-        </div>
-        <div className={styles['result-card__content-container']}>
-          <p className={styles['content__paragraph']}>{document.content.split(' ').slice(0, 100).join(' ')} ...</p>
+          <div className={styles['result-card__metadata-container']}>
+            <p className={styles['metadata__date-number']}>
+              RG. {document.meta.resmiGazeteTarihi} / {document.meta.resmiGazeteSayisi}
+            </p>
+            <p className={styles['metadata__mevzuat-no']}>Mevzuat No: {document.meta.mevzuatNo}</p>
+            <p className={styles['metadata__document-type']}>Tür: {document.meta.mevzuatTurEnumString}</p>
+          </div>
+          <div className={styles['result-card__content-container']}>
+            <p className={styles['content__paragraph']}>{document.content.split(' ').slice(0, 100).join(' ')} ...</p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
