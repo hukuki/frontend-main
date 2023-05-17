@@ -283,13 +283,13 @@ const SearchResultsPage = ({ data }) => {
             ) : (
               <motion.div>
                 <div className={styles['results__title-sort-container']}>
-                  <h1 className={styles['results__title']}>{`Sonuçlar (${results.length})`}</h1>
+                  <h1 className={styles['results__title']}>{`Sonuçlar (${results?.length})`}</h1>
                   <div className={styles['results__sort']}>
                     <p className={styles['results__sort-type']}>İlgiye Göre</p>
                     <ChevronDownIcon boxSize={6} w={8} h={8} />
                   </div>
                 </div>
-                {results.map((result, index) => {
+                {results?.map((result, index) => {
                   return (
                     <motion.div
                       onClick={() => handleCardClick(result.meta.doc_id)}
