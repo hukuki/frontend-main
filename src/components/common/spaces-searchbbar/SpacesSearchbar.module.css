@@ -41,8 +41,8 @@
 .spaces__container {
   position: absolute;
   top: 58px;
-  width: 300px;
-  overflow: hidden;
+  max-height: 200px;
+  overflow-y: scroll;
   background: var(--background-color-light);
   border-radius: 1rem;
 }
@@ -56,4 +56,40 @@
 
 .space_card__container:hover {
   color: var(--color-blue-400);
+}
+
+.share_spaces_list__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.share_space_card {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: var(--color-grey-100);
+  border-radius: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.share_space_name {
+  font-size: 2rem;
+  color: var(--text-color-primary-dark);
+  margin-right: 1rem;
+}
+
+.share_space_remove_icon {
+  font-size: 2rem;
+  color: var(--text-color-primary-dark);
+  cursor: pointer;
+}
+
+.search__container {
+  position: relative;
+  width: 100%;
 }

@@ -7,8 +7,9 @@ import useAuthContext from '../../../context/AuthContextProvider';
 export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
   const { user } = useAuthContext();
   const [spacesToAdd, setSpacesToAdd] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const onClickSpace = (space) => {
+  const addToSpaceList = (space) => {
     if (spacesToAdd.length > 0) {
       const filtered = spacesToAdd.filter((old_space) => old_space._id === space._id);
       if (filtered.length === 0) {
@@ -26,8 +27,33 @@ export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const removeFromSpaceList = (space) => {
+    if (spacesToAdd.length > 0) {
+      const ids = spacesToAdd.map((s) => s._id);
+      if (ids.includes(space._id)) {
+        setSpacesToAdd((prev) => {
+          return prev.filter((s) => s._id !== space._id);
+        });
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (user && spacesToAdd.length > 0) {
+      const spaceIds = spacesToAdd.map((s) => s._id);
+      const res = await fetch('/api/add_document_to_spaces', {
+        method: 'POST',
+        body: JSON.stringify({
+          spaceIds,
+          documentId: documentId,
+        }),
+      });
+      const { error, data } = await res.json();
+      console.log(error, data);
+      if (!error) {
+      }
+    }
   };
   return (
     <>
@@ -43,7 +69,7 @@ export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
               <label className={styles.input_label} htmlFor="share">
                 Proje
               </label>
-              <SpacesSearchbar onClickSpace={onClickSpace} />
+              <SpacesSearchbar spaceList={spacesToAdd} onAddToSpaceList={addToSpaceList} onRemoveSpaceFromList={removeFromSpaceList} />
             </div>
           </div>
           <div className={styles.buttons__container}>
