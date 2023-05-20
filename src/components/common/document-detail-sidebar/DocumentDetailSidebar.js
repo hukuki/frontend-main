@@ -11,25 +11,27 @@ const DocumentDetailSidebar = ({ document, onAddToSpace }) => {
   const router = useRouter();
   const { user } = useAuthContext();
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [bookmarkId, setBookmarkId] = useState(null);
 
   useEffect(() => {
-    async function fetchBookmark(documentId) {
+    console.log(document);
+  });
+
+  useEffect(() => {
+    async function fetchBookmark() {
       const res = await fetch('/api/get_bookmark_status', {
         method: 'POST',
         body: JSON.stringify({
           accessToken: user.accessToken,
-          documentId: documentId,
+          documentId: document._id,
         }),
       });
       const { error, data } = await res.json();
-      if (!error && data.isBookmarked) {
+      if (!error && data.length > 0) {
         setIsBookmarked(true);
-        setBookmarkId(data.bookmarkId);
       }
     }
     if (user) {
-      fetchBookmark(router.query.documentId);
+      fetchBookmark();
     }
   }, [user]);
 
@@ -39,7 +41,7 @@ const DocumentDetailSidebar = ({ document, onAddToSpace }) => {
         method: 'POST',
         body: JSON.stringify({
           accessToken: user.accessToken,
-          documentId: router.query.documentId,
+          documentId: document._id,
         }),
       });
       const { error, data } = await res.json();
@@ -47,25 +49,24 @@ const DocumentDetailSidebar = ({ document, onAddToSpace }) => {
       console.log(error);
       if (!error) {
         setIsBookmarked(true);
-        setBookmarkId(data._id);
       }
     }
   };
 
   const handleRemoveBookmark = async () => {
     if (user) {
-      const res = await fetch('/api/delete_bookmark', {
+      const res = await fetch('/api/delete_bookmark_by_document', {
         method: 'DELETE',
         body: JSON.stringify({
           accessToken: user.accessToken,
-          bookmarkId: bookmarkId,
+          documentId: document._id,
         }),
       });
       const { error, data } = await res.json();
       console.log(data);
+      console.log(error);
       if (!error) {
         setIsBookmarked(false);
-        setBookmarkId(null);
       }
     }
   };

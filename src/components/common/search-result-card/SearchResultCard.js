@@ -9,9 +9,7 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    /*
-    console.log(document);
-    */
+    console.log(document.meta.doc_id);
   });
 
   const ref = reveal !== undefined ? useRef(null) : null;
@@ -29,10 +27,6 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
       animate();
     }
   }, []);
-
-  useEffect(() => {
-    console.log(document);
-  });
 
   useEffect(() => {
     async function fetchBookmarkStatus() {
