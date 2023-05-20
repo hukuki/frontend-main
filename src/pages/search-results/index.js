@@ -36,6 +36,7 @@ const SearchResultsPage = ({ data }) => {
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
 
   useEffect(() => {
+    console.log(data);
     setResulsts(data.documents);
     setLoading(false);
   }, [data]);
