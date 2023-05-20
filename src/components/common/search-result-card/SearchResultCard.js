@@ -8,6 +8,12 @@ import AddToSpaceModal from '../add-to-space-modal/AddToSpaceModal';
 export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
   const { user } = useAuthContext();
 
+  useEffect(() => {
+    /*
+    console.log(document);
+    */
+  });
+
   const ref = reveal !== undefined ? useRef(null) : null;
 
   const [bookmarked, setBookmarked] = useState(false);

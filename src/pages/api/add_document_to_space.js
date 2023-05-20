@@ -9,12 +9,12 @@ export default async function handler(req, res) {
       })
     );
   try {
-    const { accessToken, spaceIds, documentId } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/bookmarks`, {
+    const { accessToken, spaceId, documentId } = JSON.parse(req.body);
+    const response = await fetch(`${backend_url}/bookmarks/`, {
       method: 'POST',
       body: JSON.stringify({
         document: documentId,
-        spaces: spaceIds,
+        space: spaceId,
       }),
       headers: {
         'Content-Type': 'application/json',

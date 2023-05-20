@@ -307,7 +307,7 @@ const SearchResultsPage = ({ data }) => {
                         key={index}
                         document={result}
                         onAddToSpace={() => {
-                          setAddToSpaceDocumentId(result.id);
+                          setAddToSpaceDocumentId(result.meta.doc_id);
                           setIsAddToSpaceModalOpen(true);
                         }}
                       />

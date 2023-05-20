@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import styles from './AddToSpaceModal.module.css';
 import SpacesSearchbar from '../spaces-searchbbar/SpacesSearchbar';
 import useAuthContext from '../../../context/AuthContextProvider';
+import { Progress } from '@chakra-ui/react';
 
 export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
   const { user } = useAuthContext();
@@ -40,20 +41,27 @@ export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (user && spacesToAdd.length > 0) {
-      const spaceIds = spacesToAdd.map((s) => s._id);
-      const res = await fetch('/api/add_document_to_spaces', {
-        method: 'POST',
-        body: JSON.stringify({
-          spaceIds,
-          documentId: documentId,
-        }),
-      });
-      const { error, data } = await res.json();
-      console.log(error, data);
-      if (!error) {
+      if (spacesToAdd.length === 1) {
+        const spaceId = spacesToAdd[0]._id;
+        const res = await fetch('/api/add_document_to_space', {
+          method: 'POST',
+          body: JSON.stringify({
+            spaceId: spaceId,
+            documentId: documentId,
+            accessToken: user.accessToken,
+          }),
+        });
+        const { error, data } = await res.json();
+        console.log(error);
+        console.log(data);
+        if (!error) {
+          setIsOpen(false);
+        }
       }
     }
+    setLoading(false);
   };
   return (
     <>
@@ -73,12 +81,18 @@ export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
             </div>
           </div>
           <div className={styles.buttons__container}>
-            <button type="submit" className={styles.save__button} onClick={handleSubmit}>
-              Ekle
-            </button>
-            <button className={styles.close__button} onClick={() => setIsOpen(false)}>
-              Kapat
-            </button>
+            {loading ? (
+              <Progress isIndeterminate height="1rem" width="100%" marginBottom="2rem" />
+            ) : (
+              <>
+                <button type="submit" className={styles.save__button} onClick={handleSubmit}>
+                  Ekle
+                </button>
+                <button className={styles.close__button} onClick={() => setIsOpen(false)}>
+                  Kapat
+                </button>
+              </>
+            )}
           </div>
         </form>
       </div>
