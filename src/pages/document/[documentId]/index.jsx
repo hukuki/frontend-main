@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Style
 import styles from './DocumentDetailPage.module.css';
@@ -6,6 +6,7 @@ import styles from './DocumentDetailPage.module.css';
 // Components
 import DocumentDetailSidebar from '../../../components/common/document-detail-sidebar/DocumentDetailSidebar';
 import DocumentDetail from '../../../components/common/document-detail/DocumentDetail';
+import AddToSpaceModal from '../../../components/common/add-to-space-modal/AddToSpaceModal';
 
 export const getServerSideProps = async (context) => {
   const backend_url = process.env.BACKEND_URL;
@@ -30,13 +31,22 @@ export const getServerSideProps = async (context) => {
 };
 
 const index = ({ document }) => {
+  const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
   return (
-    <div className={styles.container}>
-      <div className={styles.document_detail_page__container}>
-        <DocumentDetailSidebar document={document} />
-        <DocumentDetail document={document} />
+    <>
+      {isAddToSpaceModalOpen && <AddToSpaceModal documentId={document.id} setIsOpen={setIsAddToSpaceModalOpen} />}
+      <div className={styles.container}>
+        <div className={styles.document_detail_page__container}>
+          <DocumentDetailSidebar
+            document={document}
+            onAddToSpace={() => {
+              setIsAddToSpaceModalOpen(true);
+            }}
+          />
+          <DocumentDetail document={document} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
