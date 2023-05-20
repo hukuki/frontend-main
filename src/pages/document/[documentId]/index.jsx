@@ -1,11 +1,11 @@
 import React from 'react';
 
 // Style
-import styles from './DocumentDetail.module.scss';
+import styles from './DocumentDetailPage.module.css';
 
 // Components
-import Sidebar from './Sidebar';
-import Document from './Document';
+import DocumentDetailSidebar from '../../../components/common/document-detail-sidebar/DocumentDetailSidebar';
+import DocumentDetail from '../../../components/common/document-detail/DocumentDetail';
 
 export const getServerSideProps = async (context) => {
   const backend_url = process.env.BACKEND_URL;
@@ -31,9 +31,11 @@ export const getServerSideProps = async (context) => {
 
 const index = ({ document }) => {
   return (
-    <div className={styles.documentDetailPage}>
-      <Sidebar document={document} />
-      <Document document={document} />
+    <div className={styles.container}>
+      <div className={styles.document_detail_page__container}>
+        <DocumentDetailSidebar document={document} />
+        <DocumentDetail document={document} />
+      </div>
     </div>
   );
 };

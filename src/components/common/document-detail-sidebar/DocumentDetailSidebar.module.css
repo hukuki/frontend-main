@@ -1,0 +1,114 @@
+.container {
+  position: sticky;
+  top: 2rem;
+  left: 0;
+  justify-self: center;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--container-color-light);
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.sidebar__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.back_button__container {
+  margin-bottom: 2rem;
+}
+
+.back_button {
+  font-size: 2.5rem;
+  color: var(--color-blue-400);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.back_icon {
+  font-size: 2.5rem;
+  margin-right: 1rem;
+}
+
+@keyframes bounce-x {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.back_button:hover .back_icon {
+  animation-name: bounce-x;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.document_actions__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 2rem;
+}
+
+.add_space_title,
+.share_title,
+.save_title,
+.add_space_icon,
+.save_icon,
+.share_icon {
+  font-size: 2rem;
+}
+
+.add_space_button,
+.share_button,
+.save_button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  cursor: pointer;
+  color: var(--color-blue-400);
+  margin-bottom: 0.5rem;
+}
+
+.add_space_button:hover,
+.share_button:hover,
+.save_button:hover {
+  color: var(--color-blue-600);
+}
+
+.sidebar_content__container {
+  display: flex;
+}
+
+.document_info__container {
+  color: var(--text-color-primary-dark);
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.info {
+  font-size: 1.75rem;
+  color: var(--color-blue-600);
+}
