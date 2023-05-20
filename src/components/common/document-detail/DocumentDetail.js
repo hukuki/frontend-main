@@ -28,7 +28,7 @@ const extractContent = (content, idx) => {
   return <p className={styles.free_text}>{content.content}</p>;
 };
 
-const Document = ({ document }) => {
+const DocumentDetail = ({ document }) => {
   useEffect(() => {
     console.log(document);
   });
@@ -47,4 +47,4 @@ const Document = ({ document }) => {
   );
 };
 
-export default Document;
+export default DocumentDetail;

@@ -17,7 +17,6 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
   const ref = reveal !== undefined ? useRef(null) : null;
 
   const [bookmarked, setBookmarked] = useState(false);
-  const [bookmarkId, setBookmarkId] = useState(null);
 
   useEffect(() => {
     if (reveal !== undefined) {
@@ -31,35 +30,60 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
     }
   }, []);
 
-  const handleBookmarkChange = async (e) => {
-    e.stopPropagation();
-    try {
-      if (bookmarked) {
-        console.log(bookmarkId);
-        const res = await fetch('/api/delete_bookmark', {
-          method: 'DELETE',
-          body: JSON.stringify({
-            bookmarkId: bookmarkId,
-            accessToken: user.accessToken,
-          }),
-        });
-        const data = await res.json();
-        console.log(data);
-      } else {
-        const res = await fetch('/api/create_bookmark', {
-          method: 'POST',
-          body: JSON.stringify({
-            documentId: document.id,
-            accessToken: user.accessToken,
-          }),
-        });
-        const data = await res.json();
-        setBookmarkId(data._id);
-        console.log(data);
+  useEffect(() => {
+    console.log(document);
+  });
+
+  useEffect(() => {
+    async function fetchBookmarkStatus() {
+      const res = await fetch('/api/get_bookmark_status', {
+        method: 'POST',
+        body: JSON.stringify({
+          documentId: document.meta.doc_id,
+          accessToken: user.accessToken,
+        }),
+      });
+      const { error, data } = await res.json();
+      console.log(data);
+      if (!error && data.length > 0) {
+        setBookmarked(true);
       }
-      setBookmarked((prev) => !prev);
-    } catch (err) {
-      console.log(err);
+    }
+    if (user) {
+      fetchBookmarkStatus();
+    }
+  }, [user]);
+
+  const handleAddBookmark = async () => {
+    console.log(document.id);
+    const res = await fetch('/api/create_bookmark', {
+      method: 'POST',
+      body: JSON.stringify({
+        documentId: document.meta.doc_id,
+        accessToken: user.accessToken,
+      }),
+    });
+    const { error, data } = await res.json();
+    console.log(data);
+    console.log(error);
+    if (!error) {
+      setBookmarked(true);
+    }
+  };
+
+  const handleRemoveBookmark = async () => {
+    const res = await fetch('/api/delete_bookmark_by_document', {
+      method: 'DELETE',
+      body: JSON.stringify({
+        documentId: document.meta.doc_id,
+        accessToken: user.accessToken,
+      }),
+    });
+    const { error, data } = await res.json();
+    console.log(error);
+    console.log(data);
+    if (!error) {
+      setBookmarked(false);
     }
   };
 
@@ -104,7 +128,16 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
               >
                 <FaShare />
               </button>
-              <div className={styles['result-card__bookmark-icons-container']} onClick={handleBookmarkChange}>
+              <div
+                className={styles['result-card__bookmark-icons-container']}
+                onClick={() => {
+                  if (bookmarked) {
+                    handleRemoveBookmark();
+                  } else {
+                    handleAddBookmark();
+                  }
+                }}
+              >
                 {bookmarked ? <FaBookmark className={styles['bookmark-icon']} /> : <FaRegBookmark className={styles['bookmark-icon']} />}
               </div>
             </div>
