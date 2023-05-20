@@ -292,7 +292,7 @@ const SearchResultsPage = ({ data }) => {
                 {results.map((result, index) => {
                   return (
                     <motion.div
-                      onClick={() => handleCardClick(result.id)}
+                      onClick={() => handleCardClick(result.meta.doc_id)}
                       variants={item}
                       whileHover="hover"
                       className={styles['result-card__container']}
