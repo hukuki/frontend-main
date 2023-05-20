@@ -68,9 +68,7 @@ const SearchResultsPage = ({ data }) => {
   const router = useRouter();
 
   const handleCardClick = (id) => {
-    /*
     router.push(`/document/${id}`);
-    */
   };
 
   const handleSearchSubmit = (query) => {

@@ -54,8 +54,8 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
     }
   }, [user]);
 
-  const handleAddBookmark = async () => {
-    console.log(document.id);
+  const handleAddBookmark = async (e) => {
+    e.stopPropagation();
     const res = await fetch('/api/create_bookmark', {
       method: 'POST',
       body: JSON.stringify({
@@ -71,7 +71,8 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
     }
   };
 
-  const handleRemoveBookmark = async () => {
+  const handleRemoveBookmark = async (e) => {
+    e.stopPropagation();
     const res = await fetch('/api/delete_bookmark_by_document', {
       method: 'DELETE',
       body: JSON.stringify({
@@ -130,11 +131,11 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
               </button>
               <div
                 className={styles['result-card__bookmark-icons-container']}
-                onClick={() => {
+                onClick={(e) => {
                   if (bookmarked) {
-                    handleRemoveBookmark();
+                    handleRemoveBookmark(e);
                   } else {
-                    handleAddBookmark();
+                    handleAddBookmark(e);
                   }
                 }}
               >
