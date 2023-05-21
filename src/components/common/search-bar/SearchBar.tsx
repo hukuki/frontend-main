@@ -9,7 +9,7 @@ import { Menu, MenuButton, MenuList, MenuItemOption } from '@chakra-ui/react';
 
 // Types
 type SearchBarProps = {
-  onSubmit: (search: string, category: string) => void;
+  onSubmit: (search: string) => void;
   initialSearch?: string;
   initialCategory?: 'mevzuat' | 'içtihat' | 'literatür';
   colorMode?: string;
@@ -41,7 +41,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, initial
         <InputGroup className={styles['searchbar__input-group']}>
           <div className={styles['searchbar__container']}>
             <input
-              className={`${styles[`searchbar__input`]}`}
+              className={`${styles['searchbar__input']}`}
               placeholder="Döküman arayın"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
