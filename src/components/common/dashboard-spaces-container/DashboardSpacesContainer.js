@@ -6,6 +6,8 @@ import { SpaceCard } from '../space-card/SpaceCard';
 import { motion } from 'framer-motion';
 import styles from './DashboardSpacesContainer.module.css';
 import useAuthContext from '../../../context/AuthContextProvider';
+import { useRouter } from 'next/router';
+import DashboardSpaceDetail from '../dashboard-space-detail/DashboardSpaceDetail';
 
 const item = {
   hover: {
@@ -24,10 +26,11 @@ const item = {
   },
 };
 
-function DashboardSpacesContainer() {
+function DashboardSpacesContainer({ onSpaceClick }) {
   const { user } = useAuthContext();
   const [allSpaces, setAllSpaces] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [detailedSpaceId, setDetailedSpaceId] = useState(null);
 
   async function getSpaces() {
     const response = await fetch('/api/get_spaces', {
@@ -71,41 +74,52 @@ function DashboardSpacesContainer() {
     await getSpaces();
   };
 
-  return (
-    <>
-      <div className={styles.spaces_search_button__container}>
-        <DashboardSearchbar onSubmit={handleSearchTermChange} onSearchTermChanged={handleSearchTermChange} />
-      </div>
-      <div className={styles.space_cards_container}>
-        <CreateSpaceCard onSubmit={handleNewSpaceCreated} />
-        {loading ? (
-          <>
-            {new Array(20).fill({}).map((item) => {
-              return <SkeletonSpaceCard />;
-            })}
-          </>
-        ) : (
-          <>
-            {filteredSpaces.map((space, index) => {
-              return (
-                <motion.div variants={item} whileHover="hover" zIndex={-1}>
-                  <SpaceCard
-                    reveal={{
-                      duration: 500,
-                      delay: 350,
-                      reset: true,
+  if (detailedSpaceId) {
+    return <DashboardSpaceDetail spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
+  } else {
+    return (
+      <>
+        <div className={styles.spaces_search_button__container}>
+          <DashboardSearchbar onSubmit={handleSearchTermChange} onSearchTermChanged={handleSearchTermChange} />
+        </div>
+        <div className={styles.space_cards_container}>
+          <CreateSpaceCard onSubmit={handleNewSpaceCreated} />
+          {loading ? (
+            <>
+              {new Array(20).fill({}).map((item) => {
+                return <SkeletonSpaceCard />;
+              })}
+            </>
+          ) : (
+            <>
+              {filteredSpaces.map((space, index) => {
+                return (
+                  <motion.div
+                    variants={item}
+                    whileHover="hover"
+                    zIndex={-1}
+                    onClick={() => {
+                      setDetailedSpaceId(space._id);
                     }}
-                    key={index}
-                    space={space}
-                  />
-                </motion.div>
-              );
-            })}
-          </>
-        )}
-      </div>
-    </>
-  );
+                  >
+                    <SpaceCard
+                      reveal={{
+                        duration: 500,
+                        delay: 350,
+                        reset: true,
+                      }}
+                      key={index}
+                      space={space}
+                    />
+                  </motion.div>
+                );
+              })}
+            </>
+          )}
+        </div>
+      </>
+    );
+  }
 }
 
 export default DashboardSpacesContainer;
