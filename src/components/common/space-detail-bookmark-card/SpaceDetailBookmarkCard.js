@@ -13,12 +13,12 @@ const card = {
       ease: 'easeIn',
       duration: 0.3,
     },
-    tap: {
-      scale: 1,
-      transition: {
-        ease: 'easeOut',
-        duration: 0.5,
-      },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      ease: 'easeOut',
+      duration: 0.5,
     },
   },
 };
@@ -74,7 +74,17 @@ function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
   return (
     <>
       {isAddToSpaceModalOpen && <AddToSpaceModal documentId={document._id} setIsOpen={setIsAddToSpaceModalOpen} />}
-      <motion.div className={styles.motion_div} variants={card} whileHover="hover" zIndex={-1} onClick={() => {}}>
+      <motion.div
+        className={styles.motion_div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        variants={card}
+        whileHover="hover"
+        whileTap="tap"
+        zIndex={-1}
+        onClick={() => {}}
+      >
         <div
           className={styles.container}
           onClick={() => {

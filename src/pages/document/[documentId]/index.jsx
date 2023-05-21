@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Style
 import styles from './DocumentDetailPage.module.css';
@@ -7,6 +7,8 @@ import styles from './DocumentDetailPage.module.css';
 import DocumentDetailSidebar from '../../../components/common/document-detail-sidebar/DocumentDetailSidebar';
 import DocumentDetail from '../../../components/common/document-detail/DocumentDetail';
 import AddToSpaceModal from '../../../components/common/add-to-space-modal/AddToSpaceModal';
+import { Spinner } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 export const getServerSideProps = async (context) => {
   const backend_url = process.env.BACKEND_URL;
@@ -32,21 +34,38 @@ export const getServerSideProps = async (context) => {
 
 const index = ({ document }) => {
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (document) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    }
+  }, [document]);
   return (
-    <>
+    <div className={styles.page_container}>
       {isAddToSpaceModalOpen && <AddToSpaceModal documentId={document.id} setIsOpen={setIsAddToSpaceModalOpen} />}
-      <div className={styles.container}>
-        <div className={styles.document_detail_page__container}>
-          <DocumentDetailSidebar
-            document={document}
-            onAddToSpace={() => {
-              setIsAddToSpaceModalOpen(true);
-            }}
-          />
-          <DocumentDetail document={document} />
+      {loading ? (
+        <div className={styles.spinner__container}>
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" height="100px" width="100px" />
         </div>
-      </div>
-    </>
+      ) : (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+          <div className={styles.container}>
+            <div className={styles.document_detail_page__container}>
+              <DocumentDetailSidebar
+                document={document}
+                onAddToSpace={() => {
+                  setIsAddToSpaceModalOpen(true);
+                }}
+              />
+              <DocumentDetail document={document} />
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </div>
   );
 };
 
