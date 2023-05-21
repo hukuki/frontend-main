@@ -9,12 +9,9 @@ export default async function handler(req, res) {
       })
     );
   try {
-    const { accessToken, spaceId, peopleIds } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/spaces/${spaceId}/users/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        people: peopleIds,
-      }),
+    const { accessToken, spaceId } = JSON.parse(req.body);
+    const response = await fetch(`${backend_url}/spaces/${spaceId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
@@ -28,11 +25,10 @@ export default async function handler(req, res) {
         data,
       })
     );
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
     res.status(500).send(
       JSON.stringify({
-        error: err,
+        error,
         data: null,
       })
     );

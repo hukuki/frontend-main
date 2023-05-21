@@ -1,0 +1,135 @@
+.container {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.back_button {
+  font-size: 2.5rem;
+  color: var(--color-blue-400);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.back_button:hover .back_icon {
+  animation-name: bounce-x;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce-x {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.back_icon {
+  font-size: 3rem;
+}
+
+.header__container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.header {
+  font-size: 4rem;
+  font-weight: 300;
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-blue-600);
+}
+
+.header_break {
+  min-width: 100%;
+  min-height: 2px;
+  background-color: var(--color-blue-600);
+}
+
+.people__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.creator__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.creator_header,
+.shared_header {
+  font-size: 2.5rem;
+  color: var(--text-color-primary-dark);
+}
+
+.creator_email {
+  font-size: 2.5rem;
+  color: var(--color-blue-800);
+}
+
+.shared__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.shared_contacts__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.bookmarks__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.bookmark_cards__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.bookmarks_header {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-color-primary-dark);
+}
+
+.add_person_button {
+  font-size: 5rem;
+  color: var(--color-blue-400);
+}
+
+.add_person_button:hover {
+  cursor: pointer;
+  color: var(--color-blue-600);
+}
