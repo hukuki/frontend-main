@@ -8,6 +8,12 @@ import AddToSpaceModal from '../add-to-space-modal/AddToSpaceModal';
 export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
   const { user } = useAuthContext();
 
+  useEffect(() => {
+    /*
+    console.log(document);
+    */
+  });
+
   const ref = reveal !== undefined ? useRef(null) : null;
 
   const [bookmarked, setBookmarked] = useState(false);
@@ -63,7 +69,7 @@ export const SearchResultCard = ({ document, reveal, onAddToSpace }) => {
         <div className={styles['container__line']}></div>
         <div className={styles['result-card__container']}>
           <div className={styles['result-card__header-container']}>
-            <h4 className={styles['result-card__title']}>{document.meta.title}</h4>
+            <h4 className={styles['result-card__title']}>{document.meta.mevAdi}</h4>
             <div className={styles.action_icons__container}>
               <div
                 onClick={(e) => {

@@ -3,12 +3,14 @@ import { FaTimes } from 'react-icons/fa';
 import styles from './AddToSpaceModal.module.css';
 import SpacesSearchbar from '../spaces-searchbbar/SpacesSearchbar';
 import useAuthContext from '../../../context/AuthContextProvider';
+import { Progress } from '@chakra-ui/react';
 
 export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
   const { user } = useAuthContext();
   const [spacesToAdd, setSpacesToAdd] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const onClickSpace = (space) => {
+  const addToSpaceList = (space) => {
     if (spacesToAdd.length > 0) {
       const filtered = spacesToAdd.filter((old_space) => old_space._id === space._id);
       if (filtered.length === 0) {
@@ -26,8 +28,40 @@ export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const removeFromSpaceList = (space) => {
+    if (spacesToAdd.length > 0) {
+      const ids = spacesToAdd.map((s) => s._id);
+      if (ids.includes(space._id)) {
+        setSpacesToAdd((prev) => {
+          return prev.filter((s) => s._id !== space._id);
+        });
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    if (user && spacesToAdd.length > 0) {
+      if (spacesToAdd.length === 1) {
+        const spaceId = spacesToAdd[0]._id;
+        const res = await fetch('/api/add_document_to_space', {
+          method: 'POST',
+          body: JSON.stringify({
+            spaceId: spaceId,
+            documentId: documentId,
+            accessToken: user.accessToken,
+          }),
+        });
+        const { error, data } = await res.json();
+        console.log(error);
+        console.log(data);
+        if (!error) {
+          setIsOpen(false);
+        }
+      }
+    }
+    setLoading(false);
   };
   return (
     <>
@@ -43,16 +77,22 @@ export const AddToSpaceModal = ({ setIsOpen, documentId }) => {
               <label className={styles.input_label} htmlFor="share">
                 Proje
               </label>
-              <SpacesSearchbar onClickSpace={onClickSpace} />
+              <SpacesSearchbar spaceList={spacesToAdd} onAddToSpaceList={addToSpaceList} onRemoveSpaceFromList={removeFromSpaceList} />
             </div>
           </div>
           <div className={styles.buttons__container}>
-            <button type="submit" className={styles.save__button} onClick={handleSubmit}>
-              Ekle
-            </button>
-            <button className={styles.close__button} onClick={() => setIsOpen(false)}>
-              Kapat
-            </button>
+            {loading ? (
+              <Progress isIndeterminate height="1rem" width="100%" marginBottom="2rem" />
+            ) : (
+              <>
+                <button type="submit" className={styles.save__button} onClick={handleSubmit}>
+                  Ekle
+                </button>
+                <button className={styles.close__button} onClick={() => setIsOpen(false)}>
+                  Kapat
+                </button>
+              </>
+            )}
           </div>
         </form>
       </div>

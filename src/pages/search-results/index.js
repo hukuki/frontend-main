@@ -36,6 +36,7 @@ const SearchResultsPage = ({ data }) => {
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
 
   useEffect(() => {
+    console.log(data);
     setResulsts(data.documents);
     setLoading(false);
   }, [data]);
@@ -291,7 +292,7 @@ const SearchResultsPage = ({ data }) => {
                 {results.map((result, index) => {
                   return (
                     <motion.div
-                      onClick={() => handleCardClick(result.id)}
+                      onClick={() => handleCardClick(result.meta.doc_id)}
                       variants={item}
                       whileHover="hover"
                       className={styles['result-card__container']}
@@ -306,7 +307,7 @@ const SearchResultsPage = ({ data }) => {
                         key={index}
                         document={result}
                         onAddToSpace={() => {
-                          setAddToSpaceDocumentId(result.id);
+                          setAddToSpaceDocumentId(result.meta.doc_id);
                           setIsAddToSpaceModalOpen(true);
                         }}
                       />
