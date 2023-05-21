@@ -12,10 +12,17 @@
   z-index: 100;
 }
 
-.bookmark_cards__container {
+.bookmark_cards__container,
+.skeleton_cards__container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: stretch;
   justify-items: stretch;
+}
+
+.skeleton__container {
+  height: 300px;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
 }

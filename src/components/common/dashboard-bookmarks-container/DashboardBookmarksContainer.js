@@ -3,9 +3,10 @@ import styles from './DashboardBookmarksContainer.module.css';
 import DashboardSearchbar from '../dashboard-searchbar/DashboardSearchbar';
 import useAuthContext from '../../../context/AuthContextProvider';
 import BookmarkCard from '../bookmark-card/BookmarkCard';
+import { Flex, SkeletonText, Stack } from '@chakra-ui/react';
 
 function DashboardBookmarksContainer() {
-  const [allBookmarks, setAllBookmarks] = useState([]);
+  const [allBookmarks, setAllBookmarks] = useState(new Array(10).fill({}));
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +59,17 @@ function DashboardBookmarksContainer() {
       </div>
       <>
         {loading ? (
-          <h1>Loading...</h1>
+          <div className={styles.skeleton_cards__container}>
+            {allBookmarks.map((_, idx) => {
+              return (
+                <Flex flexDir="column" justifyContent="space-around" boxShadow="lg" className={styles.skeleton__container}>
+                  <SkeletonText fadeDuration={2} isLoaded={!loading} mt="4" noOfLines={6} skeletonHeight="2" />
+                  <SkeletonText fadeDuration={2} isLoaded={!loading} mt="4" noOfLines={6} skeletonHeight="2" />
+                  <SkeletonText fadeDuration={2} isLoaded={!loading} mt="4" noOfLines={6} skeletonHeight="2" />
+                </Flex>
+              );
+            })}
+          </div>
         ) : (
           <div className={styles.bookmark_cards__container}>
             {filteredBookmarks &&
