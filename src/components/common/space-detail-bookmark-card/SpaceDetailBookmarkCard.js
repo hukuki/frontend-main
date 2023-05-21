@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './SpaceDetailBookmarkCard.module.css';
 import { FaTrashAlt, FaPlus } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import useAuthContext from '../../../context/AuthContextProvider';
+import AddToSpaceModal from '../add-to-space-modal/AddToSpaceModal';
 
-function SpaceDetailBookmarkCard({ document }) {
+function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
+  const document = bookmark.document;
   const router = useRouter();
-  useEffect(() => {
-    extractDocument();
-  });
+  const { user } = useAuthContext();
+  const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
+
   const extractContent = (c) => {
     if (c.type === 'header') {
       return c.content;
@@ -26,15 +29,33 @@ function SpaceDetailBookmarkCard({ document }) {
     return str;
   };
 
-  const handleRemoveDocument = (e) => {
+  const handleRemoveDocument = async (e) => {
     e.stopPropagation();
+    if (user) {
+      const res = await fetch('/api/delete_bookmark_from_space', {
+        method: 'POST',
+        body: JSON.stringify({
+          accessToken: user.accessToken,
+          bookmarkId: bookmark._id,
+          spaceId: bookmark.space,
+        }),
+      });
+      const { error, data } = await res.json();
+      console.log(error);
+      console.log(data);
+      if (!error) {
+        onRemove();
+      }
+    }
   };
 
-  const handleAddDocument = (e) => {
+  const handleAddToSpace = (e) => {
     e.stopPropagation();
+    setIsAddToSpaceModalOpen(true);
   };
   return (
     <>
+      {isAddToSpaceModalOpen && <AddToSpaceModal documentId={document._id} setIsOpen={setIsAddToSpaceModalOpen} />}
       <div
         className={styles.container}
         onClick={() => {
@@ -49,7 +70,7 @@ function SpaceDetailBookmarkCard({ document }) {
               <button className={styles.remove_button} onClick={(e) => handleRemoveDocument(e)}>
                 <FaTrashAlt />
               </button>
-              <button className={styles.add_space_button} onClick={(e) => handleAddDocument(e)}>
+              <button className={styles.add_space_button} onClick={(e) => handleAddToSpace(e)}>
                 <FaPlus />
               </button>
             </div>
