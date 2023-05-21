@@ -12,3 +12,9 @@
   padding: 2rem;
   gap: 4rem;
 }
+
+.bookmark_cards__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
