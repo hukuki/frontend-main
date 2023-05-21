@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './DashboardSpaceDetail.module.css';
 import useAuthContext from '../../../context/AuthContextProvider';
-import { Avatar } from '@chakra-ui/react';
+import { Avatar, Spinner } from '@chakra-ui/react';
 import SpaceDetailBookmarkCard from '../space-detail-bookmark-card/SpaceDetailBookmarkCard';
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa';
-import { useRouter } from 'next/router';
 import AddPersonToSpaceModal from '../add-person-to-space-modal/AddPersonToSpaceModal';
+import { motion } from 'framer-motion';
 
 function DashboardSpaceDetail({ spaceId, onBackClick }) {
   const { user } = useAuthContext();
@@ -44,10 +44,18 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
   return (
     <>
       {loading ? (
-        <h1>Loading...</h1>
+        <div className={styles.spinner__container}>
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" height="100px" width="100px" />
+        </div>
       ) : (
         space && (
-          <>
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {isAddPersonModalOpen && <AddPersonToSpaceModal setIsOpen={() => setIsAddPersonModalOpen(false)} spaceId={spaceId} />}
             <div className={styles.container}>
               <div className={styles.back_button__container}>
@@ -92,7 +100,7 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
                 </div>
               </div>
             </div>
-          </>
+          </motion.div>
         )
       )}
     </>
