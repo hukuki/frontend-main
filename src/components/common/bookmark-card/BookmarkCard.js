@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './SpaceDetailBookmarkCard.module.css';
+import styles from './BookmarkCard.module.css';
 import { FaTrashAlt, FaPlus } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import useAuthContext from '../../../context/AuthContextProvider';
@@ -23,11 +23,14 @@ const card = {
   },
 };
 
-function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
+function BookmarkCard({ bookmark, onRemove }) {
   const document = bookmark.document;
   const router = useRouter();
   const { user } = useAuthContext();
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
+  const [addedSpaces, setAddedSpaces] = useState([]);
+
+  useEffect(() => {}, [user]);
 
   const extractContent = (c) => {
     if (c.type === 'header') {
@@ -47,15 +50,14 @@ function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
     return str;
   };
 
-  const handleRemoveDocument = async (e) => {
+  const handleRemoveBookmark = async (e) => {
     e.stopPropagation();
     if (user) {
-      const res = await fetch('/api/delete_bookmark_from_space', {
-        method: 'POST',
+      const res = await fetch('/api/delete_bookmark_by_document', {
+        method: 'DELETE',
         body: JSON.stringify({
           accessToken: user.accessToken,
-          bookmarkId: bookmark._id,
-          spaceId: bookmark.space,
+          documentId: document._id,
         }),
       });
       const { error, data } = await res.json();
@@ -86,7 +88,7 @@ function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
             <div className={styles.card_header__container}>
               <h1 className={styles.card_header}>{document.metadata.mevAdi}</h1>
               <div className={styles.card_actions__container}>
-                <button className={styles.remove_button} onClick={(e) => handleRemoveDocument(e)}>
+                <button className={styles.remove_button} onClick={(e) => handleRemoveBookmark(e)}>
                   <FaTrashAlt />
                 </button>
                 <button className={styles.add_space_button} onClick={(e) => handleAddToSpace(e)}>
@@ -104,6 +106,10 @@ function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
             <div className={styles.content__container}>
               <p className={styles.content}>{extractDocument().split('').slice(0, 1000)}</p>
             </div>
+            <div className={styles.added_spaces__container}>
+              <p className={styles.label}>Ait olduğu projeler</p>
+              <div className={styles.spaces__container}></div>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -111,4 +117,4 @@ function SpaceDetailBookmarkCard({ bookmark, onRemove }) {
   );
 }
 
-export default SpaceDetailBookmarkCard;
+export default BookmarkCard;

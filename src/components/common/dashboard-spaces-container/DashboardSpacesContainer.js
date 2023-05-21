@@ -92,28 +92,29 @@ function DashboardSpacesContainer({ onSpaceClick }) {
             </>
           ) : (
             <>
-              {filteredSpaces.map((space, index) => {
-                return (
-                  <motion.div
-                    variants={item}
-                    whileHover="hover"
-                    zIndex={-1}
-                    onClick={() => {
-                      setDetailedSpaceId(space._id);
-                    }}
-                  >
-                    <SpaceCard
-                      reveal={{
-                        duration: 500,
-                        delay: 350,
-                        reset: true,
+              {filteredSpaces.length > 0 &&
+                filteredSpaces.map((space, index) => {
+                  return (
+                    <motion.div
+                      variants={item}
+                      whileHover="hover"
+                      zIndex={-1}
+                      onClick={() => {
+                        setDetailedSpaceId(space._id);
                       }}
-                      key={index}
-                      space={space}
-                    />
-                  </motion.div>
-                );
-              })}
+                    >
+                      <SpaceCard
+                        reveal={{
+                          duration: 500,
+                          delay: 350,
+                          reset: true,
+                        }}
+                        key={index}
+                        space={space}
+                      />
+                    </motion.div>
+                  );
+                })}
             </>
           )}
         </div>
