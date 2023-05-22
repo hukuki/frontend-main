@@ -9,6 +9,14 @@
   align-items: flex-start;
 }
 
+.spinner__container {
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .back_button {
   font-size: 2.5rem;
   color: var(--color-blue-400);

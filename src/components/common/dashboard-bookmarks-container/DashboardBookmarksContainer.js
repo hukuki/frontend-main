@@ -4,6 +4,7 @@ import DashboardSearchbar from '../dashboard-searchbar/DashboardSearchbar';
 import useAuthContext from '../../../context/AuthContextProvider';
 import BookmarkCard from '../bookmark-card/BookmarkCard';
 import { Flex, SkeletonText, Stack } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 function DashboardBookmarksContainer() {
   const [allBookmarks, setAllBookmarks] = useState(new Array(10).fill({}));
@@ -71,14 +72,14 @@ function DashboardBookmarksContainer() {
             })}
           </div>
         ) : (
-          <div className={styles.bookmark_cards__container}>
+          <motion.div className={styles.bookmark_cards__container} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             {filteredBookmarks &&
               filteredBookmarks.length > 0 &&
               filteredBookmarks.map((bookmark) => {
                 console.log(bookmark);
                 return <BookmarkCard bookmark={bookmark} onRemove={handleBookmarkRemoved} />;
               })}
-          </div>
+          </motion.div>
         )}
       </>
     </div>
