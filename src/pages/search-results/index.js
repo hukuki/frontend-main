@@ -29,12 +29,13 @@ const item = {
   },
 };
 
-const SearchResultsPage = ({ data, query }) => {
+const SearchResultsPage = ({ data, query, algo }) => {
   const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
   const [addToSpaceDocumentId, setAddToSpaceDocumentId] = useState(null);
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(query);
+  const [searchAlgo, setSearchAlgo] = useState(algo);
 
   useEffect(() => {
     console.log(data);
@@ -217,7 +218,21 @@ const SearchResultsPage = ({ data, query }) => {
                 <Progress width="100%" isIndeterminate />
               </div>
             ) : (
-              <SearchBar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} colorMode="light" />
+              <div className={styles['searchbar_options__container']}>
+                <div className={styles['searchbar_component__container']}>
+                  <SearchBar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} colorMode="light" />
+                </div>
+                <div className={styles['searchbar_algos__container']}>
+                  <div className={styles['ai_button__container']}>
+                    <button className={styles['ai_button']}>Gelişmiş / AI</button>
+                    {searchAlgo === 'ai' && <div className={styles['ai_checked']}></div>}
+                  </div>
+                  <div className={styles['bm25_button__container']}>
+                    <button className={styles['bm25_button']}>Klasik</button>
+                    {searchAlgo === 'bm25' && <div className={styles['bm25_checked']}></div>}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           <div className={styles['results__cards-container']}>
@@ -277,12 +292,12 @@ const SearchResultsPage = ({ data, query }) => {
 export async function getServerSideProps(context) {
   const backend_url = process.env.BACKEND_URL;
   const search = context.query.search && context.query.search.split('%20').join(' ');
+  const algo = context.query.model ? context.query.model : 'ai';
   const mevzuatTurs = context.query.mevzuatTurs && context.query.mevzuatTurs.split(' ').map((t) => Number(t));
-
   const mevzuatNo = context.query.mevzuatNo && context.query.mevzuatNo;
   const mevzuatStartYear = context.query.mevzuatStartYear && context.query.mevzuatStartYear;
   const mevzuatEndYear = context.query.mevzuatEndYear && context.query.mevzuatEndYear;
-  const params = { filters: { $and: {} } };
+  const params = {};
   if (mevzuatTurs) {
     params.filters.$and.mevzuatTur = { $in: [...mevzuatTurs] };
   }
@@ -298,7 +313,7 @@ export async function getServerSideProps(context) {
   const body = { query: search, params };
   console.log(JSON.stringify(body));
   try {
-    const res = await fetch(`${backend_url}/query`, {
+    const res = await fetch(`${backend_url}/query?model=${algo}`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -307,11 +322,11 @@ export async function getServerSideProps(context) {
     });
     const data = await res.json();
     return {
-      props: { data, query: search },
+      props: { data, query: search, algo },
     };
   } catch (err) {
     console.log(err);
-    return { props: { data: new Array(10).fill({}), query: search } };
+    return { props: { data: new Array(10).fill({}), query: search, algo } };
   }
 }
 
