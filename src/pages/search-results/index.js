@@ -29,14 +29,16 @@ const item = {
   },
 };
 
-const SearchResultsPage = ({ data }) => {
+const SearchResultsPage = ({ data, query }) => {
   const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
   const [addToSpaceDocumentId, setAddToSpaceDocumentId] = useState(null);
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(query);
 
   useEffect(() => {
     console.log(data);
+    console.log(query);
     setResulsts(data.documents);
     setLoading(false);
   }, [data]);
@@ -47,23 +49,18 @@ const SearchResultsPage = ({ data }) => {
     yonetmelik: true,
   });
 
-  const [validFilters, setValidFilters] = useState({
-    mulga: true,
-    yururluk: true,
-    yonetmelik: true,
-  });
-
-  const [organizationName, setOrganizationName] = useState('');
-
   const [mevzuatSearchInput, setMevzuatSearchInput] = useState({
-    mevzuat: '',
-    madde: '',
+    mevzuatNo: '',
   });
 
-  const [dateFilters, setDateFilters] = useState({
-    startDate: '',
-    endDate: '',
+  const [mevzuatYearFilters, setMevzuatYearFilters] = useState({
+    startYear: '0',
+    endYear: new Date().getFullYear().toString(),
   });
+
+  useEffect(() => {
+    console.log(searchQuery);
+  }, [searchQuery]);
 
   const router = useRouter();
 
@@ -72,12 +69,32 @@ const SearchResultsPage = ({ data }) => {
   };
 
   const handleSearchSubmit = (query) => {
+    console.log(query);
     router.push(`/search-results?search=${query}`);
   };
 
-  const handleOrganizationSearch = () => {};
-  const handleMevzuatSearch = () => {};
-  const handleDateSearch = () => {};
+  const handleFilteredSearch = () => {
+    let filters = '';
+    let mevzuatTurs = [];
+    if (mevzuatFilters.kanun_khk) {
+      mevzuatTurs = [...mevzuatTurs, 1];
+    }
+    if (mevzuatFilters.teblig) {
+      mevzuatTurs = [...mevzuatTurs, 9];
+    }
+    if (mevzuatFilters.yonetmelik) {
+      mevzuatTurs = [...mevzuatTurs, 7];
+    }
+    if (mevzuatTurs.length > 0) {
+      filters = filters + `&mevzuatTurs=${mevzuatTurs.join(' ')}`;
+    }
+    if (mevzuatSearchInput.mevzuatNo) {
+      filters = filters + `&mevzuatNo=${mevzuatSearchInput.mevzuatNo}`;
+    }
+    filters = filters + `&mevzuatStartYear=${mevzuatYearFilters.startYear}&mevzuatEndYear=${mevzuatYearFilters.endYear}`;
+    console.log(query);
+    router.push(`/search-results?search=${query}${filters}`);
+  };
 
   return (
     <>
@@ -135,86 +152,18 @@ const SearchResultsPage = ({ data }) => {
                   />
                 </div>
               </div>
-              <div className={styles['filters__valid-container']}>
-                <p className={styles['filters__valid-title']}>Yürürlülük Durumu</p>
-                <div className={styles['filters__valid-checkbox-group']}>
-                  <FilterCheckbox
-                    label="Mülga"
-                    isChecked={true}
-                    onChecked={() =>
-                      setValidFilters((prev) => {
-                        return {
-                          ...prev,
-                          mulga: !prev.mulga,
-                        };
-                      })
-                    }
-                  />
-                  <FilterCheckbox
-                    label="Yürürlülükte"
-                    isChecked={true}
-                    onChecked={() =>
-                      setValidFilters((prev) => {
-                        return {
-                          ...prev,
-                          yururluk: !prev.yururluk,
-                        };
-                      })
-                    }
-                  />
-                  <FilterCheckbox
-                    label="Yönetmelik"
-                    isChecked={true}
-                    onChecked={() =>
-                      setValidFilters((prev) => {
-                        return {
-                          ...prev,
-                          yonetmelik: !prev.yonetmelik,
-                        };
-                      })
-                    }
-                  />
-                </div>
-              </div>
-              <div className={styles['filters__organization-container']}>
-                <p className={styles['filters__organization-title']}>Kuruma Göre</p>
-                <div className={styles['filters__organization-input-button-container']}>
-                  <FilterInput
-                    className={styles['filters__organization-input']}
-                    placeholder="Kurum Adı"
-                    type="text"
-                    onSubmit={handleOrganizationSearch}
-                    onChange={(e) => setOrganizationName(e.target.value)}
-                    value={organizationName}
-                  />
-                </div>
-              </div>
               <div className={styles['filters__mevzuat-container']}>
                 <p className={styles['filters__mevzuat-title']}>Mevzuata Göre</p>
                 <div className={styles['filters__mevzuat-input-button-container']}>
                   <FilterInput
-                    className={styles['filters__mevzuat-input']}
-                    placeholder="Mevzuat"
-                    type="text"
-                    onChange={(e) =>
-                      setMevzuatSearchInput((prev) => {
-                        return {
-                          ...prev,
-                          mevzuat: e.target.value,
-                        };
-                      })
-                    }
-                    value={mevzuatSearchInput.mevzuat}
-                  />
-                  <FilterInput
                     className={styles['filters__mevzuat-madde-input']}
-                    placeholder="Madde"
+                    placeholder="Mevzuat No"
                     type="number"
                     onChange={(e) =>
                       setMevzuatSearchInput((prev) => {
                         return {
                           ...prev,
-                          madde: e.target.value,
+                          mevzuatNo: e.target.value,
                         };
                       })
                     }
@@ -228,34 +177,36 @@ const SearchResultsPage = ({ data }) => {
                   <FilterInput
                     className={styles['filters__date-input']}
                     placeholder="Başlangıç"
-                    type="date"
+                    type="number"
                     onChange={(e) =>
-                      setDateFilters((prev) => {
+                      setMevzuatYearFilters((prev) => {
                         return {
                           ...prev,
-                          startDate: e.target.value,
+                          startYear: e.target.value,
                         };
                       })
                     }
-                    value={dateFilters.startDate}
+                    value={mevzuatYearFilters.startYear}
                   />
                   <FilterInput
                     className={styles['filters__date-input']}
                     placeholder="Bitiş"
-                    type="date"
+                    type="number"
                     onChange={(e) =>
-                      setDateFilters((prev) => {
+                      setMevzuatYearFilters((prev) => {
                         return {
                           ...prev,
-                          endDate: e.target.value,
+                          endYear: e.target.value,
                         };
                       })
                     }
-                    value={dateFilters.endDate}
+                    value={mevzuatYearFilters.endYear}
                   />
                 </div>
               </div>
-              <button className={styles['overall__search-button']}>Ara</button>
+              <button className={styles['overall__search-button']} onClick={handleFilteredSearch}>
+                Ara
+              </button>
             </div>
           )}
         </div>
@@ -266,7 +217,7 @@ const SearchResultsPage = ({ data }) => {
                 <Progress width="100%" isIndeterminate />
               </div>
             ) : (
-              <SearchBar onSubmit={handleSearchSubmit} colorMode="light" />
+              <SearchBar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} colorMode="light" />
             )}
           </div>
           <div className={styles['results__cards-container']}>
@@ -325,9 +276,27 @@ const SearchResultsPage = ({ data }) => {
 
 export async function getServerSideProps(context) {
   const backend_url = process.env.BACKEND_URL;
-  const search = context.query.search.split('%20').join(' ');
-  const body = { query: search };
+  const search = context.query.search && context.query.search.split('%20').join(' ');
+  const mevzuatTurs = context.query.mevzuatTurs && context.query.mevzuatTurs.split(' ').map((t) => Number(t));
 
+  const mevzuatNo = context.query.mevzuatNo && context.query.mevzuatNo;
+  const mevzuatStartYear = context.query.mevzuatStartYear && context.query.mevzuatStartYear;
+  const mevzuatEndYear = context.query.mevzuatEndYear && context.query.mevzuatEndYear;
+  const params = { filters: { $and: {} } };
+  if (mevzuatTurs) {
+    params.filters.$and.mevzuatTur = { $in: [...mevzuatTurs] };
+  }
+  if (mevzuatNo) {
+    params.filters.$and.mevzuatNo = { $eq: mevzuatNo };
+  }
+  if (mevzuatStartYear) {
+    params.filters.$and.resmiGazeteTarihiYil = { $gte: mevzuatStartYear };
+  }
+  if (mevzuatEndYear) {
+    params.filters.$and.resmiGazeteTarihiYil = { ...params.filters.$and.resmiGazeteTarihiYil, $lte: mevzuatEndYear };
+  }
+  const body = { query: search, params };
+  console.log(JSON.stringify(body));
   try {
     const res = await fetch(`${backend_url}/query`, {
       method: 'POST',
@@ -338,11 +307,11 @@ export async function getServerSideProps(context) {
     });
     const data = await res.json();
     return {
-      props: { data },
+      props: { data, query: search },
     };
   } catch (err) {
     console.log(err);
-    return { props: { data: new Array(10).fill({}) } };
+    return { props: { data: new Array(10).fill({}), query: search } };
   }
 }
 
