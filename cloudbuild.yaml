@@ -7,7 +7,7 @@ steps:
     args: ['app', 'deploy']
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: "bash"
-    args: ["-c", "gcloud app versions list --format="value(version.id)" --sort-by="~version.createTime" | tail -n +6 | xargs -r gcloud app versions delete --quiet --service=default"]
+    args: ["-c", 'gcloud app versions list --format="value(version.id)" --sort-by="~version.createTime" | tail -n +6 | xargs -r gcloud app versions delete --quiet --service=default']
 timeout: '1600s'
 
 availableSecrets:
