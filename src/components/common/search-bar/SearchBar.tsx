@@ -46,7 +46,9 @@ export const SearchBar: FunctionComponent<SearchBarProps> = ({ onSubmit, onSearc
               placeholder="Döküman arayın"
               value={search}
               onChange={(e) => {
-                onSearchChange(e.target.value);
+                if (onSearchChange) {
+                  onSearchChange(e.target.value);
+                }
                 setSearch(e.target.value);
               }}
               onKeyDown={(e) => {
