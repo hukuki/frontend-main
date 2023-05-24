@@ -5,7 +5,10 @@ steps:
     secretEnv: ["FIREBASE_API_KEY", "FIREBASE_AUTH_DOMAIN", "FIREBASE_PROJECT_ID", "FIREBASE_STORAGE_BUCKET", "FIREBASE_MESSAGING_SENDER_ID", "FIREBASE_APP_ID", FIREBASE_MEASUREMENT_ID, "GOOGLE_AUTH_CLIENT_ID", "GOOGLE_AUTH_CLIENT_SECRET", "GOOGLE_AUTH_API_KEY", "BACKEND_URL"]
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
-timeout: '1600s'
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: "bash"
+    args: ["-c", "gcloud app versions list --format="value(version.id)" --sort-by="~version.createTime" | tail -n +6 | xargs -r gcloud app versions delete --quiet --service=default"]
+    timeout: '1600s'
 
 availableSecrets:
   secretManager:
