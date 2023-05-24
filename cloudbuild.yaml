@@ -3,9 +3,13 @@ steps:
     entrypoint: "bash"
     args: ["-c", "echo $$ENV_FILE > .env.local"]
     secretEnv: ["ENV_FILE"]
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: "bash"
+    args: ["-c", "ls && pwd && cat .env.local"]
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
 timeout: '1600s'
+
 availableSecrets:
   secretManager:
   - versionName: projects/788459500346/secrets/front-end-env/versions/latest
