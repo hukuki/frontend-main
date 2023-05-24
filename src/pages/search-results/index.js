@@ -29,16 +29,15 @@ const item = {
   },
 };
 
-const SearchResultsPage = ({ data, query }) => {
+const SearchResultsPage = ({ data, query, algo }) => {
   const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
   const [addToSpaceDocumentId, setAddToSpaceDocumentId] = useState(null);
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(query);
+  const [searchAlgo, setSearchAlgo] = useState(algo);
 
   useEffect(() => {
-    console.log(data);
-    console.log(query);
     setResulsts(data.documents);
     setLoading(false);
   }, [data]);
@@ -58,10 +57,6 @@ const SearchResultsPage = ({ data, query }) => {
     endYear: new Date().getFullYear().toString(),
   });
 
-  useEffect(() => {
-    console.log(searchQuery);
-  }, [searchQuery]);
-
   const router = useRouter();
 
   const handleCardClick = (id) => {
@@ -69,8 +64,7 @@ const SearchResultsPage = ({ data, query }) => {
   };
 
   const handleSearchSubmit = (query) => {
-    console.log(query);
-    router.push(`/search-results?search=${query}`);
+    router.push(`/search-results?model=${searchAlgo}&search=${query}`);
   };
 
   const handleFilteredSearch = () => {
@@ -92,8 +86,7 @@ const SearchResultsPage = ({ data, query }) => {
       filters = filters + `&mevzuatNo=${mevzuatSearchInput.mevzuatNo}`;
     }
     filters = filters + `&mevzuatStartYear=${mevzuatYearFilters.startYear}&mevzuatEndYear=${mevzuatYearFilters.endYear}`;
-    console.log(query);
-    router.push(`/search-results?search=${query}${filters}`);
+    router.push(`/search-results?model=${algo}&search=${query}${filters}`);
   };
 
   return (
@@ -172,7 +165,7 @@ const SearchResultsPage = ({ data, query }) => {
                 </div>
               </div>
               <div className={styles['filters__date-container']}>
-                <p className={styles['filters__date-title']}>Değişiklik Tarihi</p>
+                <p className={styles['filters__date-title']}>Resmi Gazete Tarihi</p>
                 <div className={styles['filters__date-inputs-container']}>
                   <FilterInput
                     className={styles['filters__date-input']}
@@ -217,7 +210,25 @@ const SearchResultsPage = ({ data, query }) => {
                 <Progress width="100%" isIndeterminate />
               </div>
             ) : (
-              <SearchBar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} colorMode="light" />
+              <div className={styles['searchbar_options__container']}>
+                <div className={styles['searchbar_component__container']}>
+                  <SearchBar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} colorMode="light" />
+                </div>
+                <div className={styles['searchbar_algos__container']}>
+                  <div className={styles['ai_button__container']}>
+                    <button className={styles['ai_button']} onClick={() => setSearchAlgo('ai')}>
+                      Gelişmiş / AI
+                    </button>
+                    {searchAlgo === 'ai' && <div className={styles['ai_checked']}></div>}
+                  </div>
+                  <div className={styles['bm25_button__container']}>
+                    <button className={styles['bm25_button']} onClick={() => setSearchAlgo('bm25')}>
+                      Klasik
+                    </button>
+                    {searchAlgo === 'bm25' && <div className={styles['bm25_checked']}></div>}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           <div className={styles['results__cards-container']}>
@@ -235,10 +246,6 @@ const SearchResultsPage = ({ data, query }) => {
               <motion.div>
                 <div className={styles['results__title-sort-container']}>
                   <h1 className={styles['results__title']}>{`Sonuçlar (${results?.length})`}</h1>
-                  <div className={styles['results__sort']}>
-                    <p className={styles['results__sort-type']}>İlgiye Göre</p>
-                    <ChevronDownIcon boxSize={6} w={8} h={8} />
-                  </div>
                 </div>
                 {results?.map((result, index) => {
                   return (
@@ -277,8 +284,8 @@ const SearchResultsPage = ({ data, query }) => {
 export async function getServerSideProps(context) {
   const backend_url = process.env.BACKEND_URL;
   const search = context.query.search && context.query.search.split('%20').join(' ');
+  const algo = context.query.model ? context.query.model : 'ai';
   const mevzuatTurs = context.query.mevzuatTurs && context.query.mevzuatTurs.split(' ').map((t) => Number(t));
-
   const mevzuatNo = context.query.mevzuatNo && context.query.mevzuatNo;
   const mevzuatStartYear = context.query.mevzuatStartYear && context.query.mevzuatStartYear;
   const mevzuatEndYear = context.query.mevzuatEndYear && context.query.mevzuatEndYear;
@@ -296,9 +303,8 @@ export async function getServerSideProps(context) {
     params.filters.$and.resmiGazeteTarihiYil = { ...params.filters.$and.resmiGazeteTarihiYil, $lte: mevzuatEndYear };
   }
   const body = { query: search, params };
-  console.log(JSON.stringify(body));
   try {
-    const res = await fetch(`${backend_url}/query`, {
+    const res = await fetch(`${backend_url}/query?model=${algo}`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -307,11 +313,11 @@ export async function getServerSideProps(context) {
     });
     const data = await res.json();
     return {
-      props: { data, query: search },
+      props: { data, query: search, algo },
     };
   } catch (err) {
     console.log(err);
-    return { props: { data: new Array(10).fill({}), query: search } };
+    return { props: { data: new Array(10).fill({}), query: search, algo } };
   }
 }
 

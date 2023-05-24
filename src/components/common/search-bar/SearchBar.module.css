@@ -5,12 +5,12 @@
   align-items: center;
   width: 100%;
   position: relative;
-  background: var(--container-color-light);
+  background: var(--background-color-light);
+  border-radius: 10rem;
 }
 
 .searchbar__container {
   width: 100%;
-  margin-right: 1rem;
 }
 
 .searchbar__input {
