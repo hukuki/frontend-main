@@ -8,5 +8,5 @@ steps:
 timeout: '1600s'
 availableSecrets:
   secretManager:
-  - versionName: projects/788459500346/secrets/front-end-env
+  - versionName: projects/788459500346/secrets/front-end-env/versions/latest
     env: 'ENV_FILE'
