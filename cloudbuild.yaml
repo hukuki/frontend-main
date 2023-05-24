@@ -5,7 +5,7 @@ steps:
     secretEnv: ["ENV_FILE"]
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: "bash"
-    args: ["-c", "ls && pwd && cat .env.local"]
+    args: ["-c", "ls -a && pwd && cat .env.local"]
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
 timeout: '1600s'
