@@ -1,16 +1,33 @@
 steps:
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: "bash"
-    args: ["-c", "echo $$ENV_FILE > .env.local"]
-    secretEnv: ["ENV_FILE"]
-  - name: gcr.io/cloud-builders/gcloud
-    entrypoint: "bash"
-    args: ["-c", "ls -a && pwd && cat .env.local"]
+    args: ["-c", "printenv > .env.local && cat .env.local"]
+    secretEnv: ["FIREBASE_API_KEY", "FIREBASE_AUTH_DOMAIN", "FIREBASE_PROJECT_ID", "FIREBASE_STORAGE_BUCKET", "FIREBASE_MESSAGING_SENDER_ID", "FIREBASE_APP_ID", FIREBASE_MEASUREMENT_ID, "GOOGLE_AUTH_CLIENT_ID", "GOOGLE_AUTH_CLIENT_SECRET", "GOOGLE_AUTH_API_KEY", "BACKEND_URL"]
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
 timeout: '1600s'
 
 availableSecrets:
   secretManager:
-  - versionName: projects/788459500346/secrets/front-end-env/versions/latest
-    env: 'ENV_FILE'
+  - versionName: projects/788459500346/secrets/FIREBASE_API_KEY/versions/latest
+    env: 'FIREBASE_API_KEY'
+  - versionName: projects/788459500346/secrets/FIREBASE_AUTH_DOMAIN/versions/latest
+    env: 'FIREBASE_AUTH_DOMAIN'
+  - versionName: projects/788459500346/secrets/FIREBASE_PROJECT_ID/versions/latest
+    env: 'FIREBASE_PROJECT_ID'
+  - versionName: projects/788459500346/secrets/FIREBASE_STORAGE_BUCKET/versions/latest
+    env: 'FIREBASE_STORAGE_BUCKET'
+  - versionName: projects/788459500346/secrets/FIREBASE_MESSAGING_SENDER_ID/versions/latest
+    env: 'FIREBASE_MESSAGING_SENDER_ID'
+  - versionName: projects/788459500346/secrets/FIREBASE_APP_ID/versions/latest
+    env: 'FIREBASE_APP_ID'
+  - versionName: projects/788459500346/secrets/FIREBASE_MEASUREMENT_ID/versions/latest
+    env: 'FIREBASE_MEASUREMENT_ID'
+  - versionName: projects/788459500346/secrets/GOOGLE_AUTH_CLIENT_ID/versions/latest
+    env: 'GOOGLE_AUTH_CLIENT_ID'
+  - versionName: projects/788459500346/secrets/GOOGLE_AUTH_CLIENT_SECRET/versions/latest
+    env: 'GOOGLE_AUTH_CLIENT_SECRET'
+  - versionName: projects/788459500346/secrets/GOOGLE_AUTH_API_KEY/versions/latest
+    env: 'GOOGLE_AUTH_API_KEY'
+  - versionName: projects/788459500346/secrets/BACKEND_URL/versions/latest
+    env: 'BACKEND_URL'
