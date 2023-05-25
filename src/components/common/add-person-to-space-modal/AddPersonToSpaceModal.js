@@ -5,7 +5,7 @@ import useAuthContext from '../../../context/AuthContextProvider';
 import { Progress } from '@chakra-ui/react';
 import CreateSpacePeopleSearchBar from '../create-space-people-search-bar/CreateSpacePeopleSearchBar';
 
-export const AddPersonToSpaceModal = ({ setIsOpen, spaceId }) => {
+export const AddPersonToSpaceModal = ({ setIsOpen, spaceId, callback }) => {
   const { user } = useAuthContext();
   const [peopleToAdd, setPeopleToAdd] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,13 +58,12 @@ export const AddPersonToSpaceModal = ({ setIsOpen, spaceId }) => {
         console.log(error);
         console.log(data);
         if (!error) {
-          /*
           setIsOpen();
-          */
         }
       }
     }
     setLoading(false);
+    callback();
   };
   return (
     <>
