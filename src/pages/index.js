@@ -50,7 +50,7 @@ export default function Home() {
               </MenuList>
             </Menu>
           ) : (
-            <Button variant="outline" fontSize="2.5rem" fontWeight="200" padding="2.5rem" borderRadius="1.5rem" onClick={handleLogin}>
+            <Button fontSize="2.5rem" fontWeight="200" padding="2.5rem" borderRadius="1.5rem" onClick={handleLogin}>
               Giriş Yap
             </Button>
           )}

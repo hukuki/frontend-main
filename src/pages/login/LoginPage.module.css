@@ -136,6 +136,7 @@
   text-align: center;
   margin-bottom: 3rem;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .form__button:hover {
@@ -220,6 +221,10 @@
   text-align: center;
   transition: all 0.2s ease;
   color: var(--color-blue-400);
+  cursor: pointer;
+}
+
+.google-signin > button {
   cursor: pointer;
 }
 

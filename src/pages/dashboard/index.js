@@ -5,10 +5,12 @@ import { Avatar } from '@chakra-ui/react';
 import useAuthContext from '../../context/AuthContextProvider';
 import DashboardSpacesContainer from '../../components/common/dashboard-spaces-container/DashboardSpacesContainer';
 import DashboardBookmarksContainer from '../../components/common/dashboard-bookmarks-container/DashboardBookmarksContainer';
+import { useRouter } from 'next/router';
 
 function DashboardPage() {
-  const { user } = useAuthContext();
+  const { user, signOutWithGoogle } = useAuthContext();
   const [activeLink, setActiveLink] = useState('spaces');
+  const router = useRouter();
 
   const changeActiveLink = (name) => {
     switch (name) {
@@ -25,6 +27,11 @@ function DashboardPage() {
         setActiveLink('saved');
         break;
     }
+  };
+
+  const handleLogout = async () => {
+    await signOutWithGoogle();
+    router.push('/');
   };
 
   return (
@@ -46,20 +53,17 @@ function DashboardPage() {
               >
                 Projeler
               </button>
-              <button onClick={() => changeActiveLink('people')} className={`${styles.people_button} ${activeLink === 'people' && styles.active}`}>
-                Kişiler
-              </button>
-              <button
-                onClick={() => changeActiveLink('shared_spaces')}
-                className={`${styles.shared_spaces_button} ${activeLink === 'shared_spaces' && styles.active}`}
-              >
-                Paylaşılanlar
-              </button>
               <button
                 onClick={() => changeActiveLink('saved')}
                 className={`${styles.saved_documents_button} ${activeLink === 'saved' && styles.active}`}
               >
                 Kaydedilenler
+              </button>
+              <button className={styles.search_button} onClick={() => router.push('/search')}>
+                DeepLex'te Arayın
+              </button>
+              <button className={styles.logout_button} onClick={handleLogout}>
+                Çıkış Yap
               </button>
             </div>
             <div className={styles.footer}>&copy; 2023. All rights reserved.</div>
