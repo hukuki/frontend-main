@@ -5,16 +5,15 @@ import { Avatar, Spinner } from '@chakra-ui/react';
 import SpaceDetailBookmarkCard from '../space-detail-bookmark-card/SpaceDetailBookmarkCard';
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa';
 import AddPersonToSpaceModal from '../add-person-to-space-modal/AddPersonToSpaceModal';
-import { motion } from 'framer-motion';
+import { motion, useForceUpdate } from 'framer-motion';
 
-function DashboardSpaceDetail({ spaceId, onBackClick }) {
+function DashboardSpaceDetail({ spaceId, onBackClick, callback }) {
   const { user } = useAuthContext();
   const [space, setSpace] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAddPersonModalOpen, setIsAddPersonModalOpen] = useState(false);
-  const [render, setRender] = useState(false);
 
-  const getBookmarks = async () => {
+  const getSpace = async () => {
     const res = await fetch('/api/get_space_by_id', {
       method: 'POST',
       body: JSON.stringify({
@@ -33,12 +32,18 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
 
   useEffect(() => {
     if (user) {
-      getBookmarks();
+      getSpace();
     }
   }, [user]);
 
   const handleBookmarkRemoved = async () => {
-    await getBookmarks();
+    await getSpace();
+    callback();
+  };
+
+  const handleAddPerson = async () => {
+    await getSpace();
+    callback();
   };
 
   return (
@@ -56,7 +61,9 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {isAddPersonModalOpen && <AddPersonToSpaceModal setIsOpen={() => setIsAddPersonModalOpen(false)} spaceId={spaceId} />}
+            {isAddPersonModalOpen && (
+              <AddPersonToSpaceModal callback={handleAddPerson} setIsOpen={() => setIsAddPersonModalOpen(false)} spaceId={spaceId} />
+            )}
             <div className={styles.container}>
               <div className={styles.back_button__container}>
                 <button className={styles.back_button} onClick={onBackClick}>
@@ -81,7 +88,7 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
                     {space.people &&
                       space.people.length > 0 &&
                       space.people.map((person, idx) => {
-                        return <Avatar key={idx} name={person.name} />;
+                        return <Avatar key={idx} name={person.email} size="lg" iconLabel={person.email} />;
                       })}
                   </div>
                   <div className={styles.add_person_button__container}>
