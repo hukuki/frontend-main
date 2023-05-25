@@ -7,6 +7,7 @@ import { SearchBar } from '@/components/common/search-bar';
 
 // CSS
 import styles from './SearchPage.module.css';
+import Navbar from '../../components/common/navbar/Navbar';
 
 const SearchPage = () => {
   const router = useRouter();
@@ -18,29 +19,33 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles['logo__container']}>
-          <h1 className={styles.logo}>deeplex</h1>
+      <div className={styles.navbar_searchbar__container}>
+        <div className={styles.navbar__container}>
+          <Navbar />
         </div>
-        <div className={styles['searchbar__container']}>
-          <SearchBar onSubmit={handleSubmit} />
-        </div>
-        <div className={styles['search-algos__container']}>
-          <div className={styles['ai_button__container']}>
-            <button className={styles['ai_button']} onClick={() => setSearchAlgo('ai')}>
-              Gelişmiş / AI
-            </button>
-            {searchAlgo === 'ai' && <div className={styles['ai_button_checked']}></div>}
+        <div className={styles.container}>
+          <div className={styles['logo__container']}>
+            <h1 className={styles.logo}>deeplex</h1>
           </div>
-          <div className={styles['bm25_button__container']}>
-            <button className={styles['bm25_button']} onClick={() => setSearchAlgo('bm25')}>
-              Klasik
-            </button>
-            {searchAlgo === 'bm25' && <div className={styles['bm25_button_checked']}></div>}
+          <div className={styles['searchbar__container']}>
+            <SearchBar onSubmit={handleSubmit} />
+          </div>
+          <div className={styles['search-algos__container']}>
+            <div className={styles['ai_button__container']}>
+              <button className={styles['ai_button']} onClick={() => setSearchAlgo('ai')}>
+                Gelişmiş / AI
+              </button>
+              {searchAlgo === 'ai' && <div className={styles['ai_button_checked']}></div>}
+            </div>
+            <div className={styles['bm25_button__container']}>
+              <button className={styles['bm25_button']} onClick={() => setSearchAlgo('bm25')}>
+                Klasik
+              </button>
+              {searchAlgo === 'bm25' && <div className={styles['bm25_button_checked']}></div>}
+            </div>
           </div>
         </div>
-      </div>
-      {/*
+        {/*
     <Flex height="100%" align="center" direction="column" justify="center" gap="10px" paddingBottom="100px">
       <Icon as={GoLaw} color="dark.quinary" fontSize={200} />
       <Box w="50%" minW="500px" maxW="750px">
@@ -48,6 +53,7 @@ const SearchPage = () => {
       </Box>
     </Flex>
     */}
+      </div>
     </>
   );
 };

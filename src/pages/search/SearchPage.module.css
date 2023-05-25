@@ -135,3 +135,12 @@
 .searchbar__container {
   width: 50%;
 }
+
+.navbar__container {
+  background: var(--container-color-light);
+}
+
+.navbar_searchbar__container {
+  max-height: 100vh;
+  overflow-y: hidden;
+}

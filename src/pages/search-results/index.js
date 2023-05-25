@@ -11,6 +11,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FilterInput } from '../../components/common/filter-input';
 import { FilterCheckbox } from '../../components/common/filter-checkbox';
 import AddToSpaceModal from '../../components/common/add-to-space-modal/AddToSpaceModal';
+import Navbar from '../../components/common/navbar/Navbar';
 
 const item = {
   hover: {
@@ -94,6 +95,9 @@ const SearchResultsPage = ({ data, query, algo }) => {
       {isAddToSpaceModalOpen && <AddToSpaceModal documentId={addToSpaceDocumentId} setIsOpen={setIsAddToSpaceModalOpen} />}
       <div className={styles.container}>
         <div className={styles['filters__container']}>
+          <div className={styles.navbar__container}>
+            <Navbar />
+          </div>
           <p className={styles['filters__logo-title']}>deeplex</p>
           {loading ? (
             <div className={styles['filters__skeleton-container']}>

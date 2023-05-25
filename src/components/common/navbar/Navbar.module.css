@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 100%;
+  padding: 1rem 2rem;
+  gap: 1rem;
+}
+
+.navbar_links__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard_button {
+  font-size: 2.25rem;
+  color: var(--text-color-primary-dark);
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard_button:hover {
+  color: var(--color-blue-400);
+  border-bottom: 2px solid var(--color-blue-400);
+}

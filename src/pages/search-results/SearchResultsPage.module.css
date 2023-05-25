@@ -265,7 +265,7 @@
 
 .bm25_button {
   font-size: 1.75rem;
-  background: transparent;
+  background: var(--container-color-light);
   border: 1px solid var(--color-blue-400);
   border-radius: 1rem;
   padding: 1rem 2rem;
@@ -308,4 +308,9 @@
   max-width: 80%;
   min-width: 80%;
   background: var(--color-blue-400);
+}
+
+.navbar__container {
+  position: relative;
+  margin: 0 auto;
 }
