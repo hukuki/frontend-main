@@ -1,29 +1,18 @@
-import React from 'react';
-
-import { Button } from '../components/Button';
-
-import { useRouter } from 'next/router';
-import useAuthContext from '../context/AuthContextProvider';
-import { Avatar, Menu, MenuButton, MenuList, MenuItem, Spinner } from '@chakra-ui/react';
-import styles from './HomePage.module.css';
-
+import Head from 'next/head';
+import { Header } from '../components/Header';
 export default function Home() {
-  const router = useRouter();
-
-  const { user, loading, signOutWithGoogle } = useAuthContext();
-
-  const handleLogout = async () => {
-    await signOutWithGoogle(null);
-  };
-
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
   return (
-    <Button variant="solid" color="white">
-      <span>Get Started</span>
-    </Button>
+    <>
+      <Head>
+        <title>DeepLex - Smart way of document search</title>
+        <meta
+          name="description"
+          content="Document search is essential but traditional tools use keyword search. We use artificial intelligence to provider faster and more accurate searching experience."
+        />
+      </Head>
+      <Header />
+      <main></main>
+    </>
     /*
     <>
       <div className={styles.container}>
@@ -89,6 +78,7 @@ export default function Home() {
         </Flex>
       </div>
     </>
-    */
+  );
+  */
   );
 }

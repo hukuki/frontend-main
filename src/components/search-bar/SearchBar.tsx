@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 
 // Components
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
-import { InputGroup } from '@/components/base/forms';
+// import { InputGroup } from '@/components/base/forms';
 import { Menu, MenuButton, MenuList, MenuItemOption } from '@chakra-ui/react';
 
 // Types
