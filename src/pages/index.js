@@ -3,6 +3,7 @@ import { Header } from '../components/HomePageHeader';
 import Hero from '../components/HomePageHero';
 import HomePagePrimaryFeatures from '../components/HomePagePrimaryFeatures';
 import HomePageCallToAction from '../components/HomePageCallToAction';
+import HomePageTestimonials from '../components/HomePageTestimonials';
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Hero />
         <HomePagePrimaryFeatures />
         <HomePageCallToAction />
+        <HomePageTestimonials />
       </main>
     </>
     /*
