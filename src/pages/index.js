@@ -2,6 +2,8 @@ import Head from 'next/head';
 import { Header } from '../components/HomePageHeader';
 import Hero from '../components/HomePageHero';
 import HomePagePrimaryFeatures from '../components/HomePagePrimaryFeatures';
+import HomePageCallToAction from '../components/HomePageCallToAction';
+
 export default function Home() {
   return (
     <>
@@ -16,6 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <HomePagePrimaryFeatures />
+        <HomePageCallToAction />
       </main>
     </>
     /*
