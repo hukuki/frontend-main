@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Flex } from '../components/base/layout';
-import { Button } from '../components/base/forms';
+import { Button } from '../components/Button';
 
 import { useRouter } from 'next/router';
 import useAuthContext from '../context/AuthContextProvider';
@@ -22,6 +21,10 @@ export default function Home() {
   };
 
   return (
+    <Button variant="solid" color="white">
+      <span>Get Started</span>
+    </Button>
+    /*
     <>
       <div className={styles.container}>
         <div className={styles.navbar__container}>
@@ -86,5 +89,6 @@ export default function Home() {
         </Flex>
       </div>
     </>
+    */
   );
 }
