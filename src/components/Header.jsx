@@ -26,10 +26,7 @@ function MobileNavIcon({ open }) {
 function MobileNavigation() {
   return (
     <Popover>
-      <Popover.Button
-        className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
-        aria-label="Toggle Navigation"
-      >
+      <Popover.Button className="relative z-10 flex h-8 w-8 items-center justify-center outline-none" aria-label="Toggle Navigation">
         {({ open }) => <MobileNavIcon open={open} />}
       </Popover.Button>
       <Transition.Root>
@@ -79,10 +76,12 @@ export function Header() {
               <Logo className="font-thin lowercase text-transparent text-6xl bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-900" />
             </Link>
           </div>
-          <div className="hidden md:flex items-center justify-end md:gap-x-6">
-            <NavLink href="/features">Features</NavLink>
-            <NavLink href="/testimonials">Testimonials</NavLink>
-            <NavLink href="/pricing">Pricing</NavLink>
+          <div className="flex items-center justify-end md:gap-x-6">
+            <div className="hidden md:flex items-center md:gap-6">
+              <NavLink href="/features">Features</NavLink>
+              <NavLink href="/testimonials">Testimonials</NavLink>
+              <NavLink href="/pricing">Pricing</NavLink>
+            </div>{' '}
             <div className="flex items-center gap-x-5 md:gap-x-6">
               <div className="hidden md:block">
                 <NavLink href="/login">Sign In</NavLink>

@@ -13,10 +13,14 @@ const variantStyles = {
     violet:
       'bg-violet-600 text-white hover:text-slate-100 hover:bg-violet-500 active:bg-violet-800 active:text-violet-100 focus-visible:outline-violet-600',
     white: 'bg-white text-slate-900 hover:bg-sky-500 active:bg-sky-200 active:text-slate-600 focus-visible:outline-white',
+    slate:
+      'bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900',
   },
   outline: {
     blue: 'ring-blue-100 text-slate-700 hover:text-slate-900 hover:ring-blue-300 active:bg-blue-300 active:text-slate-900 focus-visible:outline-blue-600 focus-visible:ring-blue-300',
     white: 'ring-slate-700 text-white hover:ring-slate-500 active:ring-slate-700 active:text-slate-400 focus-visible:outline-white',
+    slate:
+      'ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300',
   },
 };
 
