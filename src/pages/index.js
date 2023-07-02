@@ -1,6 +1,7 @@
 import Head from 'next/head';
-import { Header } from '../components/Header';
-import Hero from '../components/Hero';
+import { Header } from '../components/HomePageHeader';
+import Hero from '../components/HomePageHero';
+import HomePagePrimaryFeatures from '../components/HomePagePrimaryFeatures';
 export default function Home() {
   return (
     <>
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <HomePagePrimaryFeatures />
       </main>
     </>
     /*
