@@ -6,6 +6,7 @@ import HomePageCallToAction from '../components/HomePageCallToAction';
 import HomePageTestimonials from '../components/HomePageTestimonials';
 import HomePageFAQ from '../components/HomePageFAQ';
 import Footer from '../components/Footer';
+import HomePageProduct from '../components/HomePageProduct';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <main>
         <Hero />
         <HomePagePrimaryFeatures />
+        <HomePageProduct />
         <HomePageCallToAction />
         <HomePageTestimonials />
         <HomePageFAQ />
