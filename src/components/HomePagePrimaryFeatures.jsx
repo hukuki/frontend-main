@@ -62,13 +62,13 @@ function HomePagePrimaryFeatures() {
         >
           {({ selectedIndex }) => (
             <>
-              <div className="-mx-4 flex overflow-x-auto pb-4 sm:mx-0 sm:overflow-visible sm:pb-0 lg:col-span-5">
-                <Tab.List className="relative z-10 flex gap-x-4 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal">
+              <div className="-mx-4 flex overflow-x-auto pb-4 sm:mx-auto sm:overflow-visible sm:pb-0 lg:col-span-5">
+                <Tab.List className="relative z-10 flex justify-center w-full gap-x-4 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal">
                   {features.map((feature, index) => (
                     <div
                       key={feature.title}
                       className={clsx(
-                        'group relative rounded-full py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
+                        'group relative rounded-full  py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
                         selectedIndex === index
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
                           : 'hover:bg-white/10 lg:hover:bg-white/5'
@@ -77,7 +77,7 @@ function HomePagePrimaryFeatures() {
                       <h3>
                         <Tab
                           className={clsx(
-                            'font-display text-lg [&:not(:focus-visible)]:focus:outline-none',
+                            'font-display text-md sm:text-lg [&:not(:focus-visible)]:focus:outline-none',
                             selectedIndex === index ? 'text-blue-600 lg:text-white' : 'text-blue-100 hover:text-white lg:text-white'
                           )}
                         >
@@ -86,7 +86,10 @@ function HomePagePrimaryFeatures() {
                         </Tab>
                       </h3>
                       <p
-                        className={clsx('mt-2 hidden text-sm lg:block', selectedIndex === 0 ? 'text-white' : 'text-blue-100 group-hover:text-white')}
+                        className={clsx(
+                          'mt-2 hidden text-sm md:text-md lg:block',
+                          selectedIndex === 0 ? 'text-white' : 'text-blue-100 group-hover:text-white'
+                        )}
                       >
                         {feature.description}
                       </p>
