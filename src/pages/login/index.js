@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import { LoginSchema } from '../../form-schemas/index';
 import { Logo } from '../../components/Logo';
 import clsx from 'clsx';
-import LoginLayout from '../../components/LoginLayout';
+import LoginLayout from '../../components/LoginRegisterLayout';
 import { Button } from '../../components/Button';
 
 function LoginPage() {

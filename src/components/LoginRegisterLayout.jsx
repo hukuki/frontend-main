@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import backgroundImage from '../images/background-auth.jpg';
 
-function LoginLayout({ children }) {
+function LoginRegisterLayout({ children }) {
   return (
     <>
       <div className="relative flex min-h-full justify-center md:px-12 lg:px-0">
@@ -16,4 +16,4 @@ function LoginLayout({ children }) {
   );
 }
 
-export default LoginLayout;
+export default LoginRegisterLayout;
