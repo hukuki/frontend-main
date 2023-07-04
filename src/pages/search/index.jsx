@@ -3,11 +3,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 // Components
-import { SearchBar } from '@/components/common/search-bar';
+import Searchbar from '../../components/Searchbar';
 
 // CSS
 import styles from './SearchPage.module.css';
-import Navbar from '../../components/common/navbar/Navbar';
 
 const SearchPage = () => {
   const router = useRouter();
@@ -18,17 +17,17 @@ const SearchPage = () => {
   };
 
   return (
+    <Searchbar />
+    /*
     <>
       <div className={styles.navbar_searchbar__container}>
-        <div className={styles.navbar__container}>
-          <Navbar />
-        </div>
+        <div className={styles.navbar__container}></div>
         <div className={styles.container}>
           <div className={styles['logo__container']}>
             <h1 className={styles.logo}>deeplex</h1>
           </div>
           <div className={styles['searchbar__container']}>
-            <SearchBar onSubmit={handleSubmit} />
+            <Searchbar onSubmit={handleSubmit} />
           </div>
           <div className={styles['search-algos__container']}>
             <div className={styles['ai_button__container']}>
@@ -44,17 +43,9 @@ const SearchPage = () => {
               {searchAlgo === 'bm25' && <div className={styles['bm25_button_checked']}></div>}
             </div>
           </div>
-        </div>
-        {/*
-    <Flex height="100%" align="center" direction="column" justify="center" gap="10px" paddingBottom="100px">
-      <Icon as={GoLaw} color="dark.quinary" fontSize={200} />
-      <Box w="50%" minW="500px" maxW="750px">
-        <SearchBar onSubmit={(search, category) => router.push(`/search-results?category=${category}&search=${search}`)} />
-      </Box>
-    </Flex>
-    */}
       </div>
     </>
+    */
   );
 };
 
