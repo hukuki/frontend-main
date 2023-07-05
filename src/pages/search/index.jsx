@@ -1,12 +1,10 @@
 import { useState } from 'react';
-
 import { useRouter } from 'next/router';
-
 // Components
 import Searchbar from '../../components/Searchbar';
-
-// CSS
-import styles from './SearchPage.module.css';
+import { Logo } from '../../components/Logo';
+import { Button } from '../../components/Button';
+import clsx from 'clsx';
 
 const SearchPage = () => {
   const router = useRouter();
@@ -17,7 +15,28 @@ const SearchPage = () => {
   };
 
   return (
-    <Searchbar />
+    <>
+      <div className="flex flex-col gap-y-6 items-center justify-center h-screen w-screen p-6">
+        <div className="w-full flex justify-center">
+          <Logo className="text-transparent text-5xl md:text-6xl font-semibold lowercase bg-clip-text bg-gradient-to-r from-blue-500 to-fuchsia-900" />
+        </div>
+        <div className="min-w-full">
+          <Searchbar onSubmit={handleSubmit} />
+        </div>
+        <div className="flex justify-center gap-x-4">
+          <Button
+            variant={searchAlgo === 'ai' ? 'solid' : 'outline'}
+            className={clsx('text-lg', searchAlgo === 'ai' ? 'bg-gradient-to-r from-pink-500 via-blue-500 to-cyan-500 advanced_button_animate' : '')}
+            onClick={() => setSearchAlgo('ai')}
+          >
+            <span>Advanced AI</span>
+          </Button>
+          <Button color="blue" variant={searchAlgo === 'bm25' ? 'solid' : 'outline'} className="text-lg" onClick={() => setSearchAlgo('bm25')}>
+            Classic
+          </Button>
+        </div>
+      </div>
+    </>
     /*
     <>
       <div className={styles.navbar_searchbar__container}>

@@ -5,3 +5,23 @@
 #__next {
   min-height: 100%;
 }
+
+.advanced_button_animate {
+  background-size: 400%;
+
+  -webkit-animation: advanced_button_animate 3s ease infinite;
+  -moz-animation: advanced_button_animate 3s ease infinite;
+  animation: advanced_button_animate 3s ease infinite;
+}
+
+@keyframes advanced_button_animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
