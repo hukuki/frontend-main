@@ -6,6 +6,26 @@
   min-height: 100%;
 }
 
+.search_on_deeplex_animate {
+  background-size: 200% 200%;
+
+  -webkit-animation: search_on_deeplex_animate 1s ease infinite;
+  -moz-animation: search_on_deeplex_animate 1s ease infinite;
+  animation: search_on_deeplex_animate 1s ease infinite;
+}
+
+@keyframes search_on_deeplex_animate {
+  0% {
+    background-position: left center;
+  }
+  50% {
+    background-position: right center;
+  }
+  100% {
+    background-position: left center;
+  }
+}
+
 .advanced_button_animate {
   background-size: 400%;
 
