@@ -9,9 +9,9 @@
 .search_on_deeplex_animate {
   background-size: 200% 200%;
 
-  -webkit-animation: search_on_deeplex_animate 1s ease infinite;
-  -moz-animation: search_on_deeplex_animate 1s ease infinite;
-  animation: search_on_deeplex_animate 1s ease infinite;
+  -webkit-animation: search_on_deeplex_animate 2s ease infinite;
+  -moz-animation: search_on_deeplex_animate 2s ease infinite;
+  animation: search_on_deeplex_animate 2s ease infinite;
 }
 
 @keyframes search_on_deeplex_animate {

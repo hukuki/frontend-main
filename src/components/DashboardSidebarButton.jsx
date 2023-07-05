@@ -3,10 +3,7 @@ import clsx from 'clsx';
 function DashboardSidebarButton({ section, divClass, textClass, iconClass, ...props }) {
   return (
     <div
-      className={clsx(
-        'w-full cursor-pointer group p-2 text-md md:text-xl flex gap-x-3 justify-start items-center bg-transparent hover:bg-slate-100 rounded-lg',
-        divClass
-      )}
+      className={clsx('w-full cursor-pointer group p-2 text-md md:text-lg lg:text-xl flex gap-x-3 justify-start items-center rounded-lg', divClass)}
       {...props}
     >
       <section.icon iconClass={iconClass} />

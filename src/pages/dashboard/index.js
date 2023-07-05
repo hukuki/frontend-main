@@ -166,7 +166,7 @@ function DashboardPage() {
   return (
     <>
       <div>
-        <div className="hidden bg-slate-100 md:flex flex-col fixed top-0 left-0 md:w-52 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4">
+        <div className="hidden bg-slate-100 md:flex flex-col fixed top-0 left-0 md:w-60 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4">
           <div className="h-64">
             <Logo className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
             <hr className="mt-4 border-slate-500/30" />
@@ -177,9 +177,9 @@ function DashboardPage() {
                 return (
                   <>
                     <DashboardSidebarButton
-                      divClass="bg-transparent hover:bg-blue-300"
+                      divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/30 hover:from-blue-500/40 to-violet-500 hover:to-violet-500/40"
                       section={section}
-                      textClass="text-slate-500 group-hover:text-slate-900"
+                      textClass="text-slate-100 group-hover:text-slate-600"
                       iconClass="text-slate-500 group-hover:text-slate-900"
                     />
                   </>
