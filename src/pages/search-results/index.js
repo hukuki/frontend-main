@@ -98,7 +98,7 @@ const SearchResultsPage = ({ data, query, algo }) => {
           <div className={styles.navbar__container}>
             <Navbar />
           </div>
-          <p className={styles['filters__logo-title']}>deeplex</p>
+          <p className={styles['filters__logo-title']}>CaseVisor</p>
           {loading ? (
             <div className={styles['filters__skeleton-container']}>
               <Box padding="6">
