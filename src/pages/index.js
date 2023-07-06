@@ -26,11 +26,11 @@ export default function Home() {
       <div className={styles.container}>
         <div className={styles.navbar__container}>
           <span className={styles.navbar__logo} onClick={() => router.push('/')}>
-            DeepLex
+            CaseVisor
           </span>
           <div className={styles.navbar__links_container}>
             <span className={styles.navbar__link} onClick={() => router.push('/about')}>
-              Neden DeepLex
+              Neden CaseVisor
             </span>
             <span className={styles.navbar__link} onClick={() => router.push('/team')}>
               Takım
@@ -60,11 +60,11 @@ export default function Home() {
             <span className={styles.content__right_header}>Döküman</span>
             <span className={styles.content__right_subheader}>aramanın kısa yolu</span>
             <span className={styles.content__right_parag}>
-              DeepLex, legal döküman arama sürecinizi hızlandırarak verimliliğinizi artırır. Yapay zeka modelimiz ile işinize yarayan dökümanları
+              CaseVisor, legal döküman arama sürecinizi hızlandırarak verimliliğinizi artırır. Yapay zeka modelimiz ile işinize yarayan dökümanları
               bulmanız artık çok daha kolay
             </span>
             <Button fontSize="2.5rem" fontWeight="300" px="2.5rem" py="3.5rem" borderRadius="2rem" onClick={() => router.push('/search')}>
-              DeepLex&apos;i Dene
+              CaseVisor&apos;ı Dene
             </Button>
           </div>
         </div>
