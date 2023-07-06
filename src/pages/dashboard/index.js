@@ -3,10 +3,11 @@ import useAuthContext from '../../context/AuthContextProvider';
 import { useRouter } from 'next/router';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { Container } from '../../components/Container';
 import { Logo } from '../../components/Logo';
 import DashboardSidebarButton from '../../components/DashboardSidebarButton';
 import { FaRegFolderOpen, FaBookmark, FaUserAlt, FaSignOutAlt, FaSearch } from 'react-icons/fa';
+import DashboardSearchbar from '../../components/DashboardSearchbar';
+import DashboardSpacesContainer from '../../components/DashboardSpacesContainer';
 
 const sections = [
   {
@@ -104,7 +105,7 @@ function MobileSidebar() {
         >
           <Popover.Panel
             as="div"
-            className="bg-white shadow-xl rounded-2xl text-lg tracking-tight absolute inset-x-0 p-4 origin-top top-full flex flex-col ring-1 ring-slate-900/5"
+            className="absolute inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
             {sections.map((section, index) => {
               if (index === 3) {
@@ -165,21 +166,25 @@ function DashboardPage() {
 
   return (
     <>
-      <div>
-        <div className="hidden bg-slate-100 md:flex flex-col fixed top-0 left-0 md:w-60 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4">
-          <div className="h-64">
+      <div className="flex flex-col md:flex-row">
+        <div className="group/outer transition-all duration-300 hidden bg-slate-100 md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-56 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4">
+          <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block">
             <Logo className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
             <hr className="mt-4 border-slate-500/30" />
           </div>
-          <div className="flex-1 flex flex-col gap-y-4  ">
+          <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
+            <span className="text-4xl text-blue-500">dL</span>
+            <hr className="mt-4 border-slate-500/30" />
+          </div>
+          <div className="flex-1 w-full flex flex-col gap-y-4">
             {sections.map((section, index) => {
               if (index === 3) {
                 return (
                   <>
                     <DashboardSidebarButton
-                      divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/30 hover:from-blue-500/40 to-violet-500 hover:to-violet-500/40"
+                      divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/30 hover:from-blue-500/40 to-violet-500 hover:to-violet-500/40 justify-center group-hover/outer:justify-start transition lg:justify-start"
                       section={section}
-                      textClass="text-slate-100 group-hover:text-slate-600"
+                      textClass="text-slate-100 whitespace-nowrap group-hover:text-slate-600 hidden group-hover/outer:block group-hover/outer:text-base lg:block"
                       iconClass="text-slate-500 group-hover:text-slate-900"
                     />
                   </>
@@ -190,9 +195,9 @@ function DashboardPage() {
                   <div className="mt-auto">
                     <hr />
                     <DashboardSidebarButton
-                      divClass="mt-2"
+                      divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
                       section={section}
-                      textClass="text-slate-500 group-hover:text-slate-900"
+                      textClass="text-slate-500 whitespace-nowrap group-hover:text-slate-900 hidden group-hover/outer:block group-hover/outer:text-base lg:block"
                       iconClass="text-slate-500 group-hover:text-slate-900"
                     />
                   </div>
@@ -200,22 +205,34 @@ function DashboardPage() {
               }
               return (
                 <DashboardSidebarButton
-                  divClass="bg-transparent hover:bg-blue-300"
+                  divClass="bg-transparent hover:bg-blue-300 justify-center group-hover/outer:justify-start lg:justify-start"
                   section={section}
-                  textClass="text-slate-500 group-hover:text-slate-900"
+                  textClass="text-slate-500 whitespace-nowrap group-hover:text-slate-900 hidden group-hover/outer:block group-hover/outer:text-base lg:block"
                   iconClass="text-slate-500 group-hover:text-slate-900"
                 />
               );
             })}
           </div>
         </div>
-        <div className="flex w-full justify-between items-center p-2 md:hidden">
+        <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden">
           <div className="ml-2">
             <MobileSidebar />
           </div>
+          {activeLink == 'spaces' && (
+            <div className="flex-1">
+              <DashboardSearchbar onSearchTermChanged={() => {}} onSubmit={() => {}} placeholder="Search in projects" />
+            </div>
+          )}
           <div>
             <Logo className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" />
           </div>
+        </div>
+        <div className="block">
+          {activeLink == 'spaces' && (
+            <>
+              <DashboardSpacesContainer />
+            </>
+          )}
         </div>
       </div>
     </>
