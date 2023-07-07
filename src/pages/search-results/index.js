@@ -1,37 +1,61 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 
-// CSS
-import styles from './SearchResultsPage.module.css';
-import { SkeletonText, Box, Progress, Button } from '@chakra-ui/react';
-import { SearchBar } from '../../components/common/search-bar';
-import { SearchResultCard } from '../../components/common/search-result-card';
-import { motion } from 'framer-motion';
+import SearchResultsSearchbar from '../../components/SearchResultsSearchbar';
+import SearchResultsNavbar from '../../components/SearchResultsNavbar';
+import SearchResultsFilters from '../../components/SearchResultsFilters';
+import SearchResultCard from '../../components/SearchResultCard';
+import { Popover } from '@headlessui/react';
 import { useRouter } from 'next/router';
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { FilterInput } from '../../components/common/filter-input';
-import { FilterCheckbox } from '../../components/common/filter-checkbox';
-import AddToSpaceModal from '../../components/common/add-to-space-modal/AddToSpaceModal';
-import Navbar from '../../components/common/navbar/Navbar';
+import { FaAngleDown } from 'react-icons/fa';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import clsx from 'clsx';
+import fake_results from './fake_results';
+import fakeResults from './fake_results';
 
-const item = {
-  hover: {
-    scale: 1.015,
-    transition: {
-      ease: 'easeOut',
-      duration: 0.5,
-    },
-  },
-  tap: {
-    scale: 0.99,
-    transition: {
-      ease: 'easeOut',
-      duration: 0.5,
-    },
-  },
-};
+function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative z-10">
+      <button
+        className={clsx(
+          'ouline-none focus:outline-none flex items-center justify-between p-2 gap-2 hover:bg-slate-100 cursor-pointer rounded-md',
+          open && 'bg-slate-100'
+        )}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span className="text-md font-semibold text-slate-700">Search Methods</span>
+        <div className={clsx('transition-all duration-100 ease-in', open ? 'rotate-180' : 'rotate-0')}>
+          <FaAngleDown />
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="methods"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute right-0 top-5 mt-6 flex origin-top flex-col items-start gap-2 rounded-lg bg-white py-4 px-6 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+          >
+            <button className="group" onAdvancedClick={onAdvancedClick}>
+              <span className="advanced_button_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-orange-500 to-purple-900 group-hover:text-blue-500 whitespace-nowrap">
+                Advanced / AI
+              </span>
+            </button>
+            <button className="group " onClassicClick={onClassicClick}>
+              <span className="group-hover:text-blue-500">Classic</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 const SearchResultsPage = ({ data, query, algo }) => {
-  const [results, setResulsts] = useState(new Array(10).fill({}));
+  const [results, setResulsts] = useState(fakeResults);
   const [loading, setLoading] = useState(true);
   const [addToSpaceDocumentId, setAddToSpaceDocumentId] = useState(null);
   const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
@@ -39,9 +63,13 @@ const SearchResultsPage = ({ data, query, algo }) => {
   const [searchAlgo, setSearchAlgo] = useState(algo);
 
   useEffect(() => {
-    setResulsts(data.documents);
+    setResulsts(fakeResults);
     setLoading(false);
   }, [data]);
+
+  useEffect(() => {
+    console.log(fakeResults);
+  }, []);
 
   const [mevzuatFilters, setMevzuatFilters] = useState({
     kanun_khk: true,
@@ -91,6 +119,46 @@ const SearchResultsPage = ({ data, query, algo }) => {
   };
 
   return (
+    <LayoutGroup layout>
+      <div className="flex flex-col min-h-full bg-neutral-200">
+        <div>
+          <SearchResultsNavbar divClass="md:max-w-4xl" />
+        </div>
+        <div className="relative flex flex-col-reverse lg:flex-row lg:gap-2 p-2 mx-auto md:mt-4 items-start max-w-4xl">
+          <div className="flex flex-col gap-2 md:gap-4 max-w-3xl">
+            <div className="flex flex-1 gap-4 items-center justify-center bg-white rounded-lg p-2 sticky top-2 left-0 shadow-md">
+              <div className="flex-1">
+                <SearchResultsSearchbar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} />
+              </div>
+              <div>
+                <SearchMethodsPopover onAdvancedClick={() => setSearchAlgo('ai')} onClassicClick={() => setSearchAlgo('bm25')} />
+              </div>
+            </div>
+            <div>
+              <div className="flex flex-col gap-2">
+                {results.map((result, index) => (
+                  <div>
+                    <SearchResultCard
+                      onCardClick={() => handleCardClick(result.meta.doc_id)}
+                      key={index}
+                      document={result}
+                      onAddToSpace={() => {
+                        setAddToSpaceDocumentId(result.meta.doc_id);
+                        setIsAddToSpaceModalOpen(true);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <motion.div className="w-full lg:w-12 lg:h- block lg:sticky lg:left-0 lg:top-2 mb-2 box-border">
+            <SearchResultsFilters />
+          </motion.div>
+        </div>
+      </div>
+    </LayoutGroup>
+    /*
     <>
       {isAddToSpaceModalOpen && <AddToSpaceModal documentId={addToSpaceDocumentId} setIsOpen={setIsAddToSpaceModalOpen} />}
       <div className={styles.container}>
@@ -282,6 +350,7 @@ const SearchResultsPage = ({ data, query, algo }) => {
         </div>
       </div>
     </>
+    */
   );
 };
 
@@ -316,6 +385,7 @@ export async function getServerSideProps(context) {
       },
     });
     const data = await res.json();
+    console.log(data);
     return {
       props: { data, query: search, algo },
     };

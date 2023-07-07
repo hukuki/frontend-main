@@ -33,8 +33,8 @@ function MobileNavigation() {
         <Transition.Child
           as={Fragment}
           enter="duration-150 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
+          enterFrom="scale-y-0"
+          enterTo="scale-y-100"
           leave="duration-150 ease-in"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
@@ -78,9 +78,9 @@ export function Header() {
           </div>
           <div className="flex items-center justify-end md:gap-x-6">
             <div className="hidden md:flex items-center md:gap-6">
-              <NavLink href="/features">Features</NavLink>
-              <NavLink href="/testimonials">Testimonials</NavLink>
-              <NavLink href="/pricing">Pricing</NavLink>
+              <NavLink href="#features">Features</NavLink>
+              <NavLink href="#testimonials">Testimonials</NavLink>
+              <NavLink href="#pricing">Pricing</NavLink>
             </div>{' '}
             <div className="flex items-center gap-x-5 md:gap-x-6">
               <div className="hidden md:block">

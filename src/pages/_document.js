@@ -5,7 +5,7 @@ import theme from '@/theme';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" className="h-full s-smooth antialiased">
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -13,7 +13,7 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
-      <body>
+      <body className="flex h-full flex-col">
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Main />
         <NextScript />
