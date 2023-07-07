@@ -40,7 +40,11 @@ function HomePagePrimaryFeatures() {
     };
   }, []);
   return (
-    <section id="features" className="relative overflow-hidden bg-blue-600 pt-20 pb-28 sm:py-32">
+    <section
+      id="features"
+      className="advanced_button_animate bg-gradient-to-tr from-blue-500 via-violet-700 to-indigo-700 relative overflow-hidden pt-20 pb-28 sm:py-32"
+    >
+      {/*
       <Image
         src={backgroundImage}
         className="absolute top-1/2 left-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
@@ -48,6 +52,7 @@ function HomePagePrimaryFeatures() {
         height={1636}
         unoptimized
       />
+      */}
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <h1 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">Every document you need accessed faster</h1>

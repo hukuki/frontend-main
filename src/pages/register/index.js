@@ -1,7 +1,6 @@
-import styles from './RegisterPage.module.css';
 import { useFormik } from 'formik';
 import { RegistrationSchema } from '../../form-schemas';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import useAuthContext from '../../context/AuthContextProvider';
 import { Button } from '../../components/Button';
 import LoginRegisterLayout from '../../components/LoginRegisterLayout';
@@ -10,18 +9,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Logo } from '../../components/Logo';
 import clsx from 'clsx';
-
+import { Progress } from '@chakra-ui/react';
 function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signUpWithGoogle, signUpWithEmailAndPassword } = useAuthContext();
   const [alertMessage, setAlertMessage] = useState('');
-  const cancelRef = useRef();
-
   const router = useRouter();
-
-  const handleDirectLoginPage = () => {
-    router.push('/login');
-  };
 
   const handleGoogleSignup = async () => {
     setIsSubmitting(true);
@@ -75,13 +68,27 @@ function RegisterPage() {
     initialValues: {
       firstname: '',
       lastname: '',
-      username: '',
       email: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: RegistrationSchema,
     onSubmit: handleRegistration,
+  });
+
+  const isAnyErrors = useMemo(() => {
+    return (
+      !touched.firstname ||
+      errors.firstname ||
+      !touched.lastname ||
+      errors.lastname ||
+      !touched.email ||
+      errors.email ||
+      !touched.password ||
+      errors.password ||
+      !touched.confirmPassword ||
+      errors.confirmPassword
+    );
   });
 
   return (
@@ -236,24 +243,48 @@ function RegisterPage() {
               Passwords do not match
             </p>
           </div>
-          <div>
-            <Button type="submit" variant="solid" color="blue" className="w-full rounded-lg text-xl font-[400] mt-4">
-              <span>
-                Sign up <span>&rarr;</span>
-              </span>
+          {isSubmitting ? (
+            <Progress isIndeterminate height="0.2rem" width="100%" marginTop="2rem" />
+          ) : (
+            <div>
+              <Button
+                disabled={isAnyErrors}
+                type="submit"
+                variant="solid"
+                color="blue"
+                className={clsx(
+                  'w-full rounded-lg text-xl font-[200] mt-4',
+                  isAnyErrors ? 'bg-blue-200 hover:bg-blue-200 hover:text-white cursor-default active:bg-blue-200 active:text-white' : 'bg-blue-500'
+                )}
+              >
+                <span>
+                  Sign up <span>&rarr;</span>
+                </span>
+              </Button>
+            </div>
+          )}
+        </form>
+
+        <div className="mt-4 flex gap-x-2 items-center">
+          <div className="flex-1 h-0.5 bg-violet-500"></div>
+          <span className="text-lg text-blue-700">OR</span>
+          <div className="flex-1 h-0.5 bg-violet-500"></div>
+        </div>
+        {isSubmitting ? (
+          <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
+        ) : (
+          <div className="sm:mb-0 mt-4">
+            <Button
+              type="submit"
+              variant="solid"
+              color="blue"
+              className={clsx('w-full rounded-lg text-xl font-[200] bg-blue-500')}
+              onClick={handleGoogleSignup}
+            >
+              <span>Sign up with Google</span>
             </Button>
           </div>
-        </form>
-        <div className="mt-4 flex gap-x-2 items-center">
-          <div className="flex-1 h-0.5 bg-blue-500"></div>
-          <span className="text-lg text-blue-700">OR</span>
-          <div className="flex-1 h-0.5 bg-blue-500"></div>
-        </div>
-        <div className="mt-4 sm:mb-0">
-          <Button onClick={() => handleGoogleSignup()} variant="solid" color="blue" className="w-full text-xl rounded-lg font-[400]">
-            <span>Sign up with Google</span>
-          </Button>
-        </div>
+        )}
       </LoginRegisterLayout>
     </>
     /*

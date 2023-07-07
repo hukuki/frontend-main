@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>DeepLex - Smart way of document search</title>
+        <title>CaseVisor - Search the way you think</title>
         <meta
           name="description"
           content="Document search is essential but traditional tools use keyword search. We use artificial intelligence to provider faster and more accurate searching experience."
@@ -46,7 +46,8 @@ export default function Home() {
           </div>
           {loading ? (
             <Spinner size="xl" />
-          ) : user ? (
+          ) :
+           ? (
             <Menu>
               <MenuButton>
                 <Avatar size="xl" src={user.photoURL} />

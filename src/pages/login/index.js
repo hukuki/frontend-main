@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import useAuthContext from '../../context/AuthContextProvider';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
@@ -9,17 +9,13 @@ import { Logo } from '../../components/Logo';
 import clsx from 'clsx';
 import LoginLayout from '../../components/LoginRegisterLayout';
 import { Button } from '../../components/Button';
+import { Progress } from '@chakra-ui/react';
 
 function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signInWithGoogle, signInWithEmailAndPasswordFirebase } = useAuthContext();
   const [alertMessage, setAlertMessage] = useState(null);
-  const cancelRef = useRef();
   const router = useRouter();
-
-  const handleDirectRegisterPage = () => {
-    router.push('/register');
-  };
 
   const handleGoogleLogin = async () => {
     setIsSubmitting(true);
@@ -29,17 +25,14 @@ function LoginPage() {
       setIsSubmitting(false);
       if (error) {
         // TODO: Show a toast message
-        const message = convertFirebaseErrorCodeToMessage(error.code);
+        console.log(error);
         setAlertMessage(message);
-        onOpen();
       } else {
         router.push('/search');
       }
     } catch (err) {
       setIsSubmitting(false);
-      const message = convertFirebaseErrorCodeToMessage(err.code);
-      setAlertMessage(message);
-      onOpen();
+      console.log(err);
       console.log(err);
     }
   };
@@ -52,17 +45,13 @@ function LoginPage() {
       setIsSubmitting(false);
       if (error) {
         // TODO: Show a toast message
-        const message = convertFirebaseErrorCodeToMessage(error.code);
-        setAlertMessage(message);
-        onOpen();
+        console.log(error);
       } else {
         actions.resetForm();
         router.push('/search');
       }
     } catch (err) {
-      const message = convertFirebaseErrorCodeToMessage(err.code);
-      setAlertMessage(message);
-      onOpen();
+      console.log(err);
       setIsSubmitting(false);
     }
   };
@@ -75,6 +64,10 @@ function LoginPage() {
     validationSchema: LoginSchema,
     onSubmit: handleLogin,
   });
+
+  const isAnyErrors = useMemo(() => {
+    return !touched.email || errors.email || !touched.password || errors.password;
+  }, [errors, touched]);
 
   return (
     <>
@@ -150,24 +143,42 @@ function LoginPage() {
               Please enter your password
             </p>
           </div>
-          <div>
-            <Button type="submit" variant="solid" color="blue" className="w-full rounded-lg text-xl font-[200]">
-              <span>
-                Sign in <span>&rarr;</span>
-              </span>
-            </Button>
-          </div>
+          {isSubmitting ? (
+            <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
+          ) : (
+            <div>
+              <Button
+                disabled={isAnyErrors}
+                type="submit"
+                variant="solid"
+                color="blue"
+                className={clsx(
+                  'w-full rounded-lg mt-2',
+                  isAnyErrors ? 'bg-blue-200 hover:bg-blue-200 hover:text-white cursor-default active:bg-blue-200 active:text-white' : 'bg-blue-500'
+                )}
+              >
+                <span className="text-lg">
+                  Sign in <span>&rarr;</span>
+                </span>
+              </Button>
+            </div>
+          )}
         </form>
+
         <div className="mt-4 flex gap-x-2 items-center">
           <div className="flex-1 h-0.5 bg-blue-500"></div>
           <span className="text-lg text-blue-700">OR</span>
           <div className="flex-1 h-0.5 bg-blue-500"></div>
         </div>
-        <div className="mt-4">
-          <Button onClick={() => handleGoogleLogin()} variant="solid" color="blue" className="w-full text-xl rounded-lg font-[200]">
-            <span>Sign in with Google</span>
-          </Button>
-        </div>
+        {isSubmitting ? (
+          <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
+        ) : (
+          <div className="mt-4">
+            <Button onClick={() => handleGoogleLogin()} variant="solid" color="blue" className="w-full text-xl rounded-lg font-[200]">
+              <span>Sign in with Google</span>
+            </Button>
+          </div>
+        )}
       </LoginLayout>
     </>
     /*
