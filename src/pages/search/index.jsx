@@ -5,17 +5,37 @@ import Searchbar from '../../components/Searchbar';
 import { Logo } from '../../components/Logo';
 import { Button } from '../../components/Button';
 import clsx from 'clsx';
+import useAuthContext from '../../context/AuthContextProvider';
 
 const SearchPage = () => {
-  const router = useRouter();
   const [searchAlgo, setSearchAlgo] = useState('ai');
+  const { user } = useAuthContext();
+  const router = useRouter();
 
   const handleSubmit = (query) => {
     router.push(`/search-results?search=${query}&model=${searchAlgo}`);
   };
 
   return (
-    <>
+    <div className="flex flex-col overflow-hidden max-h-screen">
+      <div className="flex items-center justify-start gap-4 p-4 shadow-md">
+        {user ? (
+          <>
+            <button className="hover:text-blue-500" onClick={() => router.push('/dashboard')}>
+              Dashboard
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="hover:text-blue-500" onClick={() => router.push('/register')}>
+              Register
+            </button>
+            <button className="hover:text-blue-500" onClick={() => router.push('/login')}>
+              Sign in
+            </button>
+          </>
+        )}
+      </div>
       <div className="flex flex-col gap-y-6 items-center justify-center h-screen w-screen p-6">
         <div className="w-full flex justify-center">
           <Logo className="text-transparent text-5xl md:text-6xl font-semibold lowercase bg-clip-text bg-gradient-to-r from-blue-500 to-fuchsia-900" />
@@ -36,7 +56,7 @@ const SearchPage = () => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
     /*
     <>
       <div className={styles.navbar_searchbar__container}>
