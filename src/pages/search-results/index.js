@@ -4,13 +4,37 @@ import SearchResultsSearchbar from '../../components/SearchResultsSearchbar';
 import SearchResultsNavbar from '../../components/SearchResultsNavbar';
 import SearchResultsFilters from '../../components/SearchResultsFilters';
 import SearchResultCard from '../../components/SearchResultCard';
-import { Popover } from '@headlessui/react';
 import { useRouter } from 'next/router';
 import { FaAngleDown } from 'react-icons/fa';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
-import fake_results from './fake_results';
+import useAuthContext from '../../context/AuthContextProvider';
 import fakeResults from './fake_results';
+
+export const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0, // this will set a delay before the children start animating
+      staggerChildren: 0.3, // this will set the time inbetween children animation
+    },
+  },
+};
+export const dropUpVariants = {
+  hidden: {
+    x: '100vw',
+  },
+  visible: {
+    x: 0,
+    transition: {
+      type: 'spring',
+      bounce: 0.2,
+    },
+  },
+};
 
 function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
   const [open, setOpen] = useState(false);
@@ -57,10 +81,9 @@ function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
 const SearchResultsPage = ({ data, query, algo }) => {
   const [results, setResulsts] = useState(fakeResults);
   const [loading, setLoading] = useState(true);
-  const [addToSpaceDocumentId, setAddToSpaceDocumentId] = useState(null);
-  const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(query);
   const [searchAlgo, setSearchAlgo] = useState(algo);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     setResulsts(fakeResults);
@@ -70,21 +93,6 @@ const SearchResultsPage = ({ data, query, algo }) => {
   useEffect(() => {
     console.log(fakeResults);
   }, []);
-
-  const [mevzuatFilters, setMevzuatFilters] = useState({
-    kanun_khk: true,
-    teblig: true,
-    yonetmelik: true,
-  });
-
-  const [mevzuatSearchInput, setMevzuatSearchInput] = useState({
-    mevzuatNo: '',
-  });
-
-  const [mevzuatYearFilters, setMevzuatYearFilters] = useState({
-    startYear: '0',
-    endYear: new Date().getFullYear().toString(),
-  });
 
   const router = useRouter();
 
@@ -96,31 +104,9 @@ const SearchResultsPage = ({ data, query, algo }) => {
     router.push(`/search-results?model=${searchAlgo}&search=${query}`);
   };
 
-  const handleFilteredSearch = () => {
-    let filters = '';
-    let mevzuatTurs = [];
-    if (mevzuatFilters.kanun_khk) {
-      mevzuatTurs = [...mevzuatTurs, 1];
-    }
-    if (mevzuatFilters.teblig) {
-      mevzuatTurs = [...mevzuatTurs, 9];
-    }
-    if (mevzuatFilters.yonetmelik) {
-      mevzuatTurs = [...mevzuatTurs, 7];
-    }
-    if (mevzuatTurs.length > 0) {
-      filters = filters + `&mevzuatTurs=${mevzuatTurs.join(' ')}`;
-    }
-    if (mevzuatSearchInput.mevzuatNo) {
-      filters = filters + `&mevzuatNo=${mevzuatSearchInput.mevzuatNo}`;
-    }
-    filters = filters + `&mevzuatStartYear=${mevzuatYearFilters.startYear}&mevzuatEndYear=${mevzuatYearFilters.endYear}`;
-    router.push(`/search-results?model=${algo}&search=${query}${filters}`);
-  };
-
   return (
     <LayoutGroup layout>
-      <div className="flex flex-col min-h-full bg-neutral-200">
+      <div className="flex flex-col max-h-content bg-neutral-200 relative">
         <div>
           <SearchResultsNavbar divClass="md:max-w-4xl" />
         </div>
@@ -134,22 +120,19 @@ const SearchResultsPage = ({ data, query, algo }) => {
                 <SearchMethodsPopover onAdvancedClick={() => setSearchAlgo('ai')} onClassicClick={() => setSearchAlgo('bm25')} />
               </div>
             </div>
-            <div>
-              <div className="flex flex-col gap-2">
-                {results.map((result, index) => (
-                  <div>
-                    <SearchResultCard
-                      onCardClick={() => handleCardClick(result.meta.doc_id)}
-                      key={index}
-                      document={result}
-                      onAddToSpace={() => {
-                        setAddToSpaceDocumentId(result.meta.doc_id);
-                        setIsAddToSpaceModalOpen(true);
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div className="flex flex-col gap-2 md:gap-4">
+              <span className="mb text-slate-500 font-medium">All results {`(${results.length})`}</span>
+              {results && (
+                <>
+                  <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
+                    {results.map((result, index) => (
+                      <motion.div key={index} variants={dropUpVariants}>
+                        <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </>
+              )}
             </div>
           </div>
           <motion.div className="w-full lg:w-12 lg:h- block lg:sticky lg:left-0 lg:top-2 mb-2 box-border">

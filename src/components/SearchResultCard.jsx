@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
 import useAuthContext from '../context/AuthContextProvider';
+import AddDocumentToSpaceModal from './AddDocumentToSpaceModal';
 
-export const SearchResultCard = ({ document, reveal, onCardClick, onAddToSpace }) => {
+export const SearchResultCard = ({ document, reveal, onCardClick }) => {
   const { user } = useAuthContext();
 
   const ref = reveal !== undefined ? useRef(null) : null;
 
   const [bookmarked, setBookmarked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (reveal !== undefined) {
@@ -69,50 +70,57 @@ export const SearchResultCard = ({ document, reveal, onCardClick, onAddToSpace }
       }),
     });
     const { error, data } = await res.json();
-    console.log(error);
-    console.log(data);
     if (!error) {
       setBookmarked(false);
     }
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div red={ref || null} className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow-md" onClick={onCardClick}>
-      <div className="flex flex-col gap-2 p-2">
-        <div className="flex justify-between items-center">
-          <span className="flex-1 text-md font-semibold tracking-tight text-blue-900 inline-block">{document.meta.mevAdi}</span>
-          <div className="flex items-center justify-center text-lg text-blue-500 gap-2">
-            <div className="hover:text-blue-700" onClick={() => onAddToSpace()}>
-              <FaPlus />
-            </div>
+    <>
+      <AddDocumentToSpaceModal open={isModalOpen} onClose={closeModal} documentId={document.meta.doc_id} />
+      <div red={ref || null} className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow-md" onClick={onCardClick}>
+        <div className="flex flex-col gap-2 p-2">
+          <div className="flex justify-between items-center">
+            <span className="flex-1 text-md font-semibold tracking-tight text-blue-900 inline-block">{document.meta.mevAdi}</span>
             <div
-              className="hover:text-blue-700"
+              className="flex items-center justify-center text-lg text-blue-500 gap-2"
               onClick={(e) => {
-                if (bookmarked) {
-                  handleRemoveBookmark(e);
-                } else {
-                  handleAddBookmark(e);
-                }
+                e.stopPropagation();
               }}
             >
-              {bookmarked ? <FaRegBookmark /> : <FaBookmark />}
-            </div>
-            <div className="hover:text-blue-700">
-              <FaShare />
+              <div className="hover:text-blue-700" onClick={() => setIsModalOpen(true)}>
+                <FaPlus />
+              </div>
+              <div
+                className="hover:text-blue-700"
+                onClick={(e) => {
+                  if (bookmarked) {
+                    handleRemoveBookmark(e);
+                  } else {
+                    handleAddBookmark(e);
+                  }
+                }}
+              >
+                {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+              </div>
             </div>
           </div>
+          <hr className="w-1/2 h-1/2 bg-blue-100" />
+          <div className="flex items-center justify-start gap-2">
+            <span className=" max-w-sm font-medium">
+              RG. {document.meta.resmiGazeteTarihi} / {document.meta.resmiGazeteSayisi}
+            </span>
+            <span className=" max-w-sm font-medium">Mevzuat No: {document.meta.mevzuatNo}</span>
+            <span className=" max-w-sm font-medium">Tür: {document.meta.mevzuatTurEnumString}</span>
+          </div>
+          <p className="text-slate-700 text-md font-normal">{document.content.split(' ').slice(0, 100).join(' ')}...</p>
         </div>
-        <hr className="w-1/2 h-1/2 bg-blue-100" />
-        <div className="flex items-center justify-start gap-2">
-          <span className=" max-w-sm font-medium">
-            RG. {document.meta.resmiGazeteTarihi} / {document.meta.resmiGazeteSayisi}
-          </span>
-          <span className=" max-w-sm font-medium">Mevzuat No: {document.meta.mevzuatNo}</span>
-          <span className=" max-w-sm font-medium">Tür: {document.meta.mevzuatTurEnumString}</span>
-        </div>
-        <p className="text-slate-700 text-md font-normal">{document.content.split(' ').slice(0, 100).join(' ')}...</p>
       </div>
-    </div>
+    </>
     /*
     <>
       <div ref={ref || null} className={styles['container']}>
