@@ -3,24 +3,31 @@ import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddDocumentToSpaceModal from './AddDocumentToSpaceModal';
 
-export const SearchResultCard = ({ document, reveal, onCardClick }) => {
+export const SearchResultCard = ({ document, onCardClick }) => {
   const { user } = useAuthContext();
-
-  const ref = reveal !== undefined ? useRef(null) : null;
-
   const [bookmarked, setBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (reveal !== undefined) {
-      async function animate() {
-        if (ref.current) {
-          const sr = (await import('scrollreveal')).default;
-          sr().reveal(ref.current, reveal);
-        }
+    function receiveBookmarkStatus(event) {
+      console.log(event);
+      if (event.source.location.origin !== event.origin) {
+        return;
       }
-      animate();
+      if (event.data.bookmark?.doc_id !== document.meta.doc_id) {
+        return;
+      }
+      if (event.data.action === 'TRUE') {
+        setBookmarked(true);
+      }
+      if (event.data.action === 'FALSE') {
+        setBookmarked(false);
+      }
     }
+    window.addEventListener(`message`, receiveBookmarkStatus);
+    return () => {
+      window.removeEventListener(`message`, receiveBookmarkStatus);
+    };
   }, []);
 
   useEffect(() => {
@@ -57,6 +64,15 @@ export const SearchResultCard = ({ document, reveal, onCardClick }) => {
     console.log(error);
     if (!error) {
       setBookmarked(true);
+      window.postMessage(
+        {
+          bookmark: {
+            doc_id: document.meta.doc_id,
+          },
+          action: 'TRUE',
+        },
+        'http://localhost:3000'
+      );
     }
   };
 
@@ -72,6 +88,15 @@ export const SearchResultCard = ({ document, reveal, onCardClick }) => {
     const { error, data } = await res.json();
     if (!error) {
       setBookmarked(false);
+      window.postMessage(
+        {
+          bookmark: {
+            doc_id: document.meta.doc_id,
+          },
+          action: 'FALSE',
+        },
+        'http://localhost:3000'
+      );
     }
   };
 
@@ -82,7 +107,7 @@ export const SearchResultCard = ({ document, reveal, onCardClick }) => {
   return (
     <>
       <AddDocumentToSpaceModal open={isModalOpen} onClose={closeModal} documentId={document.meta.doc_id} />
-      <div red={ref || null} className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow-md" onClick={onCardClick}>
+      <div className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow-md" onClick={onCardClick}>
         <div className="flex flex-col gap-2 p-2">
           <div className="flex justify-between items-center">
             <span className="flex-1 text-md font-semibold tracking-tight text-blue-900 inline-block">{document.meta.mevAdi}</span>

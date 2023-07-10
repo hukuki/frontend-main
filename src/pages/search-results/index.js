@@ -123,15 +123,13 @@ const SearchResultsPage = ({ data, query, algo }) => {
             <div className="flex flex-col gap-2 md:gap-4">
               <span className="mb text-slate-500 font-medium">All results {`(${results.length})`}</span>
               {results && (
-                <>
-                  <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
-                    {results.map((result, index) => (
-                      <motion.div key={index} variants={dropUpVariants}>
-                        <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </>
+                <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
+                  {results.map((result, index) => (
+                    <motion.div key={index} variants={dropUpVariants}>
+                      <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
+                    </motion.div>
+                  ))}
+                </motion.div>
               )}
             </div>
           </div>
