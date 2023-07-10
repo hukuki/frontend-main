@@ -1,15 +1,16 @@
-import {useState } from 'react';
+import { useState } from 'react';
 import { Avatar } from '@chakra-ui/react';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddPersonToSpaceModal from './AddPersonToSpaceModal';
 
-function DashboardSpaceDetailPeople({ space }) {
+function DashboardSpaceDetailPeople({ space, onAddPerson }) {
   const { user } = useAuthContext();
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
-    <AddPersonToSpaceModal open
+      <AddPersonToSpaceModal space={space} open={isOpen} onClose={() => setIsOpen(false)} onSubmit={onAddPerson} />
       <div className="flex flex-col gap-4 p-4 bg-white max-w-screen-sm rounded-xl shadow-lg">
         <div className="flex flex-col gap-4">
           <span className="text-md font-medium tracking-tight">People: </span>
@@ -28,7 +29,10 @@ function DashboardSpaceDetailPeople({ space }) {
                   </div>
                 );
               })}
-            <div className="bg-slate-100 flex items-center justify-center aspect-square p-4 rounded-full shadow-xl cursor-pointer hover:shadow-inner ">
+            <div
+              className="bg-slate-100 flex items-center justify-center aspect-square p-4 rounded-full shadow-xl cursor-pointer hover:shadow-inner "
+              onClick={() => setIsOpen(true)}
+            >
               <FaPlus className="text-xl text-blue-500" />
             </div>
           </div>
