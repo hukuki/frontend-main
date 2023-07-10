@@ -77,6 +77,14 @@ function MobileSidebarIcon({ open }) {
 }
 
 function MobileSidebar() {
+  const { user, signOutWithGoogle } = useAuthContext();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOutWithGoogle();
+    router.push('/');
+  };
+
   return (
     <Popover>
       <Popover.Button className="relative z-10 flex justify-center items-center outline-none">
@@ -122,10 +130,10 @@ function MobileSidebar() {
               }
               if (index === 4) {
                 return (
-                  <>
+                  <div onClick={handleLogout}>
                     <hr className="m-2 border-slate-300/40" />
                     <DashboardSidebarButton section={section} />
-                  </>
+                  </div>
                 );
               }
               return <DashboardSidebarButton section={section} />;
@@ -139,19 +147,19 @@ function MobileSidebar() {
 
 function DashboardPage() {
   const { user, signOutWithGoogle } = useAuthContext();
-  const [activeLink, setActiveLink] = useState('spaces');
+  const [activeLink, setActiveLink] = useState('Projects');
   const router = useRouter();
 
   const changeActiveLink = (name) => {
     switch (name) {
-      case 'spaces':
-        setActiveLink('spaces');
+      case 'Profile':
+        setActiveLink('Profile');
         break;
-      case 'people':
-        setActiveLink('people');
+      case 'Saved Documents':
+        setActiveLink('Saved Documents');
         break;
-      case 'shared_spaces':
-        setActiveLink('shared_spaces');
+      case 'Projects':
+        setActiveLink('Projects');
         break;
       case 'saved':
         setActiveLink('saved');
@@ -166,14 +174,15 @@ function DashboardPage() {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row">
-        <div className="group/outer transition-all duration-300 hidden bg-slate-100 md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-56 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4">
+      <div className="flex flex-col md:flex-row bg-neutral-100">
+        <div className="group/outer transition-all duration-300 hidden bg-neutral-950 md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
           <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block">
-            <Logo className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
+            <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
             <hr className="mt-4 border-slate-500/30" />
           </div>
           <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
-            <span className="text-4xl text-blue-500">dL</span>
+            <span className="text-4xl text-blue-500">c</span>
+            <span className="text-4xl text-violet-500">s</span>
             <hr className="mt-4 border-slate-500/30" />
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-4">
@@ -182,53 +191,52 @@ function DashboardPage() {
                 return (
                   <>
                     <DashboardSidebarButton
-                      divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/30 hover:from-blue-500/40 to-violet-500 hover:to-violet-500/40 justify-center group-hover/outer:justify-start transition lg:justify-start"
+                      divClass="search_on_deeplex_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
                       section={section}
-                      textClass="text-slate-100 whitespace-nowrap group-hover:text-slate-600 hidden group-hover/outer:block group-hover/outer:text-base lg:block"
-                      iconClass="text-slate-500 group-hover:text-slate-900"
+                      textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
+                      iconClass="text-white group-hover:text-slate-100"
                     />
                   </>
                 );
               }
               if (index === 4) {
                 return (
-                  <div className="mt-auto">
+                  <div className="mt-auto" onClick={handleLogout}>
                     <hr />
                     <DashboardSidebarButton
                       divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
                       section={section}
-                      textClass="text-slate-500 whitespace-nowrap group-hover:text-slate-900 hidden group-hover/outer:block group-hover/outer:text-base lg:block"
-                      iconClass="text-slate-500 group-hover:text-slate-900"
+                      textClass="text-white whitespace-nowrap group-hover:text-slate-300 hidden group-hover/outer:block  lg:block"
+                      iconClass="text-white group-hover:text-slate-300"
                     />
                   </div>
                 );
               }
               return (
                 <DashboardSidebarButton
-                  divClass="bg-transparent hover:bg-blue-300 justify-center group-hover/outer:justify-start lg:justify-start"
+                  divClass={clsx(
+                    'hover:bg-blue-500 justify-center group-hover/outer:justify-start lg:justify-start',
+                    activeLink === section.name ? 'bg-blue-500' : 'bg-transparent'
+                  )}
+                  onClick={() => changeActiveLink(section.name)}
                   section={section}
-                  textClass="text-slate-500 whitespace-nowrap group-hover:text-slate-900 hidden group-hover/outer:block group-hover/outer:text-base lg:block"
-                  iconClass="text-slate-500 group-hover:text-slate-900"
+                  textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
+                  iconClass="text-white group-hover:text-slate-100"
                 />
               );
             })}
           </div>
         </div>
-        <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden">
+        <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow-md">
           <div className="ml-2">
             <MobileSidebar />
           </div>
-          {activeLink == 'spaces' && (
-            <div className="flex-1">
-              <DashboardSearchbar onSearchTermChanged={() => {}} onSubmit={() => {}} placeholder="Search in projects" />
-            </div>
-          )}
           <div>
             <Logo className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" />
           </div>
         </div>
-        <div className="block">
-          {activeLink == 'spaces' && (
+        <div className="block m-2 flex-1">
+          {activeLink == 'Projects' && (
             <>
               <DashboardSpacesContainer />
             </>

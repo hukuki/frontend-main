@@ -1,20 +1,33 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import useAuthContext from '../context/AuthContextProvider';
-import SpaceCard from './SpaceCard';
+import DashboardSpacesSearchbar from './DashboardSpacesSearchbar';
+import DashboardSpaceCard from './DashboardSpaceCard';
+import DashboardSpaceDetail from './DashboardSpaceDetail';
+import CreateNewSpaceCard from './CreateNewSpaceCard';
+import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
 
-const item = {
-  hover: {
-    scale: 1.05,
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
     transition: {
-      ease: 'easeIn',
-      duration: 0.3,
+      delayChildren: 0, // this will set a delay before the children start animating
+      staggerChildren: 0.08, // this will set the time inbetween children animation
     },
   },
-  tap: {
-    scale: 0.99,
+};
+
+const itemVariants = {
+  hidden: {
+    y: '100vh',
+  },
+  visible: {
+    y: 0,
     transition: {
-      ease: 'easeOut',
-      duration: 0.5,
+      type: 'spring',
+      bounce: 0,
     },
   },
 };
@@ -22,6 +35,7 @@ const item = {
 function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
   const { user } = useAuthContext();
   const [allSpaces, setAllSpaces] = useState([]);
+  const [filteredSpaces, setFilteredSpaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [detailedSpaceId, setDetailedSpaceId] = useState(null);
 
@@ -47,19 +61,23 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
 
   const [filterTerm, setFilterTerm] = useState('');
 
-  const filteredSpaces = useMemo(() => {
-    if (filterTerm === '') {
-      return allSpaces;
-    } else {
-      return allSpaces.filter((space) => {
-        if (space.name.toLowerCase().includes(filterTerm)) {
-          return true;
-        }
-      });
-    }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (filterTerm === '') {
+        setFilteredSpaces(allSpaces);
+      } else {
+        let searchedSpaces = allSpaces.filter((space) => {
+          if (space.name.toLowerCase().includes(filterTerm.toLowerCase())) {
+            return true;
+          }
+        });
+        setFilteredSpaces(searchedSpaces);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
   }, [filterTerm, allSpaces]);
 
-  const handleSearchTermChange = async (term) => {
+  const handleSearchTermChange = (term) => {
     setFilterTerm(term);
   };
 
@@ -71,7 +89,36 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     await getSpaces();
   };
 
-  return <SpaceCard />;
+  if (detailedSpaceId !== null) {
+    return <DashboardSpaceDetail spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
+  } else {
+    return (
+      <LayoutGroup layout>
+        <div>
+          <DashboardSpacesSearchbar onSubmit={handleSearchTermChange} onSearchChange={handleSearchTermChange} />
+        </div>
+        {filteredSpaces.length > 0 && (
+          <motion.div
+            layout="position"
+            viewport={{ once: true }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
+          >
+            <CreateNewSpaceCard onSubmit={handleNewSpaceCreated} />
+            {filteredSpaces.map((space, index) => {
+              return (
+                <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpaceId(space._id)}>
+                  <DashboardSpaceCard space={space} />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
+      </LayoutGroup>
+    );
+  }
 
   /*
   if (detailedSpaceId) {

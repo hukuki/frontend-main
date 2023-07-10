@@ -7,22 +7,22 @@
 }
 
 .search_on_deeplex_animate {
-  background-size: 200% 200%;
-
+  background: linear-gradient(-45deg, #38bdf8, #3b82f6, #6366f1 #8b5cf6);
+  background-size: 400% 400%;
+  animation: search_on_deeplex_animate 20s ease infinite;
   -webkit-animation: search_on_deeplex_animate 2s ease infinite;
   -moz-animation: search_on_deeplex_animate 2s ease infinite;
-  animation: search_on_deeplex_animate 2s ease infinite;
 }
 
 @keyframes search_on_deeplex_animate {
   0% {
-    background-position: left center;
+    background-position: 0% 50%;
   }
   50% {
-    background-position: right center;
+    background-position: 100% 50%;
   }
   100% {
-    background-position: left center;
+    background-position: 0% 50%;
   }
 }
 
@@ -35,6 +35,25 @@
 }
 
 @keyframes advanced_button_animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.logo_animate {
+  background-size: 400% 400%;
+  animation: logo_animate 20s ease infinite;
+  -webkit-animation: logo_animate 2s ease infinite;
+  -moz-animation: logo_animate 2s ease infinite;
+}
+
+@keyframes logo_animate {
   0% {
     background-position: 0% 50%;
   }
