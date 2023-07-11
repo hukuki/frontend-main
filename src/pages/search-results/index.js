@@ -9,7 +9,6 @@ import { FaAngleDown } from 'react-icons/fa';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
 import useAuthContext from '../../context/AuthContextProvider';
-import fakeResults from './fake_results';
 
 export const containerVariants = {
   hidden: {
