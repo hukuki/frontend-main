@@ -5,6 +5,7 @@ import ProjectsSearchbar from './ProjectsSearchbar';
 import clsx from 'clsx';
 
 function AddDocumentToSpaceModal({ open, onClose, documentId }) {
+  /*
   const { user } = useAuthContext();
   const [spacesToAdd, setSpacesToAdd] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -74,7 +75,8 @@ function AddDocumentToSpaceModal({ open, onClose, documentId }) {
         </div>
       </div>
     </Dialog>
-  );
+    */
+  return <></>;
 }
 
 export default AddDocumentToSpaceModal;

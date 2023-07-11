@@ -79,20 +79,16 @@ function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
 }
 
 const SearchResultsPage = ({ data, query, algo }) => {
-  const [results, setResulsts] = useState(fakeResults);
+  const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(query);
   const [searchAlgo, setSearchAlgo] = useState(algo);
   const { user } = useAuthContext();
 
   useEffect(() => {
-    setResulsts(fakeResults);
+    setResulsts(data.documents);
     setLoading(false);
   }, [data]);
-
-  useEffect(() => {
-    console.log(fakeResults);
-  }, []);
 
   const router = useRouter();
 
@@ -124,11 +120,12 @@ const SearchResultsPage = ({ data, query, algo }) => {
               <span className="mb text-slate-500 font-medium">All results {`(${results.length})`}</span>
               {results && (
                 <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
-                  {results.map((result, index) => (
-                    <motion.div key={index} variants={dropUpVariants}>
-                      <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
-                    </motion.div>
-                  ))}
+                  {!loading &&
+                    results.map((result, index) => (
+                      <motion.div key={index} variants={dropUpVariants}>
+                        <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
+                      </motion.div>
+                    ))}
                 </motion.div>
               )}
             </div>
@@ -339,24 +336,7 @@ export async function getServerSideProps(context) {
   const backend_url = process.env.BACKEND_URL;
   const search = context.query.search && context.query.search.split('%20').join(' ');
   const algo = context.query.model ? context.query.model : 'ai';
-  const mevzuatTurs = context.query.mevzuatTurs && context.query.mevzuatTurs.split(' ').map((t) => Number(t));
-  const mevzuatNo = context.query.mevzuatNo && context.query.mevzuatNo;
-  const mevzuatStartYear = context.query.mevzuatStartYear && context.query.mevzuatStartYear;
-  const mevzuatEndYear = context.query.mevzuatEndYear && context.query.mevzuatEndYear;
-  const params = { filters: { $and: {} } };
-  if (mevzuatTurs) {
-    params.filters.$and.mevzuatTur = { $in: [...mevzuatTurs] };
-  }
-  if (mevzuatNo) {
-    params.filters.$and.mevzuatNo = { $eq: mevzuatNo };
-  }
-  if (mevzuatStartYear) {
-    params.filters.$and.resmiGazeteTarihiYil = { $gte: mevzuatStartYear };
-  }
-  if (mevzuatEndYear) {
-    params.filters.$and.resmiGazeteTarihiYil = { ...params.filters.$and.resmiGazeteTarihiYil, $lte: mevzuatEndYear };
-  }
-  const body = { query: search, params };
+  const body = { query: search };
   try {
     const res = await fetch(`${backend_url}/query?model=${algo}`, {
       method: 'POST',
@@ -366,7 +346,6 @@ export async function getServerSideProps(context) {
       },
     });
     const data = await res.json();
-    console.log(data);
     return {
       props: { data, query: search, algo },
     };
