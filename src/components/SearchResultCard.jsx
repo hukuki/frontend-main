@@ -11,7 +11,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
   useEffect(() => {
     function receiveBookmarkStatus(event) {
       console.log(event);
-      if (event.source.location.origin !== event.origin) {
+      if (event.source.location.origin != event.origin) {
         return;
       }
       if (event.data.bookmark?.doc_id !== document.meta.doc_id) {
@@ -71,7 +71,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
           },
           action: 'TRUE',
         },
-        'http://localhost:3000'
+        'http://localhost:3000/'
       );
     }
   };
@@ -95,7 +95,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
           },
           action: 'FALSE',
         },
-        'http://localhost:3000'
+        'http://localhost:3000/'
       );
     }
   };

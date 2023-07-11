@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
+import { FaRegBookmark, FaBookmark, FaPlus, FaTrashAlt } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddDocumentToSpaceModal from './AddDocumentToSpaceModal';
 
-export const DashboardSpaceDetailBookmarkCard = ({ document, onCardClick }) => {
+export const DashboardSpaceDetailBookmarkCard = ({ bookmark, onCardClick, onRemove }) => {
   const { user } = useAuthContext();
-
+  const document = bookmark.document;
   const [bookmarked, setBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,6 +65,27 @@ export const DashboardSpaceDetailBookmarkCard = ({ document, onCardClick }) => {
     }
   };
 
+  const handleRemoveDocument = async () => {
+    if (user) {
+      const res = await fetch('/api/delete_bookmark_from_space', {
+        method: 'POST',
+        body: JSON.stringify({
+          accessToken: user.accessToken,
+          bookmarkId: bookmark._id,
+          spaceId: bookmark.space,
+        }),
+      });
+      const { error, data } = await res.json();
+      console.log(error);
+      console.log(data);
+      if (!error) {
+        onRemove();
+      } else {
+        console.log(error);
+      }
+    }
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -72,10 +93,7 @@ export const DashboardSpaceDetailBookmarkCard = ({ document, onCardClick }) => {
   return (
     <>
       <AddDocumentToSpaceModal open={isModalOpen} onClose={closeModal} documentId={document.metadata.doc_id} />
-      <div
-        className="border-l-4 border-blue-500 bg-white rounded-md cursor-pointer shadow-md overflow-hidden aspect-square transition-all duration-300 ease-in hover:scale-[1.02] hover:shadow-lg"
-        onClick={onCardClick}
-      >
+      <div className="border-l-4 border-blue-500 bg-white rounded-md cursor-pointer shadow-md overflow-hidden aspect-square transition-all duration-300 ease-in hover:scale-[1.02] hover:shadow-lg">
         <div className="flex flex-col gap-2 p-2">
           <div className="flex justify-between items-center">
             <span className="flex-1 text-md font-semibold tracking-tight text-blue-900 inline-block">{document.metadata.mevAdi}</span>
@@ -99,6 +117,9 @@ export const DashboardSpaceDetailBookmarkCard = ({ document, onCardClick }) => {
                 }}
               >
                 {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+              </div>
+              <div className="hover:text-blue-700" onClick={handleRemoveDocument}>
+                <FaTrashAlt />
               </div>
             </div>
           </div>

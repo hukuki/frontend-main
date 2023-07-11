@@ -85,10 +85,6 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     await getSpaces();
   };
 
-  const callback = async () => {
-    await getSpaces();
-  };
-
   if (detailedSpaceId !== null) {
     return <DashboardSpaceDetail spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
   } else {

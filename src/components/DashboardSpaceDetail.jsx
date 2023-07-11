@@ -33,6 +33,28 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
   }, [user]);
 
   const handleAddPerson = async () => {
+    const res = await fetch('/api/get_space_by_id', {
+      method: 'POST',
+      body: JSON.stringify({
+        accessToken: user.accessToken,
+        spaceId: spaceId,
+      }),
+    });
+    const { error, data } = await res.json();
+    if (!error) {
+      setSpace(data);
+      setLoading(false);
+      window.postMessage({
+        space_id: space._id,
+        action: {
+          type: 'PEOPLE',
+          payload: data.people,
+        },
+      });
+    }
+  };
+
+  const handleDocumentRemove = async () => {
     await getSpace();
   };
 
@@ -48,7 +70,7 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
           <DashboardSpaceDetailPeople onAddPerson={handleAddPerson} space={space} />
         </div>
         <div>
-          <DashboardSpaceDetailBookmarks bookmarks={space.bookmarks} />
+          <DashboardSpaceDetailBookmarks bookmarks={space.bookmarks} onRemove={handleDocumentRemove} />
         </div>
       </div>
     );

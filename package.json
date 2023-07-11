@@ -43,7 +43,8 @@
     "sass": "^1.62.1",
     "scrollreveal": "^4.0.9",
     "swr": "^2.1.0",
-    "yup": "^1.0.2"
+    "yup": "^1.0.2",
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@types/node": "^18.15.2",
