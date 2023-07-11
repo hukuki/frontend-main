@@ -1,62 +1,94 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 
-// CSS
-import styles from './SearchResultsPage.module.css';
-import { SkeletonText, Box, Progress, Button } from '@chakra-ui/react';
-import { SearchBar } from '../../components/common/search-bar';
-import { SearchResultCard } from '../../components/common/search-result-card';
-import { motion } from 'framer-motion';
+import SearchResultsSearchbar from '../../components/SearchResultsSearchbar';
+import SearchResultsNavbar from '../../components/SearchResultsNavbar';
+import SearchResultsFilters from '../../components/SearchResultsFilters';
+import SearchResultCard from '../../components/SearchResultCard';
 import { useRouter } from 'next/router';
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { FilterInput } from '../../components/common/filter-input';
-import { FilterCheckbox } from '../../components/common/filter-checkbox';
-import AddToSpaceModal from '../../components/common/add-to-space-modal/AddToSpaceModal';
-import Navbar from '../../components/common/navbar/Navbar';
+import { FaAngleDown } from 'react-icons/fa';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import clsx from 'clsx';
+import useAuthContext from '../../context/AuthContextProvider';
+import fakeResults from './fake_results';
 
-const item = {
-  hover: {
-    scale: 1.015,
+export const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
     transition: {
-      ease: 'easeOut',
-      duration: 0.5,
+      delayChildren: 0, // this will set a delay before the children start animating
+      staggerChildren: 0.3, // this will set the time inbetween children animation
     },
   },
-  tap: {
-    scale: 0.99,
+};
+export const dropUpVariants = {
+  hidden: {
+    x: '100vw',
+  },
+  visible: {
+    x: 0,
     transition: {
-      ease: 'easeOut',
-      duration: 0.5,
+      type: 'spring',
+      bounce: 0.2,
     },
   },
 };
 
+function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative z-10">
+      <button
+        className={clsx(
+          'ouline-none focus:outline-none flex items-center justify-between p-2 gap-2 hover:bg-slate-100 cursor-pointer rounded-md',
+          open && 'bg-slate-100'
+        )}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span className="text-md font-semibold text-slate-700">Search Methods</span>
+        <div className={clsx('transition-all duration-100 ease-in', open ? 'rotate-180' : 'rotate-0')}>
+          <FaAngleDown />
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="methods"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute right-0 top-5 mt-6 flex origin-top flex-col items-start gap-2 rounded-lg bg-white py-4 px-6 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+          >
+            <button className="group" onAdvancedClick={onAdvancedClick}>
+              <span className="advanced_button_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-orange-500 to-purple-900 group-hover:text-blue-500 whitespace-nowrap">
+                Advanced / AI
+              </span>
+            </button>
+            <button className="group " onClassicClick={onClassicClick}>
+              <span className="group-hover:text-blue-500">Classic</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 const SearchResultsPage = ({ data, query, algo }) => {
   const [results, setResulsts] = useState(new Array(10).fill({}));
   const [loading, setLoading] = useState(true);
-  const [addToSpaceDocumentId, setAddToSpaceDocumentId] = useState(null);
-  const [isAddToSpaceModalOpen, setIsAddToSpaceModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(query);
   const [searchAlgo, setSearchAlgo] = useState(algo);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     setResulsts(data.documents);
     setLoading(false);
   }, [data]);
-
-  const [mevzuatFilters, setMevzuatFilters] = useState({
-    kanun_khk: true,
-    teblig: true,
-    yonetmelik: true,
-  });
-
-  const [mevzuatSearchInput, setMevzuatSearchInput] = useState({
-    mevzuatNo: '',
-  });
-
-  const [mevzuatYearFilters, setMevzuatYearFilters] = useState({
-    startYear: '0',
-    endYear: new Date().getFullYear().toString(),
-  });
 
   const router = useRouter();
 
@@ -68,29 +100,43 @@ const SearchResultsPage = ({ data, query, algo }) => {
     router.push(`/search-results?model=${searchAlgo}&search=${query}`);
   };
 
-  const handleFilteredSearch = () => {
-    let filters = '';
-    let mevzuatTurs = [];
-    if (mevzuatFilters.kanun_khk) {
-      mevzuatTurs = [...mevzuatTurs, 1];
-    }
-    if (mevzuatFilters.teblig) {
-      mevzuatTurs = [...mevzuatTurs, 9];
-    }
-    if (mevzuatFilters.yonetmelik) {
-      mevzuatTurs = [...mevzuatTurs, 7];
-    }
-    if (mevzuatTurs.length > 0) {
-      filters = filters + `&mevzuatTurs=${mevzuatTurs.join(' ')}`;
-    }
-    if (mevzuatSearchInput.mevzuatNo) {
-      filters = filters + `&mevzuatNo=${mevzuatSearchInput.mevzuatNo}`;
-    }
-    filters = filters + `&mevzuatStartYear=${mevzuatYearFilters.startYear}&mevzuatEndYear=${mevzuatYearFilters.endYear}`;
-    router.push(`/search-results?model=${algo}&search=${query}${filters}`);
-  };
-
   return (
+    <LayoutGroup layout>
+      <div className="flex flex-col max-h-content bg-neutral-200 relative">
+        <div>
+          <SearchResultsNavbar divClass="md:max-w-4xl" />
+        </div>
+        <div className="relative flex flex-col-reverse lg:flex-row lg:gap-2 p-2 mx-auto md:mt-4 items-start max-w-4xl">
+          <div className="flex flex-col gap-2 md:gap-4 max-w-3xl">
+            <div className="flex flex-1 gap-4 items-center justify-center bg-white rounded-lg p-2 sticky top-2 left-0 shadow-md">
+              <div className="flex-1">
+                <SearchResultsSearchbar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} />
+              </div>
+              <div>
+                <SearchMethodsPopover onAdvancedClick={() => setSearchAlgo('ai')} onClassicClick={() => setSearchAlgo('bm25')} />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 md:gap-4">
+              <span className="mb text-slate-500 font-medium">All results {`(${results.length})`}</span>
+              {results && (
+                <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
+                  {!loading &&
+                    results.map((result, index) => (
+                      <motion.div key={index} variants={dropUpVariants}>
+                        <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
+                      </motion.div>
+                    ))}
+                </motion.div>
+              )}
+            </div>
+          </div>
+          <motion.div className="w-full lg:w-12 lg:h- block lg:sticky lg:left-0 lg:top-2 mb-2 box-border">
+            <SearchResultsFilters />
+          </motion.div>
+        </div>
+      </div>
+    </LayoutGroup>
+    /*
     <>
       {isAddToSpaceModalOpen && <AddToSpaceModal documentId={addToSpaceDocumentId} setIsOpen={setIsAddToSpaceModalOpen} />}
       <div className={styles.container}>
@@ -282,6 +328,7 @@ const SearchResultsPage = ({ data, query, algo }) => {
         </div>
       </div>
     </>
+    */
   );
 };
 
@@ -289,24 +336,7 @@ export async function getServerSideProps(context) {
   const backend_url = process.env.BACKEND_URL;
   const search = context.query.search && context.query.search.split('%20').join(' ');
   const algo = context.query.model ? context.query.model : 'ai';
-  const mevzuatTurs = context.query.mevzuatTurs && context.query.mevzuatTurs.split(' ').map((t) => Number(t));
-  const mevzuatNo = context.query.mevzuatNo && context.query.mevzuatNo;
-  const mevzuatStartYear = context.query.mevzuatStartYear && context.query.mevzuatStartYear;
-  const mevzuatEndYear = context.query.mevzuatEndYear && context.query.mevzuatEndYear;
-  const params = { filters: { $and: {} } };
-  if (mevzuatTurs) {
-    params.filters.$and.mevzuatTur = { $in: [...mevzuatTurs] };
-  }
-  if (mevzuatNo) {
-    params.filters.$and.mevzuatNo = { $eq: mevzuatNo };
-  }
-  if (mevzuatStartYear) {
-    params.filters.$and.resmiGazeteTarihiYil = { $gte: mevzuatStartYear };
-  }
-  if (mevzuatEndYear) {
-    params.filters.$and.resmiGazeteTarihiYil = { ...params.filters.$and.resmiGazeteTarihiYil, $lte: mevzuatEndYear };
-  }
-  const body = { query: search, params };
+  const body = { query: search };
   try {
     const res = await fetch(`${backend_url}/query?model=${algo}`, {
       method: 'POST',

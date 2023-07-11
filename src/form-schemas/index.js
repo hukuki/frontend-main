@@ -35,5 +35,5 @@ export const LoginSchema = yup.object().shape({
 
 export const SpaceSchema = yup.object().shape({
   name: yup.string().required('Lütfen bir proje ismi giriniz'),
-  description: yup.string(),
+  description: yup.string().required(),
 });

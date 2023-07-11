@@ -1,27 +1,35 @@
-import React from 'react';
-
-import { Flex } from '../components/base/layout';
-import { Button } from '../components/base/forms';
-
-import { useRouter } from 'next/router';
-import useAuthContext from '../context/AuthContextProvider';
-import { Avatar, Menu, MenuButton, MenuList, MenuItem, Spinner } from '@chakra-ui/react';
-import styles from './HomePage.module.css';
+import Head from 'next/head';
+import { Header } from '../components/HomePageHeader';
+import Hero from '../components/HomePageHero';
+import HomePagePrimaryFeatures from '../components/HomePagePrimaryFeatures';
+import HomePageCallToAction from '../components/HomePageCallToAction';
+import HomePageTestimonials from '../components/HomePageTestimonials';
+import HomePageFAQ from '../components/HomePageFAQ';
+import Footer from '../components/Footer';
+import HomePageProduct from '../components/HomePageProduct';
 
 export default function Home() {
-  const router = useRouter();
-
-  const { user, loading, signOutWithGoogle } = useAuthContext();
-
-  const handleLogout = async () => {
-    await signOutWithGoogle(null);
-  };
-
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
   return (
+    <>
+      <Head>
+        <title>CaseVisor - Search the way you think</title>
+        <meta
+          name="description"
+          content="Document search is essential but traditional tools use keyword search. We use artificial intelligence to provider faster and more accurate searching experience."
+        />
+      </Head>
+      <Header />
+      <main>
+        <Hero />
+        <HomePagePrimaryFeatures />
+        <HomePageProduct />
+        <HomePageCallToAction />
+        <HomePageTestimonials />
+        <HomePageFAQ />
+      </main>
+      <Footer />
+    </>
+    /*
     <>
       <div className={styles.container}>
         <div className={styles.navbar__container}>
@@ -38,7 +46,8 @@ export default function Home() {
           </div>
           {loading ? (
             <Spinner size="xl" />
-          ) : user ? (
+          ) :
+           ? (
             <Menu>
               <MenuButton>
                 <Avatar size="xl" src={user.photoURL} />
@@ -86,5 +95,7 @@ export default function Home() {
         </Flex>
       </div>
     </>
+  );
+  */
   );
 }

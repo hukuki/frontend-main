@@ -1,176 +1,66 @@
-/***
-    The new CSS reset - version 1.8.4 (last updated 14.2.2023)
-    GitHub page: https://github.com/elad2412/the-new-css-reset
-***/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/*
-    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
-    - The "symbol *" part is to solve Firefox SVG sprite bug
- */
-*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
-  all: unset;
-  display: revert;
+#__next {
+  min-height: 100%;
 }
 
-/* Preferred box-sizing value */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+.search_on_deeplex_animate {
+  background: linear-gradient(-45deg, #38bdf8, #3b82f6, #6366f1 #8b5cf6);
+  background-size: 400% 400%;
+  animation: search_on_deeplex_animate 20s ease infinite;
+  -webkit-animation: search_on_deeplex_animate 2s ease infinite;
+  -moz-animation: search_on_deeplex_animate 2s ease infinite;
 }
 
-/* Reapply the pointer cursor for anchor tags */
-a,
-button {
-  cursor: revert;
+@keyframes search_on_deeplex_animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Remove list styles (bullets/numbers) */
-ol,
-ul,
-menu {
-  list-style: none;
+.advanced_button_animate {
+  background-size: 400%;
+
+  -webkit-animation: advanced_button_animate 3s ease infinite;
+  -moz-animation: advanced_button_animate 3s ease infinite;
+  animation: advanced_button_animate 3s ease infinite;
 }
 
-/* For images to not be able to exceed their container */
-img {
-  max-inline-size: 100%;
-  max-block-size: 100%;
+@keyframes advanced_button_animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* removes spacing between cells in tables */
-table {
-  border-collapse: collapse;
+.logo_animate {
+  background-size: 400% 400%;
+  animation: logo_animate 20s ease infinite;
+  -webkit-animation: logo_animate 2s ease infinite;
+  -moz-animation: logo_animate 2s ease infinite;
 }
 
-/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
-input,
-textarea {
-  -webkit-user-select: auto;
-}
-
-/* revert the 'white-space' property for textarea elements on Safari */
-textarea {
-  white-space: revert;
-}
-
-/* minimum style to allow to style meter element */
-meter {
-  -webkit-appearance: revert;
-  appearance: revert;
-}
-
-/* preformatted text - use only for this feature */
-:where(pre) {
-  all: revert;
-}
-
-/* reset default text opacity of input placeholder */
-::placeholder {
-  color: unset;
-}
-
-/* remove default dot (•) sign */
-::marker {
-  content: initial;
-}
-
-/* fix the feature of 'hidden' attribute.
-   display:revert; revert to element instead of attribute */
-:where([hidden]) {
-  display: none;
-}
-
-/* revert for bug in Chromium browsers
-   - fix for the content editable attribute will work properly.
-   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
-:where([contenteditable]:not([contenteditable='false'])) {
-  -moz-user-modify: read-write;
-  -webkit-user-modify: read-write;
-  overflow-wrap: break-word;
-  -webkit-line-break: after-white-space;
-  -webkit-user-select: auto;
-}
-
-/* apply back the draggable feature - exist only in Chromium and Safari */
-:where([draggable='true']) {
-  -webkit-user-drag: element;
-}
-
-/* Revert Modal native behavior */
-:where(dialog:modal) {
-  all: revert;
-}
-
-:root {
-  --color-blue-50: #def4ff;
-  --color-blue-100: #b0ddff;
-  --color-blue-200: #82c5fc;
-  --color-blue-300: #52adf7;
-  --color-blue-400: #2596f4;
-  --color-blue-500: #0b7dda;
-  --color-blue-600: #0061ab;
-  --color-blue-700: #00457b;
-  --color-blue-800: #002a4d;
-  --color-blue-900: #000f1f;
-  --background-color-dark: #000;
-  --background-color-light: #fafafa;
-
-  --container-color-dark: #0d0d0d;
-  --container-color-light: #ffffff;
-
-  --text-color-primary-light: #ffffff;
-  --text-color-secondary-light: #e6e6e6;
-  --text-color-ternary-light: #cccccc;
-  --text-color-primary-dark: #000f1f;
-  --text-color-secondary-dark: #002752;
-  --text-color-ternary-dark: #004085;
-
-  --color-grey-50: #f1f1f3;
-  --color-grey-100: #d5d5d7;
-  --color-grey-200: #bababe;
-  --color-grey-300: #9f9fa6;
-  --color-grey-400: #83838e;
-  --color-grey-500: #696974;
-  --color-grey-600: #52525a;
-  --color-grey-700: #3b3b40;
-  --color-grey-800: #232326;
-  --color-grey-900: #0c0c0e;
-
-  /* TODO: Change the Error color for different types: Text and Box */
-
-  --error-box-dark: #cc6666;
-  --error-text-dark: #cc6666;
-}
-
-/* Additional custom features */
-* {
-  font-size: 62.5%;
-}
-
-html,
-body,
-body > div:first-of-type {
-  /* the div is the root div (id="__next") */
-  height: 100%;
-  scrollbar-gutter: auto;
-  background-color: #000;
-}
-
-/* Customize scrollbar */
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #e9ebee;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  background-color: #e9ebee;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  width: 20px;
-  background-color: #c4c4c4;
-  border-radius: 10px;
+@keyframes logo_animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
