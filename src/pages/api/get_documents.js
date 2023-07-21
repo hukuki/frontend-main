@@ -9,9 +9,9 @@ export default async function handler(req, res) {
       })
     );
   }
-  const { accessToken, userId } = JSON.parse(req.body);
+  const { accessToken } = JSON.parse(req.body);
   try {
-    const response = await fetch(`${backend_url}/users/${userId}`, {
+    const response = await fetch(`${backend_url}/documents`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

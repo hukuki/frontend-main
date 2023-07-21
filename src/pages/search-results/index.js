@@ -9,31 +9,7 @@ import { FaAngleDown } from 'react-icons/fa';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
 import useAuthContext from '../../context/AuthContextProvider';
-
-export const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0, // this will set a delay before the children start animating
-      staggerChildren: 0.3, // this will set the time inbetween children animation
-    },
-  },
-};
-export const dropUpVariants = {
-  hidden: {
-    x: '100vw',
-  },
-  visible: {
-    x: 0,
-    transition: {
-      type: 'spring',
-      bounce: 0.2,
-    },
-  },
-};
+import SearchResultCardsContainer from '../../components/SearchResultCardsContainer';
 
 function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
   const [open, setOpen] = useState(false);
@@ -87,13 +63,10 @@ const SearchResultsPage = ({ data, query, algo }) => {
   useEffect(() => {
     setResulsts(data.documents);
     setLoading(false);
+    console.log(data);
   }, [data]);
 
   const router = useRouter();
-
-  const handleCardClick = (id) => {
-    router.push(`/document/${id}`);
-  };
 
   const handleSearchSubmit = (query) => {
     router.push(`/search-results?model=${searchAlgo}&search=${query}`);
@@ -116,16 +89,11 @@ const SearchResultsPage = ({ data, query, algo }) => {
               </div>
             </div>
             <div className="flex flex-col gap-2 md:gap-4">
-              <span className="mb text-slate-500 font-medium">All results {`(${results.length})`}</span>
-              {results && (
-                <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
-                  {!loading &&
-                    results.map((result, index) => (
-                      <motion.div key={index} variants={dropUpVariants}>
-                        <SearchResultCard onCardClick={() => handleCardClick(result.meta.doc_id)} document={result} onAddToSpace={() => {}} />
-                      </motion.div>
-                    ))}
-                </motion.div>
+              {!loading && results && (
+                <>
+                  <span className="mb text-slate-500 font-medium">All results {`(${results.length})`}</span>
+                  <SearchResultCardsContainer results={results} />
+                </>
               )}
             </div>
           </div>

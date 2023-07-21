@@ -1,38 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddDocumentToSpaceModal from './AddDocumentToSpaceModal';
+import { useBookmarkStore } from '../store/bookmarkStore';
 
 export const SearchResultCard = ({ document, onCardClick }) => {
   const { user } = useAuthContext();
-  const [bookmarked, setBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const bookmarkStates = useBookmarkStore((state) => state.documentBookmarks);
+  const changeBookmarkState = useBookmarkStore((state) => state.changeBookmarkState);
+
+  const isBookmarked = useMemo(() => {
+    if (bookmarkStates) {
+      return bookmarkStates.get(document.meta.doc_id);
+    }
+  }, [bookmarkStates]);
 
   useEffect(() => {
     console.log(document);
   });
-
-  useEffect(() => {
-    function receiveBookmarkStatus(event) {
-      console.log(event);
-      if (event.source.location.origin != event.origin) {
-        return;
-      }
-      if (event.data.bookmark?.doc_id !== document.meta.doc_id) {
-        return;
-      }
-      if (event.data.action === 'TRUE') {
-        setBookmarked(true);
-      }
-      if (event.data.action === 'FALSE') {
-        setBookmarked(false);
-      }
-    }
-    window.addEventListener(`message`, receiveBookmarkStatus);
-    return () => {
-      window.removeEventListener(`message`, receiveBookmarkStatus);
-    };
-  }, []);
 
   useEffect(() => {
     async function fetchBookmarkStatus() {
@@ -46,7 +32,9 @@ export const SearchResultCard = ({ document, onCardClick }) => {
       const { error, data } = await res.json();
       console.log(data);
       if (!error && data.length > 0) {
-        setBookmarked(true);
+        console.log('DATA');
+        console.log(data);
+        changeBookmarkState(document.meta.doc_id, data);
       }
     }
     if (user) {
@@ -67,16 +55,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
     console.log(data);
     console.log(error);
     if (!error) {
-      setBookmarked(true);
-      window.postMessage(
-        {
-          bookmark: {
-            doc_id: document.meta.doc_id,
-          },
-          action: 'TRUE',
-        },
-        'http://localhost:3000/'
-      );
+      changeBookmarkState(document.meta.doc_id, true);
     }
   };
 
@@ -91,16 +70,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
     });
     const { error, data } = await res.json();
     if (!error) {
-      setBookmarked(false);
-      window.postMessage(
-        {
-          bookmark: {
-            doc_id: document.meta.doc_id,
-          },
-          action: 'FALSE',
-        },
-        'http://localhost:3000/'
-      );
+      changeBookmarkState(document.meta.doc_id, false);
     }
   };
 
@@ -128,14 +98,14 @@ export const SearchResultCard = ({ document, onCardClick }) => {
                 <div
                   className="hover:text-blue-700"
                   onClick={(e) => {
-                    if (bookmarked) {
+                    if (isBookmarked) {
                       handleRemoveBookmark(e);
                     } else {
                       handleAddBookmark(e);
                     }
                   }}
                 >
-                  {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+                  {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
                 </div>
               </div>
             </div>

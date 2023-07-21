@@ -26,7 +26,7 @@ function CreateNewSpaceModal({ open, onClose, onSubmit }) {
         accessToken: user.accessToken,
         name: projectName,
         description,
-        people: peopleIds,
+        peopleIds,
       }),
     });
     console.log(response);
@@ -36,12 +36,13 @@ function CreateNewSpaceModal({ open, onClose, onSubmit }) {
     if (!error) {
       console.log(data);
     }
+    resetForm();
     onSubmit();
     onClose();
     setLoading(false);
   };
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
     initialValues: {
       name: '',
       description: '',

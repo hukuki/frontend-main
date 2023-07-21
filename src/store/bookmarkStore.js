@@ -1,18 +1,18 @@
 import { create } from 'zustand';
 
 const store = (set) => ({
-  bookmarks: [],
-  addBookmark: (bookmark) => set((state) => ({ bookmarks: state.bookmarks.push(bookmark) })),
-  removeBookmark: (bookmarkId) =>
-    set((state) => ({
-      bookmarks: state.bookmarks.filter((bookmark) => {
-        if (bookmark._id === bookmarkId) {
-          return false;
-        }
-        return true;
-      }),
-    })),
-  setBookmarks: (bookmarks) => set({ bookmarks: bookmarks }),
+  documentBookmarks: new Map(),
+  changeBookmarkState: (documentId, newState) => set((state) => state.documentBookmarks.set(documentId, newState)),
+  initiateBookmarks: (documentIds) =>
+    set((state) => {
+      const newMap = new Map();
+      for (let documentId in documentIds) {
+        newMap.set(documentId, false);
+      }
+      return {
+        documentBookmarks: newMap,
+      };
+    }),
 });
 
 export const useBookmarkStore = create(store);

@@ -1,34 +1,57 @@
 const backend_url = process.env.BACKEND_URL;
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(400).send('Invalid operation');
+  if (req.method !== 'POST') {
+    return res.status(400).send(
+      JSON.stringify({
+        error: 'Invalid operation',
+        data: null,
+      })
+    );
+  }
+  const { name, description, peopleIds, accessToken } = JSON.parse(req.body);
   try {
-    const { name, people, accessToken } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/spaces/`, {
+    let response = await fetch(`${backend_url}/spaces`, {
       method: 'POST',
       body: JSON.stringify({
         name,
-        people,
+        description,
       }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const data = await response.json();
+    let data = await response.json();
+    const peopleToAdd = peopleIds.map((id) => {
+      return {
+        user: id,
+      };
+    });
+    response = await fetch(`${backend_url}/spaces/${data._id}/users`, {
+      method: 'POST',
+      body: JSON.stringify({
+        people: peopleToAdd,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    data = await response.json();
     console.log(data);
     res.send(
       JSON.stringify({
-        error: null,
         data,
+        error: null,
       })
     );
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     res.status(500).send(
       JSON.stringify({
-        error: err,
         data: null,
+        error,
       })
     );
   }

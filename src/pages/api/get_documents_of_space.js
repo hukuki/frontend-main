@@ -1,10 +1,17 @@
 const backend_url = process.env.BACKEND_URL;
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(400).send('Invalid operation!');
+  if (req.method !== 'POST') {
+    return res.status(400).send(
+      JSON.stringify({
+        error: 'Invalid operation',
+        data: null,
+      })
+    );
+  }
+  const { spaceId, accessToken } = JSON.parse(req.body);
   try {
-    const { accessToken, query, currentUserEmail } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/users`, {
+    const response = await fetch(`${backend_url}/spaces/${spaceId}/documents`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -12,23 +19,18 @@ export default async function handler(req, res) {
       },
     });
     const data = await response.json();
-    const people = data.filter((user) => {
-      if (currentUserEmail !== user.email && user.email.startsWith(query)) {
-        return true;
-      }
-    });
-    console.log(people);
     res.send(
       JSON.stringify({
+        data,
         error: null,
-        data: people,
       })
     );
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     res.status(500).send(
       JSON.stringify({
-        error: err,
         data: null,
+        error,
       })
     );
   }

@@ -49,6 +49,7 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     const { error, data } = await response.json();
     if (!error) {
       setAllSpaces(data);
+      console.log(data);
       setLoading(false);
     }
   }
@@ -93,25 +94,26 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
         <div>
           <DashboardSpacesSearchbar onSubmit={handleSearchTermChange} onSearchChange={handleSearchTermChange} />
         </div>
-        {filteredSpaces.length > 0 && (
-          <motion.div
-            layout="position"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
-          >
-            <CreateNewSpaceCard onSubmit={handleNewSpaceCreated} />
-            {filteredSpaces.map((space, index) => {
+
+        <motion.div
+          layout="position"
+          viewport={{ once: true }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
+        >
+          <CreateNewSpaceCard onSubmit={handleNewSpaceCreated} />
+
+          {filteredSpaces.length > 0 &&
+            filteredSpaces.map((space, index) => {
               return (
                 <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpaceId(space._id)}>
                   <DashboardSpaceCard space={space} />
                 </motion.div>
               );
             })}
-          </motion.div>
-        )}
+        </motion.div>
       </LayoutGroup>
     );
   }
