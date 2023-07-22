@@ -5,6 +5,7 @@ import DashboardSpaceCard from './DashboardSpaceCard';
 import DashboardSpaceDetail from './DashboardSpaceDetail';
 import CreateNewSpaceCard from './CreateNewSpaceCard';
 import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
+import useSpaceStore from '../store/spaceStore';
 
 const containerVariants = {
   hidden: {
@@ -34,10 +35,10 @@ const itemVariants = {
 
 function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
   const { user } = useAuthContext();
-  const [allSpaces, setAllSpaces] = useState([]);
+  const spaces = useSpaceStore((state) => state.spaces);
+  const setSpaces = useSpaceStore((state) => state.setSpaces);
   const [filteredSpaces, setFilteredSpaces] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [detailedSpaceId, setDetailedSpaceId] = useState(null);
+  const [detailedSpace, setDetailedSpace] = useState(null);
 
   async function getSpaces() {
     const response = await fetch('/api/get_spaces', {
@@ -48,9 +49,7 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     });
     const { error, data } = await response.json();
     if (!error) {
-      setAllSpaces(data);
-      console.log(data);
-      setLoading(false);
+      setSpaces(data);
     }
   }
 
@@ -60,14 +59,19 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     }
   }, [user]);
 
+  useEffect(() => {
+    console.log(spaces);
+  }, [spaces]);
+
   const [filterTerm, setFilterTerm] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (filterTerm === '') {
-        setFilteredSpaces(allSpaces);
+        // Take a look at this Array.from to refactor
+        setFilteredSpaces(Array.from(spaces.values()));
       } else {
-        let searchedSpaces = allSpaces.filter((space) => {
+        let searchedSpaces = Array.from(spaces.values()).filter((space) => {
           if (space.name.toLowerCase().includes(filterTerm.toLowerCase())) {
             return true;
           }
@@ -76,18 +80,14 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [filterTerm, allSpaces]);
+  }, [filterTerm, spaces]);
 
   const handleSearchTermChange = (term) => {
     setFilterTerm(term);
   };
 
-  const handleNewSpaceCreated = async () => {
-    await getSpaces();
-  };
-
-  if (detailedSpaceId !== null) {
-    return <DashboardSpaceDetail spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
+  if (detailedSpace !== null) {
+    return <DashboardSpaceDetail space={detailedSpace} onBackClick={() => setDetailedSpace(null)} />;
   } else {
     return (
       <LayoutGroup layout>
@@ -103,12 +103,12 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
           animate="visible"
           className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
         >
-          <CreateNewSpaceCard onSubmit={handleNewSpaceCreated} />
+          <CreateNewSpaceCard />
 
           {filteredSpaces.length > 0 &&
             filteredSpaces.map((space, index) => {
               return (
-                <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpaceId(space._id)}>
+                <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpace(space)}>
                   <DashboardSpaceCard space={space} />
                 </motion.div>
               );
@@ -117,56 +117,6 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
       </LayoutGroup>
     );
   }
-
-  /*
-  if (detailedSpaceId) {
-    return <DashboardSpaceDetail callback={callback} spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
-  } else {
-    return (
-      <>
-        <div className={styles.spaces_search_button__container}>
-          <DashboardSearchbar onSubmit={handleSearchTermChange} onSearchTermChanged={handleSearchTermChange} />
-        </div>
-        <div className={styles.space_cards_container}>
-          <CreateSpaceCard onSubmit={handleNewSpaceCreated} />
-          {loading ? (
-            <>
-              {new Array(20).fill({}).map((item) => {
-                return <SkeletonSpaceCard />;
-              })}
-            </>
-          ) : (
-            <>
-              {filteredSpaces.length > 0 &&
-                filteredSpaces.map((space, index) => {
-                  return (
-                    <motion.div
-                      variants={item}
-                      whileHover="hover"
-                      zIndex={-1}
-                      onClick={() => {
-                        setDetailedSpaceId(space._id);
-                      }}
-                    >
-                      <SpaceCard
-                        reveal={{
-                          duration: 500,
-                          delay: 350,
-                          reset: true,
-                        }}
-                        key={index}
-                        space={space}
-                      />
-                    </motion.div>
-                  );
-                })}
-            </>
-          )}
-        </div>
-      </>
-    );
-  }
-  */
 }
 
 export default DashboardSpacesContainer;

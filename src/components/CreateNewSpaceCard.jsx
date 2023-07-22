@@ -7,7 +7,7 @@ function CreateNewSpaceCard({ onSubmit, divClass, ...props }) {
 
   return (
     <>
-      <CreateNewSpaceModal open={isOpen} onClose={() => setIsOpen(false)} onSubmit={onSubmit} />
+      <CreateNewSpaceModal open={isOpen} onClose={() => setIsOpen(false)} />
       <div
         className={clsx(
           'flex flex-col items-center justify-center gap-2 hover:scale-105 transition duration-100 ease-in cursor-pointer',

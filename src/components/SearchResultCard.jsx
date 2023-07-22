@@ -2,13 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddDocumentToSpaceModal from './AddDocumentToSpaceModal';
-import { useBookmarkStore } from '../store/bookmarkStore';
 
 export const SearchResultCard = ({ document, onCardClick }) => {
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const bookmarkStates = useBookmarkStore((state) => state.documentBookmarks);
-  const changeBookmarkState = useBookmarkStore((state) => state.changeBookmarkState);
 
   const isBookmarked = useMemo(() => {
     if (bookmarkStates) {

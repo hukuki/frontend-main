@@ -5,41 +5,39 @@ import clsx from 'clsx';
 import { useFormik } from 'formik';
 import { SpaceSchema } from '../form-schemas/index';
 import CreateNewSpacePeopleSearchbar from './CreateNewSpacePeopleSearchbar';
+import useSpaceStore from '../store/spaceStore';
 
-function CreateNewSpaceModal({ open, onClose, onSubmit }) {
+function CreateNewSpaceModal({ open, onClose }) {
   const { user } = useAuthContext();
   const [peopleToShare, setPeopleToShare] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const addSpace = useSpaceStore((state) => state.addSpace);
 
   const handlePeopleListChange = (newPeopleList) => {
     setPeopleToShare(newPeopleList);
   };
 
   const handleCreateSpace = async (values, actions) => {
-    setLoading(true);
     const projectName = values.name;
     const description = values.description;
-    const peopleIds = peopleToShare.map((person) => person._id);
+    const people = peopleToShare.map((p) => ({
+      user: p._id,
+      role: 'observer',
+    }));
     const response = await fetch('/api/create_space', {
       method: 'POST',
       body: JSON.stringify({
         accessToken: user.accessToken,
         name: projectName,
         description,
-        peopleIds,
+        people,
       }),
     });
-    console.log(response);
     const { error, data } = await response.json();
-    console.log(error);
-    console.log(data);
     if (!error) {
-      console.log(data);
+      addSpace(data);
     }
     resetForm();
-    onSubmit();
     onClose();
-    setLoading(false);
   };
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({

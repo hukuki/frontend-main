@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       })
     );
   }
-  const { name, description, peopleIds, accessToken } = JSON.parse(req.body);
+  const { name, description, people, accessToken } = JSON.parse(req.body);
   try {
     let response = await fetch(`${backend_url}/spaces`, {
       method: 'POST',
@@ -23,15 +23,11 @@ export default async function handler(req, res) {
       },
     });
     let data = await response.json();
-    const peopleToAdd = peopleIds.map((id) => {
-      return {
-        user: id,
-      };
-    });
+
     response = await fetch(`${backend_url}/spaces/${data._id}/users`, {
       method: 'POST',
       body: JSON.stringify({
-        people: peopleToAdd,
+        people: people,
       }),
       headers: {
         'Content-Type': 'application/json',
