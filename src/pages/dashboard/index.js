@@ -76,7 +76,7 @@ function MobileSidebarIcon({ open }) {
   );
 }
 
-function MobileSidebar() {
+function MobileSidebar({ activeLink, setActiveLink }) {
   const { user, signOutWithGoogle } = useAuthContext();
   const router = useRouter();
 
@@ -121,6 +121,7 @@ function MobileSidebar() {
                   <>
                     <hr className="m-2 border-slate-300/40" />
                     <DashboardSidebarButton
+                      onClick={() => router.push('/search')}
                       divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
                       section={section}
                       textClass="search_on_deeplex_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
@@ -136,7 +137,7 @@ function MobileSidebar() {
                   </div>
                 );
               }
-              return <DashboardSidebarButton section={section} />;
+              return <DashboardSidebarButton section={section} onClick={() => setActiveLink(section.name)} />;
             })}
           </Popover.Panel>
         </Transition.Child>
@@ -150,23 +151,6 @@ function DashboardPage() {
   const [activeLink, setActiveLink] = useState('Projects');
   const router = useRouter();
 
-  const changeActiveLink = (name) => {
-    switch (name) {
-      case 'Profile':
-        setActiveLink('Profile');
-        break;
-      case 'Saved Documents':
-        setActiveLink('Saved Documents');
-        break;
-      case 'Projects':
-        setActiveLink('Projects');
-        break;
-      case 'saved':
-        setActiveLink('saved');
-        break;
-    }
-  };
-
   const handleLogout = async () => {
     await signOutWithGoogle();
     router.push('/');
@@ -174,15 +158,15 @@ function DashboardPage() {
 
   return (
     <div className="flex flex-col md:flex-row bg-neutral-100">
-      <div className="group/outer transition-all duration-300 hidden bg-neutral-950 md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
+      <div className="group/outer transition-all duration-300 hidden bg-white md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
         <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block">
           <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
-          <hr className="mt-4 border-slate-500/30" />
+          <hr className="mt-4 border-slate-900/30" />
         </div>
         <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
           <span className="text-4xl text-blue-500">c</span>
           <span className="text-4xl text-violet-500">s</span>
-          <hr className="mt-4 border-slate-500/30" />
+          <hr className="mt-4 border-slate-900/30" />
         </div>
         <div className="flex-1 w-full flex flex-col gap-y-4">
           {sections.map((section, index) => {
@@ -206,8 +190,8 @@ function DashboardPage() {
                   <DashboardSidebarButton
                     divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
                     section={section}
-                    textClass="text-white whitespace-nowrap group-hover:text-slate-300 hidden group-hover/outer:block  lg:block"
-                    iconClass="text-white group-hover:text-slate-300"
+                    textClass="text-slate-900 whitespace-nowrap group-hover:text-slate-600 hidden group-hover/outer:block  lg:block"
+                    iconClass="text-slate-900 group-hover:text-slate-600"
                   />
                 </div>
               );
@@ -218,10 +202,13 @@ function DashboardPage() {
                   'hover:bg-blue-500 justify-center group-hover/outer:justify-start lg:justify-start',
                   activeLink === section.name ? 'bg-blue-500' : 'bg-transparent'
                 )}
-                onClick={() => changeActiveLink(section.name)}
+                onClick={() => setActiveLink(section.name)}
                 section={section}
-                textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
-                iconClass="text-white group-hover:text-slate-100"
+                textClass={clsx(
+                  'whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block',
+                  activeLink === section.name ? 'text-white' : 'text-slate-900'
+                )}
+                iconClass={clsx('group-hover:text-slate-100', activeLink === section.name ? 'text-white' : 'text-slate-400')}
               />
             );
           })}
@@ -229,7 +216,7 @@ function DashboardPage() {
       </div>
       <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow-md">
         <div className="ml-2">
-          <MobileSidebar />
+          <MobileSidebar activeLink={activeLink} setActiveLink={setActiveLink} />
         </div>
         <div>
           <Logo className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" />
