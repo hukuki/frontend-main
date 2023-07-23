@@ -113,32 +113,50 @@ function MobileSidebar({ activeLink, setActiveLink }) {
         >
           <Popover.Panel
             as="div"
-            className="absolute inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+            className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
-            {sections.map((section, index) => {
-              if (index === 3) {
-                return (
-                  <>
-                    <hr className="m-2 border-slate-300/40" />
+            {({ close }) => (
+              <>
+                {sections.map((section, index) => {
+                  if (index === 3) {
+                    return (
+                      <>
+                        <hr className="m-2 border-slate-300/40" />
+                        <DashboardSidebarButton
+                          onClick={() => {
+                            close();
+                            router.push('/search');
+                          }}
+                          divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
+                          section={section}
+                          textClass="search_on_deeplex_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
+                        />
+                      </>
+                    );
+                  }
+                  if (index === 4) {
+                    return (
+                      <div onClick={handleLogout}>
+                        <hr className="m-2 border-slate-300/40" />
+                        <DashboardSidebarButton section={section} />
+                      </div>
+                    );
+                  }
+                  return (
                     <DashboardSidebarButton
-                      onClick={() => router.push('/search')}
-                      divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
                       section={section}
-                      textClass="search_on_deeplex_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
+                      divClass={clsx('', activeLink === section.name ? 'bg-blue-500' : 'bg-transparent')}
+                      textClass={clsx('', activeLink === section.name ? 'text-white' : 'text-slate-400')}
+                      iconClass={clsx('', activeLink === section.name ? 'text-white' : 'text-slate-400')}
+                      onClick={() => {
+                        setActiveLink(section.name);
+                        close();
+                      }}
                     />
-                  </>
-                );
-              }
-              if (index === 4) {
-                return (
-                  <div onClick={handleLogout}>
-                    <hr className="m-2 border-slate-300/40" />
-                    <DashboardSidebarButton section={section} />
-                  </div>
-                );
-              }
-              return <DashboardSidebarButton section={section} onClick={() => setActiveLink(section.name)} />;
-            })}
+                  );
+                })}
+              </>
+            )}
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -157,8 +175,8 @@ function DashboardPage() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-neutral-100">
-      <div className="group/outer transition-all duration-300 hidden bg-white md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
+    <div className="flex flex-col md:flex-row bg-neutral-50 h-full">
+      <div className="group/outer transition-all duration-300 hidden bg-white shadow-2xl md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
         <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block">
           <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
           <hr className="mt-4 border-slate-900/30" />

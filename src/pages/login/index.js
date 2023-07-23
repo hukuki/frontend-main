@@ -147,20 +147,19 @@ function LoginPage() {
             <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
           ) : (
             <div>
-              <Button
+              <button
                 disabled={isAnyErrors}
-                type="submit"
-                variant="solid"
-                color="blue"
                 className={clsx(
-                  'w-full rounded-lg mt-2',
-                  isAnyErrors ? 'bg-blue-200 hover:bg-blue-200 hover:text-white cursor-default active:bg-blue-200 active:text-white' : 'bg-blue-500'
+                  'w-full rounded-lg mt-2 group inline-flex items-center justify-center py-2 px-4 text-xl font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2',
+                  isAnyErrors
+                    ? 'bg-blue-200 text-white/90 hover:bg-blue-200 cursor-default'
+                    : 'bg-blue-600 cursor-pointer text-white hover:bg-blue-500 hover:text-slate-100 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600'
                 )}
               >
                 <span className="text-lg">
                   Sign in <span>&rarr;</span>
                 </span>
-              </Button>
+              </button>
             </div>
           )}
         </form>
@@ -174,7 +173,7 @@ function LoginPage() {
           <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
         ) : (
           <div className="mt-4">
-            <Button onClick={() => handleGoogleLogin()} variant="solid" color="blue" className="w-full text-xl rounded-lg font-[200]">
+            <Button onClick={() => handleGoogleLogin()} variant="solid" color="blue" className="w-full text-xl rounded-lg">
               <span>Sign in with Google</span>
             </Button>
           </div>
