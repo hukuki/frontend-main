@@ -14,7 +14,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      delayChildren: 0, // this will set a delay before the children start animating
+      delayChildren: 0.3, // this will set a delay before the children start animating
       staggerChildren: 0.08, // this will set the time inbetween children animation
     },
   },
@@ -29,6 +29,36 @@ const itemVariants = {
     transition: {
       type: 'spring',
       bounce: 0,
+    },
+  },
+};
+
+const detailedSpaceVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+
+const spacesContainerVariants = {
+  initial: {
+    opacity: 0,
+  },
+  exit: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
     },
   },
 };
@@ -82,37 +112,41 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     setFilterTerm(term);
   };
 
-  if (detailedSpace !== null) {
-    return <DashboardSpaceDetail space={detailedSpace} onBackClick={() => setDetailedSpace(null)} />;
-  } else {
-    return (
-      <LayoutGroup layout>
-        <div>
-          <DashboardSpacesSearchbar onSubmit={handleSearchTermChange} onSearchChange={handleSearchTermChange} />
-        </div>
-
-        <motion.div
-          layout="position"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
-        >
-          <CreateNewSpaceCard />
-
-          {filteredSpaces.length > 0 &&
-            filteredSpaces.map((space, index) => {
-              return (
-                <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpace(space)}>
-                  <DashboardSpaceCard space={space} />
-                </motion.div>
-              );
-            })}
+  return (
+    <AnimatePresence>
+      {detailedSpace !== null ? (
+        <motion.div key="detailed_space" variants={detailedSpaceVariants} initial="initial" animate="animate" exit="exit">
+          <DashboardSpaceDetail space={detailedSpace} onBackClick={() => setDetailedSpace(null)} />
         </motion.div>
-      </LayoutGroup>
-    );
-  }
+      ) : (
+        <motion.div key="spaces_container" variants={spacesContainerVariants} exit="exit" animate="animate" initial="initial">
+          <div>
+            <DashboardSpacesSearchbar key="searchbar" onSubmit={handleSearchTermChange} onSearchChange={handleSearchTermChange} />
+          </div>
+
+          <motion.div
+            layout="position"
+            viewport={{ once: true }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
+          >
+            <CreateNewSpaceCard key="create" />
+
+            {filteredSpaces.length > 0 &&
+              filteredSpaces.map((space, index) => {
+                return (
+                  <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpace(space)}>
+                    <DashboardSpaceCard space={space} />
+                  </motion.div>
+                );
+              })}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 export default DashboardSpacesContainer;
