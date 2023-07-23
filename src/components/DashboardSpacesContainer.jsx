@@ -59,10 +59,6 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(spaces);
-  }, [spaces]);
-
   const [filterTerm, setFilterTerm] = useState('');
 
   useEffect(() => {

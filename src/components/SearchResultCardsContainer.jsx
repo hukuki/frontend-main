@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useBookmarkStore } from '../store/bookmarkStore';
 import SearchResultCard from './SearchResultCard';
 import { motion } from 'framer-motion';
+import useBookmarkStore from '../store/bookmarkStore';
+import useAuthContext from '../context/AuthContextProvider';
 
 export const containerVariants = {
   hidden: {
@@ -29,19 +30,49 @@ export const dropUpVariants = {
 };
 
 function SearchResultCardsContainer({ results }) {
-  const bookmarkStates = useBookmarkStore((state) => state.documentBookmarks);
-  const initiateBookmarks = useBookmarkStore((state) => state.initiateBookmarks);
+  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const addBookmark = useBookmarkStore((state) => state.addBookmark);
+  const removeBookmark = useBookmarkStore((state) => state.removeBookmark);
+  const setBookmarks = useBookmarkStore((state) => state.setBookmarks);
+  const { user } = useAuthContext();
+
+  const getBookmarkStatus = async () => {
+    try {
+      const response = await fetch('/api/get_bookmarks', {
+        method: 'POST',
+        body: JSON.stringify({
+          accessToken: user.accessToken,
+        }),
+      });
+      const { error, data } = await response.json();
+      if (!error) {
+        setBookmarks(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const ids = results.map((result) => result.meta.doc_id);
-    initiateBookmarks(ids);
-  }, []);
+    if (user) {
+      getBookmarkStatus();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log(bookmarks);
+  }, [bookmarks]);
 
   return (
     <motion.div layout variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
-      {results.map((document, index) => (
-        <motion.div key={index} variants={dropUpVariants}>
-          <SearchResultCard onCardClick={() => handleCardClick(document.meta.doc_id)} document={document} onAddToSpace={() => {}} />
+      {results.map((document) => (
+        <motion.div key={document._id} variants={dropUpVariants}>
+          <SearchResultCard
+            onCardClick={() => handleCardClick(document.meta.doc_id)}
+            document={document}
+            onAddToSpace={() => {}}
+            isBookmarked={bookmarks.get(document.meta.doc_id) ? true : false}
+          />
         </motion.div>
       ))}
     </motion.div>

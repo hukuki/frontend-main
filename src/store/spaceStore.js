@@ -25,7 +25,6 @@ const useSpaceStore = create((set) => ({
   },
   setSpaces: (spaces) => {
     set((state) => {
-      console.log(spaces);
       const newSpaces = new Map(
         spaces.map((space) => {
           return [space._id, space];

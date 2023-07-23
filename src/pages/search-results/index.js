@@ -63,7 +63,6 @@ const SearchResultsPage = ({ data, query, algo }) => {
   useEffect(() => {
     setResulsts(data.documents);
     setLoading(false);
-    console.log(data);
   }, [data]);
 
   const router = useRouter();

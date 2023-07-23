@@ -2,83 +2,54 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegBookmark, FaBookmark, FaPlus, FaShare } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddDocumentToSpaceModal from './AddDocumentToSpaceModal';
+import useBookmarkStore from '../store/bookmarkStore';
 
-export const SearchResultCard = ({ document, onCardClick }) => {
+export const SearchResultCard = ({ document, onCardClick, isBookmarked }) => {
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const isBookmarked = useMemo(() => {
-    if (bookmarkStates) {
-      return bookmarkStates.get(document.meta.doc_id);
-    }
-  }, [bookmarkStates]);
-
-  useEffect(() => {
-    console.log(document);
-  });
-
-  useEffect(() => {
-    async function fetchBookmarkStatus() {
-      const res = await fetch('/api/get_bookmark_status', {
-        method: 'POST',
-        body: JSON.stringify({
-          documentId: document.meta.doc_id,
-          accessToken: user.accessToken,
-        }),
-      });
-      const { error, data } = await res.json();
-      console.log(data);
-      if (!error && data.length > 0) {
-        console.log('DATA');
-        console.log(data);
-        changeBookmarkState(document.meta.doc_id, data);
-      }
-    }
-    if (user) {
-      fetchBookmarkStatus();
-    }
-  }, [user]);
-
-  const handleAddBookmark = async (e) => {
-    e.stopPropagation();
-    const res = await fetch('/api/create_bookmark', {
-      method: 'POST',
-      body: JSON.stringify({
-        documentId: document.meta.doc_id,
-        accessToken: user.accessToken,
-      }),
-    });
-    const { error, data } = await res.json();
-    console.log(data);
-    console.log(error);
-    if (!error) {
-      changeBookmarkState(document.meta.doc_id, true);
-    }
-  };
-
-  const handleRemoveBookmark = async (e) => {
-    e.stopPropagation();
-    const res = await fetch('/api/delete_bookmark_by_document', {
-      method: 'DELETE',
-      body: JSON.stringify({
-        documentId: document.meta.doc_id,
-        accessToken: user.accessToken,
-      }),
-    });
-    const { error, data } = await res.json();
-    if (!error) {
-      changeBookmarkState(document.meta.doc_id, false);
-    }
-  };
+  const addBookmark = useBookmarkStore((state) => state.addBookmark);
+  const removeBookmark = useBookmarkStore((state) => state.removeBookmark);
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  const changeBookmark = async () => {
+    if (user) {
+      if (!isBookmarked) {
+        const response = await fetch('/api/create_bookmark', {
+          method: 'POST',
+          body: JSON.stringify({
+            accessToken: user.accessToken,
+            bookmarks: [document.meta.doc_id],
+          }),
+        });
+        const { error, data } = await response.json();
+        console.log(data);
+        if (!error) {
+          addBookmark(document.meta.doc_id);
+        }
+      } else {
+        const response = await fetch('/api/delete_bookmark', {
+          method: 'POST',
+          body: JSON.stringify({
+            accessToken: user.accessToken,
+            bookmarkId: document.meta.doc_id,
+          }),
+        });
+        const { error, data } = await response.json();
+        console.log(data);
+        if (!error) {
+          removeBookmark(document.meta.doc_id);
+        }
+      }
+    }
+  };
+
   return (
     <>
       <AddDocumentToSpaceModal open={isModalOpen} onClose={closeModal} documentId={document.meta.doc_id} />
-      <a target="_blank" href={`https://www.mevzuat.gov.tr/anasayfa/MevzuatFihristDetayIframe?${document.meta.url.slice(8)}`}>
+      <>
         <div className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow-md" onClick={() => {}}>
           <div className="flex flex-col gap-2 p-2">
             <div className="flex justify-between items-center">
@@ -95,11 +66,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
                 <div
                   className="hover:text-blue-700"
                   onClick={(e) => {
-                    if (isBookmarked) {
-                      handleRemoveBookmark(e);
-                    } else {
-                      handleAddBookmark(e);
-                    }
+                    changeBookmark();
                   }}
                 >
                   {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
@@ -117,7 +84,7 @@ export const SearchResultCard = ({ document, onCardClick }) => {
             <p className="text-slate-700 text-md font-normal">{document.content.split(' ').slice(0, 100).join(' ')}...</p>
           </div>
         </div>
-      </a>
+      </>
     </>
   );
 };

@@ -10,10 +10,12 @@ function DashboardSpaceDetailPeople({ initialSpace }) {
   const [isOpen, setIsOpen] = useState(false);
   const spaces = useSpaceStore((state) => state.spaces);
   const [space, setSpace] = useState(initialSpace);
+
   useEffect(() => {
     const _space = spaces.get(initialSpace._id);
     setSpace(_space);
   }, [spaces]);
+
   return (
     <>
       <AddPersonToSpaceModal space={space} open={isOpen} onClose={() => setIsOpen(false)} />
