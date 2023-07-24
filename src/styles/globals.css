@@ -64,3 +64,19 @@
     background-position: 0% 50%;
   }
 }
+
+.circular_path_animation {
+  animation: circular_path_animation 2s linear infinite;
+  -webkit-animation: circular_path_animation 2s linear infinite;
+  -moz-animation: circular_path_animation 2s linear infinite;
+}
+
+@keyframes circular_path_animation {
+  0% {
+    transform: rotate(0deg) translateY(50px) rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg) translateY(50px) rotate(-360deg);
+  }
+}
