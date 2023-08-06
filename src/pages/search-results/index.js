@@ -92,7 +92,7 @@ const SearchResultsPage = ({ data, query, algo }) => {
           </motion.div>
         ) : (
           <LayoutGroup layout>
-            <div className="flex flex-col max-h-content bg-neutral-200 relative">
+            <div className="flex flex-col max-h-content bg-neutral-100 relative">
               <div>
                 <SearchResultsNavbar divClass="md:max-w-4xl" />
               </div>
