@@ -97,7 +97,7 @@ const SearchResultsPage = ({ data, query, algo }) => {
                 <SearchResultsNavbar divClass="md:max-w-4xl" />
               </div>
               <div className="relative flex flex-col-reverse lg:flex-row lg:gap-2 p-2 mx-auto md:mt-4 items-start max-w-4xl">
-                <div className="flex flex-col gap-2 md:gap-4 max-w-3xl">
+                <div className="flex flex-col gap-2 md:gap-4 max-w-4xl">
                   <div className="flex flex-1 gap-4 items-center justify-center bg-white rounded-lg p-2 sticky top-2 left-0 shadow-md">
                     <div className="flex-1">
                       <SearchResultsSearchbar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} />
