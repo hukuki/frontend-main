@@ -9,17 +9,17 @@ const questions = [
   {
     question: 'Will my confidential documents be saved securely?',
     answer:
-      'Documents uploaded to DeepLex are securely protected and encrypted on our servers. New uploaded documents are stored privately, only you have access to them. If you want, you can give your collegues access to any document you want.',
+      'Documents uploaded to casevisor are securely protected and encrypted on our servers. New uploaded documents are stored privately, only you have access to them. If you want, you can give your collegues access to any document you want.',
   },
   {
     question: 'Will other firms see the documents I upload?',
     answer:
-      'No! DeepLex keeps the documents of each firm in a separate server with separate encryption key. Documents on different servers cannot be shared and accessed, even with the permission of the document holder.',
+      'No! casevisor keeps the documents of each firm in a separate server with separate encryption key. Documents on different servers cannot be shared and accessed, even with the permission of the document holder.',
   },
   {
     question: 'If I have any problem, whom I should get in touch with?',
     answer:
-      'If you encounter any problem when using DeepLex, you can call our 24/7 support center. Our representatives will be more than happy to help you out.',
+      'If you encounter any problem when using casevisor, you can call our 24/7 support center. Our representatives will be more than happy to help you out.',
   },
   {
     question: 'I lost my password, how do I get into my account?',
@@ -27,12 +27,12 @@ const questions = [
       'If you lost your password, you can follow the necessary steps on the login page to restore your password. An email will be sent to your email account set a new password for your account.',
   },
   {
-    question: 'How can I start using DeepLex in my firm?',
+    question: 'How can I start using casevisor in my firm?',
     answer:
-      'If you want to use DeepLex in your firm, give us a call and we are more than happy to meet with you to discuss further details and price options',
+      'If you want to use casevisor in your firm, give us a call and we are more than happy to meet with you to discuss further details and price options',
   },
   {
-    question: 'How can I search with DeepLex?',
+    question: 'How can I search with casevisor?',
     answer:
       "You can start searching right away. To search, you can write the question to which you are looking for an answer. You don't even need to what type of document you are looking for.",
   },

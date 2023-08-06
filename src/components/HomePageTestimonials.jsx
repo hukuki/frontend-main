@@ -8,18 +8,18 @@ import { Container } from './Container';
 import HomePageTestimonialCard from './HomePageTestimonialCard';
 const testimonials = [
   {
-    content: 'DeepLex is amazing. It is so easy to use that it boosted my productivity a hundred times',
+    content: 'casevisor is amazing. It is so easy to use that it boosted my productivity a hundred times',
     author: {
       name: 'Tunaberk Almaci',
-      role: 'CEO at DeepLex',
+      role: 'CEO at casevisor',
       image: avatarImage1,
     },
   },
   {
-    content: 'I would rather die than to work at a company using Lexpera after using DeepLex',
+    content: 'I would rather die than to work at a company using Lexpera after using casevisor',
     author: {
       name: 'Atakan Kara',
-      role: 'CTO at DeepLex',
+      role: 'CTO at casevisor',
       image: avatarImage2,
     },
   },
@@ -28,16 +28,16 @@ const testimonials = [
       "Sometimes it finds the documents where I did't even use any of the keywords. It is such a relief not to think about what law term I should be using just to find a document",
     author: {
       name: 'Onur Eren Arpacı',
-      role: 'Vice President of Engineering at DeepLex',
+      role: 'Vice President of Engineering at casevisor',
       image: avatarImage3,
     },
   },
   {
     content:
-      "I don't have to keep track of the email threads anymore. By just using DeepLex, I can find every document I uploaded in the correct client case folder.",
+      "I don't have to keep track of the email threads anymore. By just using casevisor, I can find every document I uploaded in the correct client case folder.",
     author: {
       name: 'Eren Yenigül',
-      role: 'TechLead at DeepLex',
+      role: 'TechLead at casevisor',
       image: avatarImage4,
     },
   },
@@ -46,15 +46,15 @@ const testimonials = [
       "I didn't know I needed a platform like this until I used it. Now, I can focus on important things without getting lost in emails and documents",
     author: {
       name: 'Şafak Bulut',
-      role: 'Legal Advisor at DeepLex',
+      role: 'Legal Advisor at casevisor',
       image: avatarImage5,
     },
   },
   {
-    content: "Finally somebody did it. I knew that law needed a tool as easy to use as DeepLex. I can't wait to share this with more collegues.",
+    content: "Finally somebody did it. I knew that law needed a tool as easy to use as casevisor. I can't wait to share this with more collegues.",
     author: {
       name: 'Mertcan Barut',
-      role: 'Legal Advisor at DeepLex',
+      role: 'Legal Advisor at casevisor',
       image: avatarImage3,
     },
   },
@@ -67,7 +67,7 @@ function HomePageTestimonials() {
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">Loved by legal workers</h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            The simplicity and power of DeepLex is loved by many around the world. We have a solid customer base of legal workers who love our product
+            The simplicity and power of casevisor is loved by many around the world. We have a solid customer base of legal workers who love our product
           </p>
         </div>
         <ul role="list" className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3">

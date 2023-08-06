@@ -8,7 +8,7 @@ const features = [
   {
     title: 'Semantic Search',
     description:
-      'DeepLex retrieves documents relevant documents from the database of documents and user-uploaded files without requiring using the exact words in the document. That way, it helps workers save precious time of legal workers.',
+      'casevisor retrieves documents relevant documents from the database of documents and user-uploaded files without requiring using the exact words in the document. That way, it helps workers save precious time of legal workers.',
     icon: function SemanticSearchIcon() {
       let id = useId();
       return (
@@ -21,7 +21,7 @@ const features = [
   {
     title: 'Secure',
     description:
-      'No data is shared with any external third parties. User uploaded files are encrypted and preserved for each client separately, protecting the privacy of client and enterprise information. DeepLex runs on secure clouds, respecting the privacy and value of each firm.',
+      'No data is shared with any external third parties. User uploaded files are encrypted and preserved for each client separately, protecting the privacy of client and enterprise information. casevisor runs on secure clouds, respecting the privacy and value of each firm.',
     icon: function SecureIcon() {
       let id = useId();
       return (
@@ -34,7 +34,7 @@ const features = [
   {
     title: 'All-in-one Solution',
     description:
-      'DeepLex solved the problem of needing multiple separate tools to manage your documents. With our all-in-one solution, you can manage your projects in one place with the flexibility of sharing with those you work together, or keep it private. With DeepLex, legal work is as easy as logging in to our platform.',
+      'casevisor solved the problem of needing multiple separate tools to manage your documents. With our all-in-one solution, you can manage your projects in one place with the flexibility of sharing with those you work together, or keep it private. With casevisor, legal work is as easy as logging in to our platform.',
     icon: function AllInOneSolutionIcon() {
       let id = useId();
       return (

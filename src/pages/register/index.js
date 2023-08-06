@@ -94,7 +94,7 @@ function RegisterPage() {
   return (
     <>
       <Head>
-        <title>DeepLex | Register</title>
+        <title>casevisor | Register</title>
       </Head>
       <LoginRegisterLayout>
         <div className="flex flex-col">

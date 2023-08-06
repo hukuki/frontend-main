@@ -44,7 +44,7 @@ const sections = [
     },
   },
   {
-    name: 'Search on DeepLex',
+    name: 'Search on casevisor',
     icon: function SearchIcon({ divClass, iconClass }) {
       let id = useId();
       return (
@@ -127,9 +127,9 @@ function MobileSidebar({ activeLink, setActiveLink }) {
                             close();
                             router.push('/search');
                           }}
-                          divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
+                          divClass="search_on_casevisor_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
                           section={section}
-                          textClass="search_on_deeplex_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
+                          textClass="search_on_casevisor_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
                         />
                       </>
                     );
@@ -192,7 +192,7 @@ function DashboardPage() {
               return (
                 <>
                   <DashboardSidebarButton
-                    divClass="search_on_deeplex_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
+                    divClass="search_on_casevisor_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
                     section={section}
                     onClick={() => router.push('/search')}
                     textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"

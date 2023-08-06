@@ -26,10 +26,10 @@ function Hero() {
       <div className="mt-10 flex justify-center space-x-6">
         <Button
           color="slate"
-          className="search_on_deeplex_animate bg-gradient-to-r from-blue-500 via-violet-500 to-indigo-500 drop-shadow-md hover:shadow-md transition-all duration-200"
+          className="search_on_casevisor_animate bg-gradient-to-r from-blue-500 via-violet-500 to-indigo-500 drop-shadow-md hover:shadow-md transition-all duration-200"
           href="/search"
         >
-          Try CaseVisor
+          Try casevisor
         </Button>
         <Button variant="outline" color="blue">
           <svg aria-hidden="true" className="h-3 w-3 flex-none fill-blue-600 group-active:fill-current">
