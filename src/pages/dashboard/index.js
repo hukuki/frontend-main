@@ -44,7 +44,7 @@ const sections = [
     },
   },
   {
-    name: 'Search on DeepLex',
+    name: 'Search on casevisor',
     icon: function SearchIcon({ divClass, iconClass }) {
       let id = useId();
       return (
@@ -127,9 +127,9 @@ function MobileSidebar({ activeLink, setActiveLink }) {
                             close();
                             router.push('/search');
                           }}
-                          divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
+                          divClass="search_on_casevisor_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
                           section={section}
-                          textClass="search_on_deeplex_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
+                          textClass="search_on_casevisor_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
                         />
                       </>
                     );
@@ -177,7 +177,7 @@ function DashboardPage() {
   return (
     <div className="flex flex-col md:flex-row bg-neutral-50 h-full">
       <div className="group/outer transition-all duration-300 hidden bg-white shadow-2xl md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
-        <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block">
+        <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
           <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
           <hr className="mt-4 border-slate-900/30" />
         </div>
@@ -192,7 +192,7 @@ function DashboardPage() {
               return (
                 <>
                   <DashboardSidebarButton
-                    divClass="search_on_deeplex_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
+                    divClass="search_on_casevisor_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
                     section={section}
                     onClick={() => router.push('/search')}
                     textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"

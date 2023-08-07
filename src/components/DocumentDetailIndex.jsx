@@ -5,8 +5,7 @@ import { FaChevronDown } from 'react-icons/fa';
 
 function Index({ document }) {
   return (
-    <div className="max-w-md flex flex-col gap-2 bg-white rounded-lg shadow-lg p-2">
-      <h1 className="text-xl font-semibold tracking-tight text-slate-800">Content</h1>
+    <div className="max-w-md flex flex-col gap-2 bg-white rounded-lg shadow-lg p-4">
       <div className="">
         <IndexArticle article={document} />
       </div>
@@ -18,9 +17,9 @@ function IndexArticle({ article }) {
   if (article.children && article.children.length > 0) {
     return (
       <div className={clsx('flex flex-col gap-2 ml-2')}>
-        <h1 className="text-lg font-semibold tracking-tight text-blue-950">{article && article.articleTitle}</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-blue-800">{article && article.articleTitle}</h1>
         <div className="ml-2">{article.children.length > 0 && article.children.map((child) => <IndexArticle article={child} />)}</div>
-        <hr className="h-1 bg-blue-900 rounded-lg mb-2"></hr>
+        <hr className="rounded-lg mb-4"></hr>
       </div>
     );
   }
@@ -73,7 +72,6 @@ function MobileIndex({ document }) {
       {({ open }) => (
         <>
           <Disclosure.Button className="min-w-full text-start rounded-lg bg-white p-2 shadow-md flex gap-2 items-center">
-            <h1 className="text-xl tracking-tight font-medium text-slate-900">Content</h1>
             <div className={clsx('transition-all text-md text-slate-500', open && 'rotate-180')}>
               <FaChevronDown />
             </div>
@@ -107,7 +105,7 @@ function DocumentDetailIndex({ document }) {
   }, []);
   // return <h1>Hello World</h1>;
   return (
-    <div className="">
+    <div className="shadow-md shadow-slate-400">
       <div className="2xl:hidden">
         <MobileIndex document={document} />
       </div>

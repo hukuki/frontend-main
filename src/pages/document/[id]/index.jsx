@@ -15,10 +15,10 @@ function Page({ id }) {
 
   return (
     <div>
-      <DocumentDetailLayout>
+      <DocumentDetailLayout >
         <DocumentDetailContainer>
-          <DocumentDetailIndex document={result} />
           <DocumentDetail document={result} />
+          <DocumentDetailIndex document={result} />
         </DocumentDetailContainer>
       </DocumentDetailLayout>
     </div>

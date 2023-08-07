@@ -72,7 +72,7 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>DeepLex | Sign In</title>
+        <title>casevisor | Sign In</title>
       </Head>
       <LoginLayout>
         <div className="flex flex-col">
