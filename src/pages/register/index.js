@@ -94,7 +94,7 @@ function RegisterPage() {
   return (
     <>
       <Head>
-        <title>casevisor | Register</title>
+        <title>casevisor | Kaydolun</title>
       </Head>
       <LoginRegisterLayout>
         <div className="flex flex-col">
@@ -104,11 +104,10 @@ function RegisterPage() {
           <div className="mt-12">
             <h2 className="text-lg font-semibold text-gray-900">Sign up for a free account</h2>
             <p className="mt-2 text-sm text-gray-700">
-              Already have an account?{' '}
+              Zaten bir hesabınız var mı?{' '}
               <Link href="/login" className="font-medium text-blue-600 hover:underline">
-                Sign in
+                Giriş yapın  
               </Link>{' '}
-              to your account.
             </p>
           </div>
         </div>
@@ -119,7 +118,7 @@ function RegisterPage() {
                 htmlFor="firstname"
                 className={clsx('text-sm font-medium', errors.firstname && touched.firstname ? 'text-red-700' : 'text-gray-700')}
               >
-                First Name
+                Adınız
               </label>
               <input
                 className={clsx(
@@ -132,12 +131,12 @@ function RegisterPage() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type="firstname"
-                placeholder="Enter your first name"
+                placeholder="Lütfen adınızı girin."
                 id="firstname"
                 name="firstname"
               />
               <p className={clsx('', errors.firstname && touched.firstname ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-                Please enter a valid name
+                Lütfen doğru bir ad girin.
               </p>
             </div>
             <div className="sm:mb-0 mb-3">
@@ -145,7 +144,7 @@ function RegisterPage() {
                 htmlFor="lastname"
                 className={clsx('text-sm font-medium', errors.lastname && touched.lastname ? 'text-red-700' : 'text-gray-700')}
               >
-                Last Name
+                Soyadınız
               </label>
               <input
                 className={clsx(
@@ -158,7 +157,7 @@ function RegisterPage() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type="lastname"
-                placeholder="Enter your last name"
+                placeholder="Lütfen soyadınızı girin."
                 id="lastname"
                 name="lastname"
               />
@@ -169,7 +168,7 @@ function RegisterPage() {
               htmlFor="email"
               className={clsx('mb-3 block text-sm font-medium', errors.email && touched.email ? 'text-red-700' : 'text-gray-700')}
             >
-              Email Address
+              Email Adresiniz
             </label>
             <input
               className={clsx(
@@ -182,12 +181,12 @@ function RegisterPage() {
               onChange={handleChange}
               onBlur={handleBlur}
               type="email"
-              placeholder="Enter your email address"
+              placeholder="Lütfen email adresinizi girin."
               id="email"
               name="email"
             />
             <p className={clsx('', errors.email && touched.email ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-              Please enter a valid email address
+              Lütfen doğru bir email adresi girin.
             </p>
           </div>
           <div>
@@ -195,7 +194,7 @@ function RegisterPage() {
               htmlFor="password"
               className={clsx('mb-3 block text-sm font-medium', errors.password && touched.password ? 'text-red-700' : 'text-gray-700')}
             >
-              Password
+              Şifreniz
             </label>
             <input
               className={clsx(
@@ -208,13 +207,12 @@ function RegisterPage() {
               onChange={handleChange}
               onBlur={handleBlur}
               type="password"
-              placeholder="Enter your password"
+              placeholder="Lütfen şifrenizi girin."
               id="password"
               name="password"
             />
             <p className={clsx('', errors.password && touched.password ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-              A valid password should be at least 8 characters and at most 32 characters with at least 1 digit, 1 lower case letter, 1 upper case
-              letter and 1 special character.
+        Geçerli bir şifre en az 8 karakter, en fazla 32 karakter ve en az 1 rakam, 1 küçük harf, 1 büyük harf ve 1 özel karakterden oluşmalıdır.
             </p>
           </div>
           <div>
@@ -222,7 +220,7 @@ function RegisterPage() {
               htmlFor="confirmPassword"
               className={clsx('mb-3 block text-sm font-medium', errors.password && touched.password ? 'text-red-700' : 'text-gray-700')}
             >
-              Confirm Password
+              Şifrenizi Tekrar Girin
             </label>
             <input
               className={clsx(
@@ -235,12 +233,12 @@ function RegisterPage() {
               onChange={handleChange}
               onBlur={handleBlur}
               type="password"
-              placeholder="Enter your password again"
+              placeholder="Lütfen şifrenizi tekrar girin."
               id="confirmPassword"
               name="confirmPassword"
             />
             <p className={clsx('', errors.confirmPassword && touched.confirmPassword ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-              Passwords do not match
+              Şifreleriniz eşleşmiyor.
             </p>
           </div>
           {isSubmitting ? (
@@ -257,7 +255,7 @@ function RegisterPage() {
                 )}
               >
                 <span className="text-lg">
-                  Sign in <span>&rarr;</span>
+                  Giriş Yapın <span>&rarr;</span>
                 </span>
               </button>
             </div>
@@ -266,7 +264,7 @@ function RegisterPage() {
 
         <div className="mt-4 flex gap-x-2 items-center">
           <div className="flex-1 h-px bg-blue-200"></div>
-          <span className="text-lg text-blue-700">OR</span>
+          <span className="text-lg text-blue-700">veya</span>
           <div className="flex-1 h-px bg-blue-200"></div>
         </div>
         {isSubmitting ? (
@@ -280,7 +278,7 @@ function RegisterPage() {
               className={clsx('w-full rounded-lg text-xl font-[200] bg-blue-500')}
               onClick={handleGoogleSignup}
             >
-              <span>Sign up with Google</span>
+              <span>Google ile giriş yapın</span>
             </Button>
           </div>
         )}
