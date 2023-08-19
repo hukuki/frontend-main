@@ -8,19 +8,19 @@ import backgroundImage from '@/images/background-features.jpg';
 
 const features = [
   {
-    title: 'Document Search',
+    title: 'Belge Arama',
     description:
-      'You can search for the document you need without thinking about what keywords you should choose. Semantic search helps you find the right document even without using any of the words in the document',
+      'Hangi anahtar kelimeleri seçeceğinizi düşünmeden arama yapabilirsiniz. ',
   },
   {
     title: 'Case Management',
     description:
-      "Monetize the cases in one platform. You can save the documents you need for a case and share them with your collegues. You don't need to keep track of email attachments anymore.",
+      'Monetize the cases in one platform. You can save the documents you need for a case and share them with your collegues. You don\'t need to keep track of email attachments anymore.',
   },
   {
     title: 'Document Upload',
     description:
-      "Upload the documents you need. You don't need to rely on third party solutions anymore. All documents are kept securely and privately for you.",
+      'Upload the documents you need. You don\'t need to rely on third party solutions anymore. All documents are kept securely and privately for you.',
   },
 ];
 
@@ -55,9 +55,9 @@ function HomePagePrimaryFeatures() {
       */}
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
-          <h1 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">Every document you need accessed faster</h1>
+          <h1 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">İhtiyacınız olan belgere daha hızlı erişin</h1>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
-            You can store and find every document you need much faster and more accurate than existing solutions
+            İhtiyacınız olan her belgeyi mevcut çözümlerden çok daha hızlı ve doğru bir şekilde saklayabilir ve bulabilirsiniz.
           </p>
         </div>
         <Tab.Group

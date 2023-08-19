@@ -10,9 +10,9 @@ function Footer() {
 
           <nav className="mt-10 text-sm">
             <div className="-my-1 flex justify-center items-center gap-x-6">
-              <NavLink href="/">Features</NavLink>
-              <NavLink href="/">Search</NavLink>
-              <NavLink href="/">Register</NavLink>
+              <NavLink href="/search">Arama</NavLink>
+              <NavLink href="/login">Giriş Yapın</NavLink>
+              <NavLink href="/register">Kaydolun</NavLink>
             </div>
           </nav>
         </div>
@@ -20,5 +20,10 @@ function Footer() {
     </footer>
   );
 }
+/*
+<NavLink href="/">Features</NavLink>
+              <NavLink href="/">Search</NavLink>
+              <NavLink href="/">Register</NavLink>
+              */
 
 export default Footer;

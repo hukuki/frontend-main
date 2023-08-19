@@ -21,15 +21,17 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <HomePagePrimaryFeatures />
-        <HomePageProduct />
-        <HomePageCallToAction />
-        <HomePageTestimonials />
-        <HomePageFAQ />
+       
       </main>
       <Footer />
     </>
     /*
+
+     <HomePagePrimaryFeatures />
+        <HomePageProduct />
+        <HomePageCallToAction />
+        <HomePageTestimonials />
+        <HomePageFAQ />
     <>
       <div className={styles.container}>
         <div className={styles.navbar__container}>
