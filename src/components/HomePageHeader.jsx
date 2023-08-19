@@ -102,10 +102,10 @@ export function Header() {
               {user ? (
                 <>
                   <div className="hidden md:block" onClick={handleLogout}>
-                    <NavLink>Logout</NavLink>
+                    <NavLink>Çıkış yapın</NavLink>
                   </div>
                   <Button href="/dashboard" color="blue">
-                    <span>Go to dashboard</span>
+                    <span>Projelerime git</span>
                   </Button>
                 </>
               ) : (

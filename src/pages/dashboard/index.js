@@ -55,7 +55,7 @@ const sections = [
     },
   },
   {
-    name: 'Logout',
+    name: 'Çıkış yap',
     icon: function LogoutIcon({ divClass, iconClass }) {
       let id = useId();
       return (
