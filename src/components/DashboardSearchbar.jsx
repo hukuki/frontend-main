@@ -17,7 +17,7 @@ function DashboardSearchbar({ initialSearch, placeholder, onSubmit, onSearchTerm
 
   return (
     <div className="min-w-full flex justify-center items-center">
-      <div className="flex items-center justify-start gap-4 box-border w-full bg-slate-50 rounded-md p-2 shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.15)]">
+      <div className="flex items-center justify-start gap-4 box-border w-full bg-slate-50 rounded-md p-2 shadow">
         <FaSearch className="text-md" />
         <input
           className="bg-transparent w-full text-md focus:outline-none"

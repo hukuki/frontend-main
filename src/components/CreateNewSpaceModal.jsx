@@ -61,16 +61,16 @@ function CreateNewSpaceModal({ open, onClose }) {
           <Dialog.Panel as="div" className="bg-white p-6 rounded-lg flex flex-col gap-8 justify-between">
             <div className="flex flex-col gap-2">
               <Dialog.Title as="h3" className="text-xl font-semibold tracking-tight">
-                Create a new project
+                Yeni bir proje yarat 
               </Dialog.Title>
               <Dialog.Description as="span" className="text-slate-600">
-                Create a new project and add your collegues
+                Bir proje oluşturun ve bu projeyi paylaşmak istediğiniz kişileri ekleyin.
               </Dialog.Description>
               <hr className="h-[2px] rounded-full bg-slate-600/30" />
             </div>
             <form action="" className="flex flex-col gap-6" onSubmit={handleSubmit} autoComplete="off">
               <div className="flex flex-col gap-2">
-                <label className={clsx('tracking-tight font-medium', errors.name && touched.name ? 'text-red-500' : '')}>Project name</label>
+                <label className={clsx('tracking-tight font-medium', errors.name && touched.name ? 'text-red-500' : '')}>Proje adı</label>
                 <input
                   className={clsx(
                     'p-2 bg-slate-100 rounded-md outline-none text-sm',
@@ -80,15 +80,15 @@ function CreateNewSpaceModal({ open, onClose }) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   type="text"
-                  placeholder="Enter the name for your new project"
+                  placeholder="Lütfen proje adını girin"
                   id="name"
                   name="name"
                 />
-                {errors.name && touched.name && <p className="text-sm text-red-500">Please enter a valid name for your project</p>}
+                {errors.name && touched.name && <p className="text-sm text-red-500">Lütfen bir proje adı girin</p>}
               </div>
               <div className="flex flex-col gap-2">
                 <label className={clsx('tracking-tight font-medium', errors.description && touched.description ? 'text-red-500' : '')}>
-                  Description
+                  Açıklama
                 </label>
                 <input
                   className={clsx(
@@ -99,12 +99,12 @@ function CreateNewSpaceModal({ open, onClose }) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   type="text"
-                  placeholder="Enter the description of your new project"
+                  placeholder="Proje açıklaması girin"
                   id="description"
                   name="description"
                 />
                 {errors.description && touched.description && (
-                  <p className="text-sm text-red-500">Please enter a valid description for your project</p>
+                  <p className="text-sm text-red-500">Lütfen bir açıklama girin.</p>
                 )}
               </div>
               <div>
@@ -116,7 +116,7 @@ function CreateNewSpaceModal({ open, onClose }) {
                   className="outline-none py-1 px-2 hover:bg-red-400 text-gray-500 hover:text-white rounded-md cursor-pointer"
                   onClick={onClose}
                 >
-                  Cancel
+                  İptal et
                 </button>
                 <button
                   type="submit"
@@ -124,7 +124,7 @@ function CreateNewSpaceModal({ open, onClose }) {
                   className={clsx('rounded-md py-1 px-2', isAnyErrors ? 'bg-blue-200 text-slate-500' : 'bg-blue-500 text-white hover:bg-blue-600')}
                   onClick={(e) => handleSubmit(e)}
                 >
-                  Add to spaces
+                  Ekle
                 </button>
               </div>
             </form>

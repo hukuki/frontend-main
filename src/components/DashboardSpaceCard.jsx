@@ -20,7 +20,7 @@ function DashboardSpaceCard({ space }) {
   }, []);
 
   return (
-    <div className="z-1 shadow-md hover:shadow-none hover:scale-[0.98] cursor-pointer transition ease-in duration-100 p-4 bg-gradient-to-b from-purple-200 to-blue-400 rounded-md aspect-square min-w-[10rem] max-w-[16rem]">
+    <div className="z-1 shadow hover:shadow-none hover:scale-[0.98] cursor-pointer transition ease-in duration-100 p-4 bg-gradient-to-b from-purple-200 to-blue-400 rounded-md aspect-square min-w-[10rem] max-w-[16rem]">
       <div className="aspect-square w-full max-h-full rounded-md">
         <div className="flex flex-col gap-2 items-start justify-between">
           <div className="bg-white w-full rounded-md py-1 md:px-1 md:py-2 text-center">

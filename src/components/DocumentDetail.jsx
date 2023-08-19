@@ -51,7 +51,7 @@ function DisplayArticle({ article, index }) {
 
 function DocumentDetail({ document }) {
   return (
-    <div className="min-h-[2000px] max-w-5xl bg-stone-50 rounded-lg p-8 shadow-md shadow-slate-400 ">
+    <div className="min-h-[2000px] max-w-5xl bg-stone-50 rounded-lg p-8 shadow shadow-slate-400 ">
       <DisplayArticle article={document} index={0} />
     </div>
   );

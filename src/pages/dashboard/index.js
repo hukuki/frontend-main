@@ -11,7 +11,7 @@ import DashboardSpacesContainer from '../../components/DashboardSpacesContainer'
 
 const sections = [
   {
-    name: 'Profile',
+    name: 'Profilim',
     icon: function ProfileIcon({ divClass, iconClass }) {
       let id = useId();
       return (
@@ -22,18 +22,18 @@ const sections = [
     },
   },
   {
-    name: 'Projects',
+    name: 'Projelerim',
     icon: function ProjectsIcon({ divClass, iconClass }) {
       let id = useId();
       return (
         <div id={id} className={clsx('group', divClass)}>
-          <FaRegFolderOpen className={clsx('', iconClass ? iconClass : 'h-6 w-6 text-slate-500 group-hover:text-blue-500')} />
+          <FaRegFolderOpen className={clsx('', iconClass ? iconClass : 'h-6 w-6 ')} />
         </div>
       );
     },
   },
   {
-    name: 'Saved Documents',
+    name: 'Dokümanlarım',
     icon: function SavedDocumentsIcon({ divClass, iconClass }) {
       let id = useId();
       return (
@@ -44,12 +44,12 @@ const sections = [
     },
   },
   {
-    name: 'Search on casevisor',
+    name: 'Ara',
     icon: function SearchIcon({ divClass, iconClass }) {
       let id = useId();
       return (
         <div id={id} className={clsx('group', divClass)}>
-          <FaSearch className={clsx('', iconClass ? iconClass : 'h-6 w-6 text-slate-500 group-hover:text-blue-500')} />
+          <FaSearch className={clsx('', iconClass ? iconClass : 'h-6 w-6')} />
         </div>
       );
     },
@@ -113,7 +113,7 @@ function MobileSidebar({ activeLink, setActiveLink }) {
         >
           <Popover.Panel
             as="div"
-            className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+            className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow ring-1 ring-slate-900/5"
           >
             {({ close }) => (
               <>
@@ -145,9 +145,9 @@ function MobileSidebar({ activeLink, setActiveLink }) {
                   return (
                     <DashboardSidebarButton
                       section={section}
-                      divClass={clsx('', activeLink === section.name ? 'bg-blue-500' : 'bg-transparent')}
-                      textClass={clsx('', activeLink === section.name ? 'text-white' : 'text-slate-400')}
-                      iconClass={clsx('', activeLink === section.name ? 'text-white' : 'text-slate-400')}
+                      divClass={clsx('bg-transparent')}
+                      textClass={clsx('text-slate-400')}
+                      iconClass={clsx('text-slate-400')}
                       onClick={() => {
                         setActiveLink(section.name);
                         close();
@@ -176,12 +176,11 @@ function DashboardPage() {
 
   return (
     <div className="flex flex-col md:flex-row bg-neutral-50 h-full">
-      <div className="group/outer transition-all duration-300 hidden bg-white shadow-2xl md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
+      <div className="group/outer transition-all duration-300 hidden bg-white shadow md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
         <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
           <Logo 
           //className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" 
           />
-          <hr className="mt-4 border-slate-900/30" />
         </div>
         <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
           <span className="text-4xl text-blue-500">c</span>
@@ -197,8 +196,8 @@ function DashboardPage() {
                     divClass="search_on_casevisor_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
                     section={section}
                     onClick={() => router.push('/search')}
-                    textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
-                    iconClass="text-white group-hover:text-slate-100"
+                    textClass="text-white whitespace-nowrap group-hover:text-black-600 hidden group-hover/outer:block lg:block"
+                    iconClass="text-white group-hover:text-black-600"
                   />
                 </>
               );
@@ -210,8 +209,8 @@ function DashboardPage() {
                   <DashboardSidebarButton
                     divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
                     section={section}
-                    textClass="text-slate-900 whitespace-nowrap group-hover:text-slate-600 hidden group-hover/outer:block  lg:block"
-                    iconClass="text-slate-900 group-hover:text-slate-600"
+                    textClass="text-slate-900 whitespace-nowrap group-hover:text-black-600 hidden group-hover/outer:block  lg:block"
+                    iconClass="text-slate-900 group-hover:text-black-600"
                   />
                 </div>
               );
@@ -219,22 +218,20 @@ function DashboardPage() {
             return (
               <DashboardSidebarButton
                 divClass={clsx(
-                  'hover:bg-blue-500 justify-center group-hover/outer:justify-start lg:justify-start',
-                  activeLink === section.name ? 'bg-blue-500' : 'bg-transparent'
+                  'hover:bg-slate-200 justify-center group-hover/outer:justify-start lg:justify-start hover:text-black-600',
+    
                 )}
                 onClick={() => setActiveLink(section.name)}
                 section={section}
                 textClass={clsx(
-                  'whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block',
-                  activeLink === section.name ? 'text-white' : 'text-slate-900'
+                  'whitespace-nowrap hidden group-hover/outer:block lg:block'
                 )}
-                iconClass={clsx('group-hover:text-slate-100', activeLink === section.name ? 'text-white' : 'text-slate-400')}
               />
             );
           })}
         </div>
       </div>
-      <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow-md">
+      <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow">
         <div className="ml-2">
           <MobileSidebar activeLink={activeLink} setActiveLink={setActiveLink} />
         </div>
@@ -245,7 +242,7 @@ function DashboardPage() {
         </div>
       </div>
       <div className="block m-2 flex-1">
-        {activeLink == 'Projects' && (
+        {activeLink == 'Projelerim' && (
           <>
             <DashboardSpacesContainer />
           </>

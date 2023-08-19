@@ -63,7 +63,7 @@ function ProjectsSearchbar({ onSpaceListChange }) {
   };
   return (
     <div className="mt-2 flex flex-col gap-2 max-w-md">
-      <span className="tracking-tight font-medium text-lg">Projects</span>
+      <span className="tracking-tight font-medium text-lg">Projelerim</span>
       <Combobox value={spacesToAdd} onChange={setSpacesToAdd} multiple>
         {spacesToAdd.length > 0 && (
           <div className="flex flex-row gap-2 text-blue-500 flex-wrap">
@@ -84,7 +84,7 @@ function ProjectsSearchbar({ onSpaceListChange }) {
               <Combobox.Input
                 className="w-full border-none py-2 pl-3 pr-10 text-md leading-5 text-gray-900 bg-slate-100"
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search your projects"
+                placeholder="Projelerimde ara"
               />
             </div>
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -98,7 +98,7 @@ function ProjectsSearchbar({ onSpaceListChange }) {
             leaveTo="opacity-0"
             afterLeave={() => setSearchTerm('')}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadowring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {filteredSpaces.length === 0 && searchTerm !== '' ? (
                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">Nothing found.</div>
               ) : (

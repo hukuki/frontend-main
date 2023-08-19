@@ -8,7 +8,7 @@ function SearchResultsFilters() {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col items-start w-full box-border">
-      <button className="shadow-lg hover:shadow-md">
+      <button className="shadowhover:shadow">
         <div
           className={clsx(
             'ouline-none focus:outline-none flex lg:p-4 items-center justify-start p-2 gap-2 bg-white cursor-pointer rounded-md',

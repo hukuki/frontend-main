@@ -54,7 +54,7 @@ export const AddPersonToSpaceModal = ({ open, onClose, space }) => {
                 {space.name}
               </Dialog.Title>
               <Dialog.Description as="span" className="text-slate-600">
-                Add new people to this project
+                Bu projeye yeni kişi ekleyin.
               </Dialog.Description>
               <hr className="h-[2px] rounded-full bg-slate-600/30" />
             </div>

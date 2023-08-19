@@ -8,7 +8,7 @@ function SearchResultsNavbar({ divClass }) {
   const router = useRouter();
   const { user } = useAuthContext();
   return (
-    <div className="bg-white shadow-md rounded-b-lg w-full p-2">
+    <div className="bg-white shadow rounded-b-lg w-full p-2">
       <div className={clsx('flex justify-between mx-auto', divClass)}>
         <div>
           <Link href="/">

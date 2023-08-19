@@ -50,7 +50,7 @@ export const SearchResultCard = ({ document, onCardClick, isBookmarked }) => {
     <>
       <AddDocumentToSpaceModal open={isModalOpen} onClose={closeModal} documentId={document.meta.doc_id} />
       <>
-        <div className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow-md" onClick={() => {}}>
+        <div className="border-l-4 p-2 border-blue-500 bg-white rounded-md cursor-pointer shadow" onClick={() => {}}>
           <div className="flex flex-col gap-2 p-2">
             <div className="flex justify-between items-center">
               <span className="flex-1 text-md font-semibold tracking-tight text-blue-900 inline-block">{document.meta.mevAdi}</span>

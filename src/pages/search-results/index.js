@@ -37,7 +37,7 @@ function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute right-0 top-5 mt-6 flex origin-top flex-col items-start gap-2 rounded-lg bg-white py-4 px-6 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+            className="absolute right-0 top-5 mt-6 flex origin-top flex-col items-start gap-2 rounded-lg bg-white py-4 px-6 text-lg tracking-tight text-slate-900 shadow ring-1 ring-slate-900/5"
           >
             <button className="group" onAdvancedClick={onAdvancedClick}>
               <span className="advanced_button_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-orange-500 to-purple-900 group-hover:text-blue-500 whitespace-nowrap">
@@ -98,7 +98,7 @@ const SearchResultsPage = ({ data, query, algo }) => {
               </div>
               <div className="relative flex flex-col-reverse lg:flex-row lg:gap-2 p-2 mx-auto md:mt-4 items-start max-w-4xl">
                 <div className="flex flex-col gap-2 md:gap-4 max-w-4xl">
-                  <div className="flex flex-1 gap-4 items-center justify-center bg-white rounded-lg p-2 sticky top-2 left-0 shadow-md">
+                  <div className="flex flex-1 gap-4 items-center justify-center bg-white rounded-lg p-2 sticky top-2 left-0 shadow">
                     <div className="flex-1">
                       <SearchResultsSearchbar onSearchChange={setSearchQuery} initialSearch={query} onSubmit={handleSearchSubmit} />
                     </div>

@@ -10,7 +10,7 @@ function QuoteIcon(props) {
 
 function HomePageTestimonialCard({ testimonial, ...props }) {
   return (
-    <figure className="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+    <figure className="relative rounded-2xl bg-white p-6 shadow shadow-slate-900/10">
       <QuoteIcon className="absolute top-6 left-6 fill-slate-100" />
       <blockquote className="relative">
         <p className="text-lg tracking-tight text-slate-900">{testimonial.content}</p>

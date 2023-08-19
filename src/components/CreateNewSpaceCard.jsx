@@ -16,7 +16,7 @@ function CreateNewSpaceCard({ onSubmit, divClass, ...props }) {
         onClick={() => setIsOpen(true)}
       >
         <FaPlusCircle className="text-4xl text-white" />
-        <span className="text-xl text-white">New project</span>
+        <span className="text-xl text-white">Yeni Proje</span>
       </div>
     </>
   );

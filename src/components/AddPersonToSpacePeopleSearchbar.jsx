@@ -64,8 +64,8 @@ function AddPersonToSpacePeopleSearchbar({ onPeopleListChange }) {
 
   return (
     <div className="flex flex-col gap-2 max-w-md">
-      <span className="tracking-tight font-medium text-md">People to add</span>
-      <span className="text-slate-600 text-sm">You can add people to share this project with, or you can keep it to yourself</span>
+      <span className="tracking-tight font-medium text-md">Kişi ekleyin</span>
+      <span className="text-slate-600 text-sm">Projenizde beraber çalışmak istediğiniz kişileri seçin.</span>
       <Combobox value={peopleToShare} onChange={setPeopleToShare} multiple>
         {peopleToShare.length > 0 && (
           <div className="flex flex-row gap-2 text-blue-500 flex-wrap">
@@ -100,7 +100,7 @@ function AddPersonToSpacePeopleSearchbar({ onPeopleListChange }) {
             leaveTo="opacity-0"
             afterLeave={() => setSearchTerm('')}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadowring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {filteredPeople.length === 0 && searchTerm !== '' ? (
                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">Nothing found.</div>
               ) : (

@@ -93,7 +93,7 @@ export const DashboardSpaceDetailBookmarkCard = ({ bookmark, onCardClick, onRemo
   return (
     <>
       <AddDocumentToSpaceModal open={isModalOpen} onClose={closeModal} documentId={document.metadata.doc_id} />
-      <div className="border-l-4 border-blue-500 bg-white rounded-md cursor-pointer shadow-md overflow-hidden aspect-square transition-all duration-300 ease-in hover:scale-[1.02] hover:shadow-lg">
+      <div className="border-l-4 border-blue-500 bg-white rounded-md cursor-pointer shadow overflow-hidden aspect-square transition-all duration-300 ease-in hover:scale-[1.02] hover:shadow">
         <div className="flex flex-col gap-2 p-2">
           <div className="flex justify-between items-center">
             <span className="flex-1 text-md font-semibold tracking-tight text-blue-900 inline-block">{document.metadata.mevAdi}</span>

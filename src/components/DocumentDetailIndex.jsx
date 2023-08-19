@@ -5,7 +5,7 @@ import { FaChevronDown } from 'react-icons/fa';
 
 function Index({ document }) {
   return (
-    <div className="max-w-md flex flex-col gap-2 bg-white rounded-lg shadow-lg p-4">
+    <div className="max-w-md flex flex-col gap-2 bg-white rounded-lg shadowp-4">
       <div className="">
         <IndexArticle article={document} />
       </div>
@@ -32,7 +32,7 @@ function MobileIndexArticle({ article }) {
       <Disclosure as="div" className="">
         {({ open }) => (
           <>
-            <Disclosure.Button className="bg-white w-full mb-2 p-2 rounded-lg shadow-lg text-start text-lg font-light tracking-tight flex items-center gap-2">
+            <Disclosure.Button className="bg-white w-full mb-2 p-2 rounded-lg shadowtext-start text-lg font-light tracking-tight flex items-center gap-2">
               <h1>{article.articleTitle}</h1>
               <div className={clsx('transition-all text-md text-slate-500', open && 'rotate-180')}>
                 <FaChevronDown />
@@ -71,7 +71,7 @@ function MobileIndex({ document }) {
     <Disclosure as="div">
       {({ open }) => (
         <>
-          <Disclosure.Button className="min-w-full text-start rounded-lg bg-white p-2 shadow-md flex gap-2 items-center">
+          <Disclosure.Button className="min-w-full text-start rounded-lg bg-white p-2 shadow flex gap-2 items-center">
             <div className={clsx('transition-all text-md text-slate-500', open && 'rotate-180')}>
               <FaChevronDown />
             </div>
@@ -85,7 +85,7 @@ function MobileIndex({ document }) {
             leaveFrom="transform  max-h-[1000px]"
             leaveTo="transform  max-h-0"
           >
-            <Disclosure.Panel as="div" className="bg-white/80 p-2 mt-2 rounded-lg shadow-md">
+            <Disclosure.Panel as="div" className="bg-white/80 p-2 mt-2 rounded-lg shadow">
               <div className="box-border">
                 {document && document.children.map((child) => <MobileIndexArticle key={child.articleTitle} article={child} />)}
               </div>
@@ -105,7 +105,7 @@ function DocumentDetailIndex({ document }) {
   }, []);
   // return <h1>Hello World</h1>;
   return (
-    <div className="shadow-md shadow-slate-400">
+    <div className="shadow shadow-slate-400">
       <div className="2xl:hidden">
         <MobileIndex document={document} />
       </div>
