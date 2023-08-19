@@ -9,32 +9,28 @@ export default async function handler(req, res) {
       })
     );
   try {
-    const { accessToken, query } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/spaces`, {
-      method: 'GET',
+    const { accessToken, spaceId, documents } = JSON.parse(req.body);
+    const response = await fetch(`${backend_url}/spaces/${spaceId}/documents`, {
+      method: 'POST',
+      body: JSON.stringify({
+        documents,
+      }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
     });
     const data = await response.json();
-    const spaces = data.filter((space) => {
-      if (space.name.toLowerCase().includes(query)) {
-        return true;
-      }
-    });
-    console.log(spaces);
     res.send(
       JSON.stringify({
         error: null,
-        data: spaces,
+        data,
       })
     );
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
     res.status(500).send(
       JSON.stringify({
-        error: err,
+        error,
         data: null,
       })
     );

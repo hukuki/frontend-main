@@ -94,7 +94,7 @@ function RegisterPage() {
   return (
     <>
       <Head>
-        <title>DeepLex | Register</title>
+        <title>casevisor | Register</title>
       </Head>
       <LoginRegisterLayout>
         <div className="flex flex-col">
@@ -247,28 +247,27 @@ function RegisterPage() {
             <Progress isIndeterminate height="0.2rem" width="100%" marginTop="2rem" />
           ) : (
             <div>
-              <Button
+              <button
                 disabled={isAnyErrors}
-                type="submit"
-                variant="solid"
-                color="blue"
                 className={clsx(
-                  'w-full rounded-lg text-xl font-[200] mt-4',
-                  isAnyErrors ? 'bg-blue-200 hover:bg-blue-200 hover:text-white cursor-default active:bg-blue-200 active:text-white' : 'bg-blue-500'
+                  'w-full rounded-lg mt-2 group inline-flex items-center justify-center py-2 px-4 text-xl font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2',
+                  isAnyErrors
+                    ? 'bg-blue-200 text-white/90 hover:bg-blue-200 cursor-default'
+                    : 'bg-blue-600 cursor-pointer text-white hover:bg-blue-500 hover:text-slate-100 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600'
                 )}
               >
-                <span>
-                  Sign up <span>&rarr;</span>
+                <span className="text-lg">
+                  Sign in <span>&rarr;</span>
                 </span>
-              </Button>
+              </button>
             </div>
           )}
         </form>
 
         <div className="mt-4 flex gap-x-2 items-center">
-          <div className="flex-1 h-0.5 bg-violet-500"></div>
+          <div className="flex-1 h-px bg-blue-200"></div>
           <span className="text-lg text-blue-700">OR</span>
-          <div className="flex-1 h-0.5 bg-violet-500"></div>
+          <div className="flex-1 h-px bg-blue-200"></div>
         </div>
         {isSubmitting ? (
           <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
@@ -287,189 +286,6 @@ function RegisterPage() {
         )}
       </LoginRegisterLayout>
     </>
-    /*
-    <>
-      <AlertDialog isOpen={isOpen} isCentered={true} leastDestructiveRef={cancelRef} onClose={onClose} size="xl">
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="3rem" fontWeight="600">
-              Hata
-            </AlertDialogHeader>
-            <AlertDialogBody fontSize="2rem">{alertMessage}</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button
-                borderRadius="1.2rem"
-                fontSize="2.5rem"
-                fontFamily="Poppins, sans-serif"
-                py="2.5rem"
-                px="1.5rem"
-                ref={cancelRef}
-                onClick={onClose}
-              >
-                Geri
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-      <div className={styles.container}>
-        <div className={styles['hero__container']}>
-          <div className={styles['hero__content']}>
-            <h1 className={styles['hero__header']}>Lorem ipsum</h1>
-            <p className={styles['hero__text']}>
-              {' '}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque doloribus natus molestias facere, odit ullam corporis impedit,
-              quo veritatis error voluptates voluptatem? Pariatur, magni fugit. Blanditiis qui temporibus dolores. Iusto, totam repudiandae? Vel,
-              velit, dignissimos ab, nesciunt cumque aperiam repellat delectus enim tempora rem quae beatae assumenda. Quos, hic nostrum. Quo
-              molestias quod tempora, quos illo voluptas dignissimos exercitationem?{' '}
-            </p>
-          </div>
-        </div>
-        <div className={styles['form__container']}>
-          <h3 className={styles['form__header']}>Kayıt Olun</h3>
-          <form action="" className={styles['login__form']} onSubmit={handleSubmit}>
-            <div className={styles['form__input-area']}>
-              <div className={styles['form__input-names-container']}>
-                <div className={styles['form__input-container']}>
-                  <label
-                    htmlFor="firstname"
-                    className={`${styles['form__name-input-label']} ${errors.firstname && touched.firstname && styles['form__input-label-error']}`}
-                  >
-                    İsim
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.firstname}
-                    type="text"
-                    className={`${styles['form__input-name']} ${errors.firstname && touched.firstname && styles['form__input-error']}`}
-                    placeholder="İsminiz"
-                    id="firstname"
-                  />
-                  {errors.firstname && touched.firstname && <p className={styles['form__name-input-error-p']}>{errors.firstname}</p>}
-                </div>
-                <div className={styles['form__input-container']}>
-                  <label
-                    htmlFor="lastname"
-                    className={`${styles['form__name-input-label']} ${errors.lastname && touched.lastname && styles['form__input-label-error']}`}
-                  >
-                    Soyisim
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.lastname}
-                    type="text"
-                    className={`${styles['form__input-name']} ${errors.lastname && touched.lastname && styles['form__input-error']}`}
-                    placeholder="Soyisminiz"
-                    id="lastname"
-                  />
-                  {errors.lastname && touched.lastname && <p className={styles['form__name-input-error-p']}>{errors.lastname}</p>}
-                </div>
-              </div>
-              <div className={styles['form__input-container']}>
-                <label
-                  htmlFor="username"
-                  className={`${styles['form__input-label']} ${errors.username && touched.username && styles['form__input-label-error']}`}
-                >
-                  Kullanıcı Adı
-                </label>
-                <input
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.username}
-                  type="text"
-                  className={`${styles['form__input']} ${errors.username && touched.username && styles['form__input-error']}`}
-                  placeholder="Kullanıcı adınız"
-                  id="username"
-                />
-                {errors.username && touched.username && <p className={styles['form__input-error-p']}>{errors.username}</p>}
-              </div>
-              <div className={styles['form__input-container']}>
-                <label
-                  htmlFor="email"
-                  className={`${styles['form__input-label']} ${errors.email && touched.email && styles['form__input-label-error']}`}
-                >
-                  Email
-                </label>
-                <input
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                  type="email"
-                  className={`${styles['form__input']} ${errors.email && touched.email && styles['form__input-error']}`}
-                  placeholder="Email adresiniz"
-                  id="email"
-                />
-                {errors.email && touched.email && <p className={styles['form__input-error-p']}>{errors.email}</p>}
-              </div>
-              <div className={`${styles['form__input-container']} ${errors.password && touched.password && styles['password__error']}`}>
-                <label
-                  htmlFor="password"
-                  className={`${styles['form__input-label']} ${errors.password && touched.password && styles['form__input-label-error']}`}
-                >
-                  Şifre
-                </label>
-                <input
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                  type="password"
-                  className={`${styles['form__input']} ${errors.password && touched.password && styles['form__input-error']}`}
-                  placeholder="Şifreniz"
-                  id="password"
-                />
-                {errors.password && touched.password && <p className={styles['form__input-error-p']}>{errors.password}</p>}
-              </div>
-              <div className={`${styles['form__input-container']} `}>
-                <label
-                  htmlFor="confirmPassword"
-                  className={`${styles['form__input-label']} ${
-                    errors.confirmPassword && touched.confirmPassword && styles['form__input-label-error']
-                  }`}
-                >
-                  Şifre Tekrar
-                </label>
-                <input
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.confirmPassword}
-                  type="password"
-                  className={`${styles['form__input']} ${errors.confirmPassword && touched.confirmPassword && styles['form__input-error']}`}
-                  placeholder="Şifrenizin tekrarı"
-                  id="confirmPassword"
-                />
-                {errors.confirmPassword && touched.confirmPassword && <p className={styles['form__input-error-p']}>{errors.confirmPassword}</p>}
-              </div>
-              <p className={styles['form__prompt-login']}>
-                Zaten bir hesabınız var mı?{' '}
-                <span onClick={handleDirectLoginPage} className={styles['form__login-cta']}>
-                  Giriş yapın
-                </span>
-              </p>
-            </div>
-            {isSubmitting ? (
-              <Progress isIndeterminate height="1rem" width="100%" marginBottom="2rem" />
-            ) : (
-              <button disabled={isSubmitting} className={styles['form__button']} type="submit">
-                Kayıt Olun
-              </button>
-            )}
-          </form>
-          <div className={styles['or__container']}>
-            <span>Ya da</span>
-          </div>
-          {isSubmitting ? (
-            <Progress isIndeterminate height="1rem" width="60%" marginBottom="2rem" />
-          ) : (
-            <div className={styles['google-signin']}>
-              <button onClick={() => handleGoogleSignup()}>Google ile kayıt olun</button>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-    */
   );
 }
 

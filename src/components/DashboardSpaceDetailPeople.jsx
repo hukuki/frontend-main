@@ -1,21 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Avatar } from '@chakra-ui/react';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import useAuthContext from '../context/AuthContextProvider';
 import AddPersonToSpaceModal from './AddPersonToSpaceModal';
+import useSpaceStore from '../store/spaceStore';
 
-function DashboardSpaceDetailPeople({ space, onAddPerson }) {
+function DashboardSpaceDetailPeople({ initialSpace }) {
   const { user } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
+  const spaces = useSpaceStore((state) => state.spaces);
+  const [space, setSpace] = useState(initialSpace);
+
+  useEffect(() => {
+    const _space = spaces.get(initialSpace._id);
+    setSpace(_space);
+  }, [spaces]);
 
   return (
     <>
-      <AddPersonToSpaceModal space={space} open={isOpen} onClose={() => setIsOpen(false)} onSubmit={onAddPerson} />
+      <AddPersonToSpaceModal space={space} open={isOpen} onClose={() => setIsOpen(false)} />
       <div className="flex flex-col gap-4 p-4 bg-white max-w-screen-sm rounded-xl shadow-lg">
         <div className="flex flex-col gap-4">
           <span className="text-md font-medium tracking-tight">People: </span>
           <div className="flex gap-2 flex-wrap">
-            {space.people.length > 0 &&
+            {space &&
+              space.people.length > 0 &&
               space.people.map((contact, index) => {
                 return (
                   <div className="relative group z-10">

@@ -9,10 +9,10 @@ export default async function handler(req, res) {
       })
     );
   }
-  const { accessToken, userId } = JSON.parse(req.body);
+  const { spaceId, userId, accessToken } = JSON.parse(req.body);
   try {
-    const response = await fetch(`${backend_url}/users/${userId}`, {
-      method: 'GET',
+    const response = await fetch(`${backend_url}/spaces/${spaceId}/users/${userId}`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,

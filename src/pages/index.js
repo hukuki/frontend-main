@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>CaseVisor - Search the way you think</title>
+        <title>casevisor - Search the way you think</title>
         <meta
           name="description"
           content="Document search is essential but traditional tools use keyword search. We use artificial intelligence to provider faster and more accurate searching experience."
@@ -34,11 +34,11 @@ export default function Home() {
       <div className={styles.container}>
         <div className={styles.navbar__container}>
           <span className={styles.navbar__logo} onClick={() => router.push('/')}>
-            CaseVisor
+            casevisor
           </span>
           <div className={styles.navbar__links_container}>
             <span className={styles.navbar__link} onClick={() => router.push('/about')}>
-              Neden CaseVisor
+              Neden casevisor
             </span>
             <span className={styles.navbar__link} onClick={() => router.push('/team')}>
               Takım
@@ -69,11 +69,11 @@ export default function Home() {
             <span className={styles.content__right_header}>Döküman</span>
             <span className={styles.content__right_subheader}>aramanın kısa yolu</span>
             <span className={styles.content__right_parag}>
-              CaseVisor, legal döküman arama sürecinizi hızlandırarak verimliliğinizi artırır. Yapay zeka modelimiz ile işinize yarayan dökümanları
+              casevisor, legal döküman arama sürecinizi hızlandırarak verimliliğinizi artırır. Yapay zeka modelimiz ile işinize yarayan dökümanları
               bulmanız artık çok daha kolay
             </span>
             <Button fontSize="2.5rem" fontWeight="300" px="2.5rem" py="3.5rem" borderRadius="2rem" onClick={() => router.push('/search')}>
-              CaseVisor&apos;ı Dene
+              casevisor&apos;i Dene
             </Button>
           </div>
         </div>

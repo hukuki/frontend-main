@@ -1,36 +1,43 @@
 import { create } from 'zustand';
 
-const store = (set) => ({
-  spaces: [],
-  addSpace: (space) => set((state) => ({ spaces: state.spaces.push(space) })),
-  removeSpace: (spaceId) =>
-    set((state) => ({
-      spaces: state.spaces.filter((space) => {
-        if (space._id === spaceId) {
-          return false;
-        }
-        return true;
-      }),
-    })),
-  setSpaces: (spaces) => set({ spaces: spaces }),
-  addPeopleToSpace: (spaceId, people) =>
-    set((state) => ({
-      spaces: state.spaces.map((space) => {
-        if (space._id === spaceId) {
-          return { ...space, people: space.people.push(people) };
-        }
-        return space;
-      }),
-    })),
-  removePersonFromSpace: (spaceId, personId) =>
-    set((state) => ({
-      spaces: state.spaces.map((space) => {
-        if (space._id === spaceId) {
-          return { ...space, people: space.people.filter((p) => p._id !== personId) };
-        }
-        return space;
-      }),
-    })),
-});
+const useSpaceStore = create((set) => ({
+  spaces: new Map(),
+  addSpace: (space) => {
+    set((state) => {
+      const updatedSpaces = new Map(state.spaces);
+      updatedSpaces.set(space._id, space);
+      return { spaces: updatedSpaces };
+    });
+  },
+  updateSpace: (newSpace) => {
+    set((state) => {
+      const updatedSpaces = new Map(state.spaces);
+      updatedSpaces.set(newSpace._id, newSpace);
+      return { spaces: updatedSpaces };
+    });
+  },
+  removeSpace: (spaceId) => {
+    set((state) => {
+      const updatedSpaces = new Map(state.spaces);
+      updatedSpaces.delete(spaceId);
+      return { spaces: updatedSpaces };
+    });
+  },
+  setSpaces: (spaces) => {
+    set((state) => {
+      const newSpaces = new Map(
+        spaces.map((space) => {
+          return [space._id, space];
+        })
+      );
+      return { spaces: newSpaces };
+    });
+  },
+  resetSpaces: () => {
+    set((state) => {
+      return { spaces: new Map() };
+    });
+  },
+}));
 
-export default useSpaceStore = create(store);
+export default useSpaceStore;

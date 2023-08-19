@@ -44,7 +44,7 @@ const sections = [
     },
   },
   {
-    name: 'Search on DeepLex',
+    name: 'Search on casevisor',
     icon: function SearchIcon({ divClass, iconClass }) {
       let id = useId();
       return (
@@ -76,7 +76,7 @@ function MobileSidebarIcon({ open }) {
   );
 }
 
-function MobileSidebar() {
+function MobileSidebar({ activeLink, setActiveLink }) {
   const { user, signOutWithGoogle } = useAuthContext();
   const router = useRouter();
 
@@ -113,31 +113,50 @@ function MobileSidebar() {
         >
           <Popover.Panel
             as="div"
-            className="absolute inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+            className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
-            {sections.map((section, index) => {
-              if (index === 3) {
-                return (
-                  <>
-                    <hr className="m-2 border-slate-300/40" />
+            {({ close }) => (
+              <>
+                {sections.map((section, index) => {
+                  if (index === 3) {
+                    return (
+                      <>
+                        <hr className="m-2 border-slate-300/40" />
+                        <DashboardSidebarButton
+                          onClick={() => {
+                            close();
+                            router.push('/search');
+                          }}
+                          divClass="search_on_casevisor_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
+                          section={section}
+                          textClass="search_on_casevisor_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
+                        />
+                      </>
+                    );
+                  }
+                  if (index === 4) {
+                    return (
+                      <div onClick={handleLogout}>
+                        <hr className="m-2 border-slate-300/40" />
+                        <DashboardSidebarButton section={section} />
+                      </div>
+                    );
+                  }
+                  return (
                     <DashboardSidebarButton
-                      divClass="search_on_deeplex_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
                       section={section}
-                      textClass="search_on_deeplex_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
+                      divClass={clsx('', activeLink === section.name ? 'bg-blue-500' : 'bg-transparent')}
+                      textClass={clsx('', activeLink === section.name ? 'text-white' : 'text-slate-400')}
+                      iconClass={clsx('', activeLink === section.name ? 'text-white' : 'text-slate-400')}
+                      onClick={() => {
+                        setActiveLink(section.name);
+                        close();
+                      }}
                     />
-                  </>
-                );
-              }
-              if (index === 4) {
-                return (
-                  <div onClick={handleLogout}>
-                    <hr className="m-2 border-slate-300/40" />
-                    <DashboardSidebarButton section={section} />
-                  </div>
-                );
-              }
-              return <DashboardSidebarButton section={section} />;
-            })}
+                  );
+                })}
+              </>
+            )}
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -150,148 +169,85 @@ function DashboardPage() {
   const [activeLink, setActiveLink] = useState('Projects');
   const router = useRouter();
 
-  const changeActiveLink = (name) => {
-    switch (name) {
-      case 'Profile':
-        setActiveLink('Profile');
-        break;
-      case 'Saved Documents':
-        setActiveLink('Saved Documents');
-        break;
-      case 'Projects':
-        setActiveLink('Projects');
-        break;
-      case 'saved':
-        setActiveLink('saved');
-        break;
-    }
-  };
-
   const handleLogout = async () => {
     await signOutWithGoogle();
     router.push('/');
   };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row bg-neutral-100">
-        <div className="group/outer transition-all duration-300 hidden bg-neutral-950 md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
-          <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block">
-            <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
-            <hr className="mt-4 border-slate-500/30" />
-          </div>
-          <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
-            <span className="text-4xl text-blue-500">c</span>
-            <span className="text-4xl text-violet-500">s</span>
-            <hr className="mt-4 border-slate-500/30" />
-          </div>
-          <div className="flex-1 w-full flex flex-col gap-y-4">
-            {sections.map((section, index) => {
-              if (index === 3) {
-                return (
-                  <>
-                    <DashboardSidebarButton
-                      divClass="search_on_deeplex_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
-                      section={section}
-                      textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
-                      iconClass="text-white group-hover:text-slate-100"
-                    />
-                  </>
-                );
-              }
-              if (index === 4) {
-                return (
-                  <div className="mt-auto" onClick={handleLogout}>
-                    <hr />
-                    <DashboardSidebarButton
-                      divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
-                      section={section}
-                      textClass="text-white whitespace-nowrap group-hover:text-slate-300 hidden group-hover/outer:block  lg:block"
-                      iconClass="text-white group-hover:text-slate-300"
-                    />
-                  </div>
-                );
-              }
+    <div className="flex flex-col md:flex-row bg-neutral-50 h-full">
+      <div className="group/outer transition-all duration-300 hidden bg-white shadow-2xl md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
+        <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
+          <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
+          <hr className="mt-4 border-slate-900/30" />
+        </div>
+        <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
+          <span className="text-4xl text-blue-500">c</span>
+          <span className="text-4xl text-violet-500">s</span>
+          <hr className="mt-4 border-slate-900/30" />
+        </div>
+        <div className="flex-1 w-full flex flex-col gap-y-4">
+          {sections.map((section, index) => {
+            if (index === 3) {
               return (
-                <DashboardSidebarButton
-                  divClass={clsx(
-                    'hover:bg-blue-500 justify-center group-hover/outer:justify-start lg:justify-start',
-                    activeLink === section.name ? 'bg-blue-500' : 'bg-transparent'
-                  )}
-                  onClick={() => changeActiveLink(section.name)}
-                  section={section}
-                  textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
-                  iconClass="text-white group-hover:text-slate-100"
-                />
+                <>
+                  <DashboardSidebarButton
+                    divClass="search_on_casevisor_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
+                    section={section}
+                    onClick={() => router.push('/search')}
+                    textClass="text-white whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block"
+                    iconClass="text-white group-hover:text-slate-100"
+                  />
+                </>
               );
-            })}
-          </div>
-        </div>
-        <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow-md">
-          <div className="ml-2">
-            <MobileSidebar />
-          </div>
-          <div>
-            <Logo className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" />
-          </div>
-        </div>
-        <div className="block m-2 flex-1">
-          {activeLink == 'Projects' && (
-            <>
-              <DashboardSpacesContainer />
-            </>
-          )}
-        </div>
-      </div>
-    </>
-    /*
-    <>
-      <div className={styles.page__container}>
-        <div className={styles.container}>
-          <div className={styles.sidebar__container}>
-            {user && (
-              <div className={styles.avatar__container}>
-                <Avatar size="2xl" src={user.photoURL} />
-                <span className={styles.user_name}>{user.displayName}</span>
-                <span className={styles.user_email}>{user.email}</span>
-              </div>
-            )}
-            <div className={styles.links__container}>
-              <button
-                onClick={() => changeActiveLink('spaces')}
-                className={`${styles.spaces_sidebar_button} ${activeLink === 'spaces' && styles.active}`}
-              >
-                Projeler
-              </button>
-              <button
-                onClick={() => changeActiveLink('saved')}
-                className={`${styles.saved_documents_button} ${activeLink === 'saved' && styles.active}`}
-              >
-                Kaydedilenler
-              </button>
-              <button className={styles.search_button} onClick={() => router.push('/search')}>
-                DeepLex'te Arayın
-              </button>
-              <button className={styles.logout_button} onClick={handleLogout}>
-                Çıkış Yap
-              </button>
-            </div>
-            <div className={styles.footer}>&copy; 2023. All rights reserved.</div>
-          </div>
-          {activeLink === 'spaces' && (
-            <div className={styles.spaces__container}>
-              <DashboardSpacesContainer />
-            </div>
-          )}
-          {activeLink === 'saved' && (
-            <div className={styles.spaces__container}>
-              <DashboardBookmarksContainer />
-            </div>
-          )}
+            }
+            if (index === 4) {
+              return (
+                <div className="mt-auto" onClick={handleLogout}>
+                  <hr />
+                  <DashboardSidebarButton
+                    divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
+                    section={section}
+                    textClass="text-slate-900 whitespace-nowrap group-hover:text-slate-600 hidden group-hover/outer:block  lg:block"
+                    iconClass="text-slate-900 group-hover:text-slate-600"
+                  />
+                </div>
+              );
+            }
+            return (
+              <DashboardSidebarButton
+                divClass={clsx(
+                  'hover:bg-blue-500 justify-center group-hover/outer:justify-start lg:justify-start',
+                  activeLink === section.name ? 'bg-blue-500' : 'bg-transparent'
+                )}
+                onClick={() => setActiveLink(section.name)}
+                section={section}
+                textClass={clsx(
+                  'whitespace-nowrap group-hover:text-slate-100 hidden group-hover/outer:block lg:block',
+                  activeLink === section.name ? 'text-white' : 'text-slate-900'
+                )}
+                iconClass={clsx('group-hover:text-slate-100', activeLink === section.name ? 'text-white' : 'text-slate-400')}
+              />
+            );
+          })}
         </div>
       </div>
-    </>
-    */
+      <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow-md">
+        <div className="ml-2">
+          <MobileSidebar activeLink={activeLink} setActiveLink={setActiveLink} />
+        </div>
+        <div>
+          <Logo className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" />
+        </div>
+      </div>
+      <div className="block m-2 flex-1">
+        {activeLink == 'Projects' && (
+          <>
+            <DashboardSpacesContainer />
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 

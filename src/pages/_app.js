@@ -7,14 +7,12 @@ import { AuthContextProvider } from '../context/AuthContextProvider';
 
 export default function App({ Component, pageProps: { session, ...pageProps }, router }) {
   return (
-    <ChakraProvider theme={theme}>
-      <AnimatePresence mode="wait" initial={true}>
-        <LayoutGroup>
-          <AuthContextProvider>
-            <Component {...pageProps} key={router.asPath} />
-          </AuthContextProvider>
-        </LayoutGroup>
-      </AnimatePresence>
-    </ChakraProvider>
+    <AnimatePresence mode="wait" initial={true}>
+      <LayoutGroup>
+        <AuthContextProvider>
+          <Component {...pageProps} key={router.asPath} />
+        </AuthContextProvider>
+      </LayoutGroup>
+    </AnimatePresence>
   );
 }

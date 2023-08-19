@@ -1,21 +1,18 @@
 const backend_url = process.env.BACKEND_URL;
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST')
+  if (req.method !== 'POST') {
     return res.status(400).send(
       JSON.stringify({
         error: 'Invalid operation',
         data: null,
       })
     );
+  }
+  const { spaceId, documentId, accessToken } = JSON.parse(req.body);
   try {
-    const { accessToken, spaceId, documentId } = JSON.parse(req.body);
-    const response = await fetch(`${backend_url}/bookmarks/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        document: documentId,
-        space: spaceId,
-      }),
+    const response = await fetch(`${backend_url}/spaces/${spaceId}/documents/${documentId}`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
@@ -24,15 +21,16 @@ export default async function handler(req, res) {
     const data = await response.json();
     res.send(
       JSON.stringify({
-        error: null,
         data,
+        error: null,
       })
     );
   } catch (error) {
+    console.log(error);
     res.status(500).send(
       JSON.stringify({
-        error,
         data: null,
+        error,
       })
     );
   }

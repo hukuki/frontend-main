@@ -11,7 +11,7 @@ function HomePageCallToAction() {
         <div className="mx-auto max-w-lg text-center">
           <h1 className="tracking-tight font-display text-3xl sm:text-4xl text-white">Request a demo</h1>
           <p className="tracking-tight text-lg mt-4 text-blue-100">
-            You can start using DeepLex today. It's time to organize your workflow and work smarter, not harder
+            You can start using casevisor today. It's time to organize your workflow and work smarter, not harder
           </p>
           <Button href="/" color="slate" className="mt-10 shadow-md">
             Request demo

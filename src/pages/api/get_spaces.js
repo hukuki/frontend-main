@@ -1,10 +1,16 @@
 const backend_url = process.env.BACKEND_URL;
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(400).send('Invalid operation');
+  if (req.method !== 'POST') {
+    return res.status(400).send(
+      JSON.stringify({
+        error: 'Invalid operation',
+        data: null,
+      })
+    );
+  }
+  const { accessToken } = JSON.parse(req.body);
   try {
-    const { accessToken } = JSON.parse(req.body);
-    console.log(accessToken);
     const response = await fetch(`${backend_url}/spaces`, {
       method: 'GET',
       headers: {
@@ -12,21 +18,19 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response);
     const data = await response.json();
-    console.log(data);
     res.send(
       JSON.stringify({
-        error: null,
         data,
+        error: null,
       })
     );
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     res.status(500).send(
       JSON.stringify({
-        error: err,
         data: null,
+        error,
       })
     );
   }

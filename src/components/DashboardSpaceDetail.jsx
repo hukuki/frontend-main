@@ -4,60 +4,7 @@ import DashboardSpaceDetailBookmarks from './DashboardSpaceDetailBookmarks';
 import useAuthContext from '../context/AuthContextProvider';
 import { FaArrowLeft } from 'react-icons/fa';
 
-function DashboardSpaceDetail({ spaceId, onBackClick }) {
-  const { user } = useAuthContext();
-  const [space, setSpace] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const getSpace = async () => {
-    const res = await fetch('/api/get_space_by_id', {
-      method: 'POST',
-      body: JSON.stringify({
-        accessToken: user.accessToken,
-        spaceId: spaceId,
-      }),
-    });
-    const { error, data } = await res.json();
-    console.log(error);
-    console.log(data);
-    if (!error) {
-      setSpace(data);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      getSpace();
-    }
-  }, [user]);
-
-  const handleAddPerson = async () => {
-    const res = await fetch('/api/get_space_by_id', {
-      method: 'POST',
-      body: JSON.stringify({
-        accessToken: user.accessToken,
-        spaceId: spaceId,
-      }),
-    });
-    const { error, data } = await res.json();
-    if (!error) {
-      setSpace(data);
-      setLoading(false);
-      window.postMessage({
-        space_id: space._id,
-        action: {
-          type: 'PEOPLE',
-          payload: data.people,
-        },
-      });
-    }
-  };
-
-  const handleDocumentRemove = async () => {
-    await getSpace();
-  };
-
+function DashboardSpaceDetail({ space, onBackClick }) {
   if (space) {
     return (
       <div className="p-2 flex flex-col gap-4">
@@ -67,10 +14,10 @@ function DashboardSpaceDetail({ spaceId, onBackClick }) {
         </button>
         <h1 className="tracking-tight text-xl text-slate-900">{space.name}</h1>
         <div>
-          <DashboardSpaceDetailPeople onAddPerson={handleAddPerson} space={space} />
+          <DashboardSpaceDetailPeople initialSpace={space} />
         </div>
         <div>
-          <DashboardSpaceDetailBookmarks bookmarks={space.bookmarks} onRemove={handleDocumentRemove} />
+          <DashboardSpaceDetailBookmarks bookmarks={space.bookmarks} />
         </div>
       </div>
     );

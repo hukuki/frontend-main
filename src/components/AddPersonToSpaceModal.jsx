@@ -4,11 +4,12 @@ import useAuthContext from '../context/AuthContextProvider';
 import { Dialog } from '@headlessui/react';
 import AddPersonToSpacePeopleSearchbar from './AddPersonToSpacePeopleSearchbar';
 import clsx from 'clsx';
+import useSpaceStore from '../store/spaceStore';
 
-export const AddPersonToSpaceModal = ({ open, onClose, space, onSubmit }) => {
+export const AddPersonToSpaceModal = ({ open, onClose, space }) => {
   const { user } = useAuthContext();
   const [peopleToAdd, setPeopleToAdd] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const updateSpace = useSpaceStore((state) => state.updateSpace);
 
   const handlePeopleListChange = (newList) => {
     setPeopleToAdd(newList);
@@ -16,29 +17,29 @@ export const AddPersonToSpaceModal = ({ open, onClose, space, onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     if (user && peopleToAdd.length > 0) {
-      if (peopleToAdd.length === 1) {
-        const peopleId = peopleToAdd[0]._id;
-        const res = await fetch('/api/add_people_to_space', {
-          method: 'POST',
-          body: JSON.stringify({
-            accessToken: user.accessToken,
-            spaceId: space._id,
-            peopleIds: peopleId,
-          }),
-        });
-        const { error, data } = await res.json();
-        console.log(error);
+      const people = peopleToAdd.map((p) => {
+        return {
+          user: p._id,
+          role: 'observer',
+        };
+      });
+      const res = await fetch('/api/add_people_to_space', {
+        method: 'POST',
+        body: JSON.stringify({
+          accessToken: user.accessToken,
+          spaceId: space._id,
+          people,
+        }),
+      });
+      const { error, data } = await res.json();
+      if (!error) {
         console.log(data);
-        if (!error) {
-          onSubmit();
-          onClose();
-        }
+        updateSpace(data);
+      } else {
+        console.log(error);
       }
     }
-    setLoading(false);
-    onSubmit();
     onClose();
   };
 

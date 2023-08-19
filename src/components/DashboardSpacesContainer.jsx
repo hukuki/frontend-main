@@ -5,6 +5,7 @@ import DashboardSpaceCard from './DashboardSpaceCard';
 import DashboardSpaceDetail from './DashboardSpaceDetail';
 import CreateNewSpaceCard from './CreateNewSpaceCard';
 import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
+import useSpaceStore from '../store/spaceStore';
 
 const containerVariants = {
   hidden: {
@@ -13,7 +14,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      delayChildren: 0, // this will set a delay before the children start animating
+      delayChildren: 0.3, // this will set a delay before the children start animating
       staggerChildren: 0.08, // this will set the time inbetween children animation
     },
   },
@@ -32,12 +33,42 @@ const itemVariants = {
   },
 };
 
+const detailedSpaceVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+
+const spacesContainerVariants = {
+  initial: {
+    opacity: 0,
+  },
+  exit: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+    },
+  },
+};
+
 function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
   const { user } = useAuthContext();
-  const [allSpaces, setAllSpaces] = useState([]);
+  const spaces = useSpaceStore((state) => state.spaces);
+  const setSpaces = useSpaceStore((state) => state.setSpaces);
   const [filteredSpaces, setFilteredSpaces] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [detailedSpaceId, setDetailedSpaceId] = useState(null);
+  const [detailedSpace, setDetailedSpace] = useState(null);
 
   async function getSpaces() {
     const response = await fetch('/api/get_spaces', {
@@ -48,8 +79,7 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
     });
     const { error, data } = await response.json();
     if (!error) {
-      setAllSpaces(data);
-      setLoading(false);
+      setSpaces(data);
     }
   }
 
@@ -64,9 +94,10 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (filterTerm === '') {
-        setFilteredSpaces(allSpaces);
+        // Take a look at this Array.from to refactor
+        setFilteredSpaces(Array.from(spaces.values()));
       } else {
-        let searchedSpaces = allSpaces.filter((space) => {
+        let searchedSpaces = Array.from(spaces.values()).filter((space) => {
           if (space.name.toLowerCase().includes(filterTerm.toLowerCase())) {
             return true;
           }
@@ -75,25 +106,24 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [filterTerm, allSpaces]);
+  }, [filterTerm, spaces]);
 
   const handleSearchTermChange = (term) => {
     setFilterTerm(term);
   };
 
-  const handleNewSpaceCreated = async () => {
-    await getSpaces();
-  };
+  return (
+    <AnimatePresence>
+      {detailedSpace !== null ? (
+        <motion.div key="detailed_space" variants={detailedSpaceVariants} initial="initial" animate="animate" exit="exit">
+          <DashboardSpaceDetail space={detailedSpace} onBackClick={() => setDetailedSpace(null)} />
+        </motion.div>
+      ) : (
+        <motion.div key="spaces_container" variants={spacesContainerVariants} exit="exit" animate="animate" initial="initial">
+          <div>
+            <DashboardSpacesSearchbar key="searchbar" onSubmit={handleSearchTermChange} onSearchChange={handleSearchTermChange} />
+          </div>
 
-  if (detailedSpaceId !== null) {
-    return <DashboardSpaceDetail spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
-  } else {
-    return (
-      <LayoutGroup layout>
-        <div>
-          <DashboardSpacesSearchbar onSubmit={handleSearchTermChange} onSearchChange={handleSearchTermChange} />
-        </div>
-        {filteredSpaces.length > 0 && (
           <motion.div
             layout="position"
             viewport={{ once: true }}
@@ -102,69 +132,21 @@ function DashboardSpacesContainer({ onSpaceClick, searchedSpace }) {
             animate="visible"
             className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 grid-flow-row gap-4 justify-between items-center"
           >
-            <CreateNewSpaceCard onSubmit={handleNewSpaceCreated} />
-            {filteredSpaces.map((space, index) => {
-              return (
-                <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpaceId(space._id)}>
-                  <DashboardSpaceCard space={space} />
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        )}
-      </LayoutGroup>
-    );
-  }
+            <CreateNewSpaceCard key="create" />
 
-  /*
-  if (detailedSpaceId) {
-    return <DashboardSpaceDetail callback={callback} spaceId={detailedSpaceId} onBackClick={() => setDetailedSpaceId(null)} />;
-  } else {
-    return (
-      <>
-        <div className={styles.spaces_search_button__container}>
-          <DashboardSearchbar onSubmit={handleSearchTermChange} onSearchTermChanged={handleSearchTermChange} />
-        </div>
-        <div className={styles.space_cards_container}>
-          <CreateSpaceCard onSubmit={handleNewSpaceCreated} />
-          {loading ? (
-            <>
-              {new Array(20).fill({}).map((item) => {
-                return <SkeletonSpaceCard />;
+            {filteredSpaces.length > 0 &&
+              filteredSpaces.map((space, index) => {
+                return (
+                  <motion.div key={space._id} viewport={{ once: true }} variants={itemVariants} onClick={() => setDetailedSpace(space)}>
+                    <DashboardSpaceCard space={space} />
+                  </motion.div>
+                );
               })}
-            </>
-          ) : (
-            <>
-              {filteredSpaces.length > 0 &&
-                filteredSpaces.map((space, index) => {
-                  return (
-                    <motion.div
-                      variants={item}
-                      whileHover="hover"
-                      zIndex={-1}
-                      onClick={() => {
-                        setDetailedSpaceId(space._id);
-                      }}
-                    >
-                      <SpaceCard
-                        reveal={{
-                          duration: 500,
-                          delay: 350,
-                          reset: true,
-                        }}
-                        key={index}
-                        space={space}
-                      />
-                    </motion.div>
-                  );
-                })}
-            </>
-          )}
-        </div>
-      </>
-    );
-  }
-  */
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 export default DashboardSpacesContainer;
