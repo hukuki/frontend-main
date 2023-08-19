@@ -42,8 +42,10 @@ const SearchPage = () => {
           )}
         </div>
         <div className="flex flex-col gap-y-6 items-center justify-center h-screen w-screen p-6">
-          <div className="w-full flex justify-center">
-            <Logo className="text-transparent text-5xl md:text-6xl font-semibold lowercase bg-clip-text bg-gradient-to-r from-blue-500 to-fuchsia-900" />
+          <div className="w-full flex justify-center mb-6">
+            <Logo
+              className="text-5xl md:text-7xl" 
+            />
           </div>
           <div className="min-w-full">
             <Searchbar onSubmit={handleSubmit} />

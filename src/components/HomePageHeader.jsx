@@ -90,7 +90,8 @@ export function Header() {
         <nav className="relative z-50 flex justify-between items-baseline">
           <div className="flex items-center justify-center md:gap-x-12">
             <Link href="/" aria-label="Home">
-              <Logo className="font-light lowercase text-transparent text-4xl bg-clip-text bg-gradient-to-r from-blue-400 via-violet-700 to-indigo-900" />
+              <Logo //className="font-light lowercase text-transparent text-4xl bg-clip-text bg-gradient-to-r from-blue-400 via-violet-700 to-indigo-900" 
+              />
             </Link>
           </div>
           <div className="flex items-center justify-end md:gap-x-6">

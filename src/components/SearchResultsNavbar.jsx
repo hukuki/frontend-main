@@ -12,7 +12,9 @@ function SearchResultsNavbar({ divClass }) {
       <div className={clsx('flex justify-between mx-auto', divClass)}>
         <div>
           <Link href="/">
-            <Logo className="cursor-pointer lowercase text-transparent bg-clip-text bg-gradient-to-r inline-block from-blue-400 to-indigo-900 text-4xl font-light" />
+            <Logo 
+            //className="cursor-pointer lowercase text-transparent bg-clip-text bg-gradient-to-r inline-block from-blue-400 to-indigo-900 text-4xl font-light" 
+            />
           </Link>
         </div>
         {user ? (

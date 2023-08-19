@@ -99,7 +99,9 @@ function RegisterPage() {
       <LoginRegisterLayout>
         <div className="flex flex-col">
           <Link href="/">
-            <Logo className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" />
+            <Logo
+            // className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" 
+            />
           </Link>
           <div className="mt-12">
             <h2 className="text-lg font-semibold text-gray-900">Yeni bir hesap oluşturun.</h2>

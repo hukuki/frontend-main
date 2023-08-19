@@ -77,7 +77,9 @@ function LoginPage() {
       <LoginLayout>
         <div className="flex flex-col">
           <Link href="/">
-            <Logo className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" />
+            <Logo 
+            //className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" 
+            />
           </Link>
           <div className="mt-20">
             <h2 className="text-lg font-semibold text-gray-900">Hesabınıza giriş yapın.</h2>

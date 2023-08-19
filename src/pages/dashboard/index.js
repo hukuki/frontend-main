@@ -178,7 +178,9 @@ function DashboardPage() {
     <div className="flex flex-col md:flex-row bg-neutral-50 h-full">
       <div className="group/outer transition-all duration-300 hidden bg-white shadow-2xl md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
         <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
-          <Logo className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" />
+          <Logo 
+          //className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" 
+          />
           <hr className="mt-4 border-slate-900/30" />
         </div>
         <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
@@ -237,7 +239,9 @@ function DashboardPage() {
           <MobileSidebar activeLink={activeLink} setActiveLink={setActiveLink} />
         </div>
         <div>
-          <Logo className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" />
+          <Logo 
+          //className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" 
+          />
         </div>
       </div>
       <div className="block m-2 flex-1">
