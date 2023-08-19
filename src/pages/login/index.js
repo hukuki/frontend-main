@@ -72,7 +72,7 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>casevisor | Sign In</title>
+        <title>casevisor | Giriş Yap</title>
       </Head>
       <LoginLayout>
         <div className="flex flex-col">
@@ -80,13 +80,12 @@ function LoginPage() {
             <Logo className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" />
           </Link>
           <div className="mt-20">
-            <h2 className="text-lg font-semibold text-gray-900">Sign in to your account</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Hesabınıza giriş yapın.</h2>
             <p className="mt-2 text-sm text-gray-700">
-              Don't have an account?{' '}
+              Hesabınız yok mu?{' '}
               <Link href="/register" className="font-medium text-blue-600 hover:underline">
-                Sign up
+                Kaydolun
               </Link>{' '}
-              for a free trial.
             </p>
           </div>
         </div>
@@ -96,7 +95,7 @@ function LoginPage() {
               htmlFor="email"
               className={clsx('mb-3 block text-sm font-medium', errors.email && touched.email ? 'text-red-700' : 'text-gray-700')}
             >
-              Email Address
+              Email Adresiniz
             </label>
             <input
               className={clsx(
@@ -109,12 +108,12 @@ function LoginPage() {
               onChange={handleChange}
               onBlur={handleBlur}
               type="email"
-              placeholder="Enter your email address"
+              placeholder="Email adresinizi girin."
               id="email"
               name="email"
             />
             <p className={clsx('', errors.email && touched.email ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-              Please enter a valid email address
+              Lütfen doğru bir email adresi girin.
             </p>
           </div>
           <div>
@@ -122,7 +121,7 @@ function LoginPage() {
               htmlFor="password"
               className={clsx('mb-3 block text-sm font-medium', errors.password && touched.password ? 'text-red-700' : 'text-gray-700')}
             >
-              Password
+              Şifreniz
             </label>
             <input
               className={clsx(
@@ -135,12 +134,12 @@ function LoginPage() {
               onChange={handleChange}
               onBlur={handleBlur}
               type="password"
-              placeholder="Enter your password"
+              placeholder="Şifrenizi girin"
               id="password"
               name="password"
             />
             <p className={clsx('', errors.password && touched.password ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-              Please enter your password
+              Lütfen şifrenizi girin.
             </p>
           </div>
           {isSubmitting ? (
@@ -157,7 +156,7 @@ function LoginPage() {
                 )}
               >
                 <span className="text-lg">
-                  Sign in <span>&rarr;</span>
+                  Giriş Yapın <span>&rarr;</span>
                 </span>
               </button>
             </div>
@@ -166,7 +165,7 @@ function LoginPage() {
 
         <div className="mt-4 flex gap-x-2 items-center">
           <div className="flex-1 h-px bg-blue-200"></div>
-          <span className="text-lg text-blue-700">OR</span>
+          <span className="text-lg text-blue-700">veya</span>
           <div className="flex-1 h-px bg-blue-200"></div>
         </div>
         {isSubmitting ? (
@@ -174,7 +173,7 @@ function LoginPage() {
         ) : (
           <div className="mt-4">
             <Button onClick={() => handleGoogleLogin()} variant="solid" color="blue" className="w-full text-xl rounded-lg">
-              <span>Sign in with Google</span>
+              <span>Google ile Giriş Yapın</span>
             </Button>
           </div>
         )}
