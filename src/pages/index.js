@@ -12,10 +12,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>casevisor - Search the way you think</title>
+        <title>casevisor - Hukuki Arama Motoru</title>
         <meta
           name="description"
-          content="Document search is essential but traditional tools use keyword search. We use artificial intelligence to provider faster and more accurate searching experience."
+          content="Avukatlar için yapay zeka teknolojili mevzuat, içtihat ve literatür arama motoru."
         />
       </Head>
       <Header />
