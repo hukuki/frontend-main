@@ -165,9 +165,9 @@ function LoginPage() {
         </form>
 
         <div className="mt-4 flex gap-x-2 items-center">
-          <div className="flex-1 h-0.5 bg-blue-500"></div>
+          <div className="flex-1 h-px bg-blue-200"></div>
           <span className="text-lg text-blue-700">OR</span>
-          <div className="flex-1 h-0.5 bg-blue-500"></div>
+          <div className="flex-1 h-px bg-blue-200"></div>
         </div>
         {isSubmitting ? (
           <Progress isIndeterminate height=".2rem" width="100%" marginTop="2rem" />
