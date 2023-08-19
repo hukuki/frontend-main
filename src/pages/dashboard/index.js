@@ -231,11 +231,13 @@ function DashboardPage() {
           })}
         </div>
       </div>
-      <div className="w-full flex justify-between items-center gap-x-4 p-2 md:hidden bg-white shadow">
+      <div className="w-full flex items-center gap-x-4 p-2 md:hidden bg-white shadow">
         <div className="ml-2">
           <MobileSidebar activeLink={activeLink} setActiveLink={setActiveLink} />
         </div>
-        <div>
+        <div 
+          className='ml-5'
+        >
           <Logo 
           //className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" 
           />
