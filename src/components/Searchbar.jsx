@@ -26,7 +26,7 @@ function Searchbar({ initialSearch = '', onSubmit, onSearchChange, className, ..
               onSubmit(search);
             }
           }}
-          placeholder={!initialSearch && 'Search in documents'}
+          placeholder={!initialSearch && 'Eve izinsiz girmenin cezası nedir?'}
         />
       </div>
     </div>
