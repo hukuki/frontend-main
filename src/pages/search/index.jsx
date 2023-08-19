@@ -23,7 +23,7 @@ const SearchPage = () => {
         <title>casevisor | Arama Yapın </title>
       </Head>
       <div className="flex flex-col overflow-hidden max-h-screen">
-        <div className="flex items-center justify-start gap-4 p-4 shadow-md">
+        <div className="flex items-center justify-start gap-5 p-4 shadow">
           {user ? (
             <>
               <button className="hover:text-blue-500" onClick={() => router.push('/dashboard')}>
@@ -42,9 +42,9 @@ const SearchPage = () => {
           )}
         </div>
         <div className="flex flex-col gap-y-6 items-center justify-center h-screen w-screen p-6">
-          <div className="w-full flex justify-center mb-6">
+          <div className="w-full flex justify-center mb-8">
             <Logo
-              className="text-5xl md:text-7xl" 
+              className="text-7xl" 
             />
           </div>
           <div className="min-w-full">
