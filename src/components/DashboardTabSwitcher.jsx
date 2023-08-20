@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 const TabContext = createContext({});
 
 function DashboardTabSwitcher(props) {
-  const [activeTabID, setActiveTabID] = useState('Projects');
+  const [activeTabID, setActiveTabID] = useState('Projelerim');
   return <TabContext.Provider value={[activeTabID, setActiveTabID]}>{props.children}</TabContext.Provider>;
 }
 

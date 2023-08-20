@@ -166,7 +166,7 @@ function MobileSidebar({ activeLink, setActiveLink }) {
 
 function DashboardPage() {
   const { user, signOutWithGoogle } = useAuthContext();
-  const [activeLink, setActiveLink] = useState('Projects');
+  const [activeLink, setActiveLink] = useState('Projelerim');
   const router = useRouter();
 
   const handleLogout = async () => {
