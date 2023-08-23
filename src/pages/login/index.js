@@ -70,7 +70,7 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>casevisor | Giriş Yap</title>
+        <title>Giriş Yap - casevisor</title>
       </Head>
       <LoginLayout>
         <div className="flex flex-col">

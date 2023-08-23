@@ -20,7 +20,7 @@ const SearchPage = () => {
   return (
     <>
       <Head>
-        <title>casevisor | Arama Yapın </title>
+        <title>Arama - casevisor</title>
       </Head>
       <div className="flex flex-col overflow-hidden max-h-screen">
         <div className="flex items-center justify-start gap-5 p-4 shadow">
