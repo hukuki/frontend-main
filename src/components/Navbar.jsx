@@ -77,7 +77,7 @@ function MobileNavigation({ user, logout }) {
   );
 }
 
-export function Header() {
+export function Navbar() {
   const { user, signOutWithGoogle } = useAuthContext();
 
   const handleLogout = async () => {
@@ -85,19 +85,17 @@ export function Header() {
   };
 
   return (
-    <header className="py-6">
+    <header className="py-2 border-b-2 border-slate-200">
       <Container>
-        <nav className="relative z-50 flex justify-between items-baseline">
+        <nav className="relative z-50 flex justify-between items-center">
           <div className="flex items-center justify-center md:gap-x-12">
             <Link href="/" aria-label="Home">
-              <Logo //className="font-light lowercase text-transparent text-4xl bg-clip-text bg-gradient-to-r from-blue-400 via-violet-700 to-indigo-900" 
+              <Logo //className="font-light lowercase text-transparent text-4xl bg-clip-text bg-gradient-to-r from-blue-400 via-violet-700 to-indigo-900"
               />
             </Link>
           </div>
           <div className="flex items-center justify-end md:gap-x-6">
-            <div className="hidden md:flex items-center md:gap-6">
-            
-            </div>{' '}
+            <div className="hidden md:flex items-center md:gap-6"></div>{' '}
             <div className="flex items-center gap-x-5 md:gap-x-6">
               {user ? (
                 <>
@@ -114,9 +112,11 @@ export function Header() {
                     <NavLink href="/login">Giriş Yapın</NavLink>
                     <NavLink href="/register">Kaydolun</NavLink>
                   </div>
-                  <Button href="/register" color="blue">
-                    <span>Başlayın</span>
-                  </Button>
+                  <div className="hidden md:block">
+                    <Button href="/register" color="blue">
+                      <span>Başlayın</span>
+                    </Button>
+                  </div>
                 </>
               )}
               <div className="-mr-1 md:hidden">
@@ -129,10 +129,3 @@ export function Header() {
     </header>
   );
 }
-
-/*
-  <NavLink href="#features">Features</NavLink>
-              <NavLink href="#product">Product</NavLink>
-              <NavLink href="#testimonials">Testimonials</NavLink>
-
-*/

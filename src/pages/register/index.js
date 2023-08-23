@@ -133,7 +133,7 @@ function RegisterPage() {
                 name="firstname"
               />
               <p className={clsx('', errors.firstname && touched.firstname ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-                Lütfen doğru bir ad girin.
+                Lütfen geçerli bir isim giriniz.
               </p>
             </div>
             <div className="sm:mb-0 mb-3">

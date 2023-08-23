@@ -2,12 +2,12 @@ import React from 'react';
 import img404 from '@/images/custom_error.png';
 import Image from 'next/image';
 import { Logo } from '../components/Logo';
-import { Header } from '../components/HomePageHeader';
+import { Navbar } from '../components/Navbar';
 function Custom404() {
   return (
     <div className="bg-slate-100 min-h-screen min-w-screen overflow-hidden flex flex-col relative">
       <div className="min-w-ful">
-        <Header />
+        <Navbar />
       </div>
       <div className="flex-1">
         <div className=" absolute top-0 left-0 right-0 bottom-0 m-auto flex flex-col justify-center items-center">

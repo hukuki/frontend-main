@@ -6,12 +6,11 @@ import theme from '@/theme';
 import { AuthContextProvider } from '../context/AuthContextProvider';
 
 export default function App({ Component, pageProps: { session, ...pageProps }, router }) {
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <AnimatePresence mode="wait" initial={true}>
       <LayoutGroup>
-        <AuthContextProvider>
-          <Component {...pageProps} key={router.asPath} />
-        </AuthContextProvider>
+        <AuthContextProvider>{getLayout(<Component {...pageProps} key={router.asPath} />)}</AuthContextProvider>
       </LayoutGroup>
     </AnimatePresence>
   );
