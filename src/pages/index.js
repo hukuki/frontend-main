@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Header } from '../components/HomePageHeader';
+import { Navbar } from '../components/Navbar';
 import Hero from '../components/HomePageHero';
 import HomePagePrimaryFeatures from '../components/HomePagePrimaryFeatures';
 import HomePageCallToAction from '../components/HomePageCallToAction';
@@ -13,15 +13,11 @@ export default function Home() {
     <>
       <Head>
         <title>casevisor - Hukuki Arama Motoru</title>
-        <meta
-          name="description"
-          content="Avukatlar için yapay zeka teknolojili mevzuat, içtihat ve literatür arama motoru."
-        />
+        <meta name="description" content="Avukatlar için yapay zeka teknolojili mevzuat, içtihat ve literatür arama motoru." />
       </Head>
-      <Header />
+      <Navbar />
       <main>
         <Hero />
-       
       </main>
       <Footer />
     </>
