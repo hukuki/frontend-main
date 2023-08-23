@@ -94,7 +94,7 @@ function RegisterPage() {
   return (
     <>
       <Head>
-        <title>casevisor | Kaydolun</title>
+        <title>Kaydolun - casevisor</title>
       </Head>
       <LoginRegisterLayout>
         <div className="flex flex-col">

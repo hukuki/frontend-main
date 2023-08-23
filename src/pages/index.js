@@ -12,8 +12,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>casevisor - Hukuki Arama Motoru</title>
-        <meta name="description" content="Avukatlar için yapay zeka teknolojili mevzuat, içtihat ve literatür arama motoru." />
+        <title>casevisor | Legal Arama Motoru</title>
+        <meta
+          name="description"
+          content="Avukatlar için yapay zeka teknolojili mevzuat, içtihat ve literatür arama motoru. casevisor ile aradığınız dökümanlara çok daha hızlı ulaşın."
+        />
       </Head>
       <Navbar />
       <main>
