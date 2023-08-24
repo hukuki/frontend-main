@@ -1,13 +1,8 @@
-import { useEffect, useState, Fragment } from 'react';
 import { Button } from './Button';
 import { Container } from './Container';
 import { Typewriter } from 'react-simple-typewriter';
-import ErrorModal from './ErrorModal';
-import { Dialog, Transition } from '@headlessui/react';
 
 function Hero() {
-  const [modalOpen, setModalOpen] = useState(false);
-
   return (
     <Container className="pt-20 pb-16 text-center lg:pt-32">
       <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-800 sm:text-7xl">
