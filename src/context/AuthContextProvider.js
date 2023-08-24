@@ -28,6 +28,7 @@ const useFirebaseAuth = () => {
 
   const router = useRouter();
 
+  // TODO: Delete on deployment
   useEffect(() => {
     console.log(user);
   }, [user]);

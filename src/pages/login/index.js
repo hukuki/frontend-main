@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import LoginLayout from '../../components/LoginRegisterLayout';
 import { Button } from '../../components/Button';
 import { Progress } from '@chakra-ui/react';
+import { convertFirebaseErrorCodeToMessage } from '../../utils/alerts/convert_firebase_error';
 
 function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,20 +21,17 @@ function LoginPage() {
   const handleGoogleLogin = async () => {
     setIsSubmitting(true);
     try {
-      const { error, user } = await signInWithGoogle(null);
-      console.log(error);
+      const { error, _ } = await signInWithGoogle(null);
       setIsSubmitting(false);
       if (error) {
-        // TODO: Show a toast message
-        console.log(error);
+        const message = convertFirebaseErrorCodeToMessage(error.code);
         setAlertMessage(message);
       } else {
         router.push('/search');
       }
     } catch (err) {
+      setAlertMessage('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz');
       setIsSubmitting(false);
-      console.log(err);
-      console.log(err);
     }
   };
 
@@ -41,17 +39,17 @@ function LoginPage() {
     setIsSubmitting(true);
     try {
       const { email, password } = values;
-      const { error, user } = await signInWithEmailAndPasswordFirebase({ email, password }, '/search');
+      const { error, _ } = await signInWithEmailAndPasswordFirebase({ email, password }, '/search');
       setIsSubmitting(false);
       if (error) {
-        // TODO: Show a toast message
-        console.log(error);
+        const message = convertFirebaseErrorCodeToMessage(error.code);
+        setAlertMessage(message);
       } else {
         actions.resetForm();
         router.push('/search');
       }
     } catch (err) {
-      console.log(err);
+      setAlertMessage('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz');
       setIsSubmitting(false);
     }
   };
@@ -77,8 +75,8 @@ function LoginPage() {
       <LoginLayout>
         <div className="flex flex-col">
           <Link href="/">
-            <Logo 
-            //className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" 
+            <Logo
+            //className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl"
             />
           </Link>
           <div className="mt-20">
@@ -90,8 +88,13 @@ function LoginPage() {
               </Link>{' '}
             </p>
           </div>
+          {alertMessage && (
+            <div className="mt-2">
+              <span className="text-red-400 font-semibold text-md">{alertMessage}</span>
+            </div>
+          )}
         </div>
-        <form action="" className="mt-10 grid grid-cols-1 gap-y-8" onSubmit={handleSubmit} autoComplete="off">
+        <form action="" className="mt-4 grid grid-cols-1 gap-y-8" onSubmit={handleSubmit} autoComplete="off">
           <div>
             <label
               htmlFor="email"
@@ -149,6 +152,7 @@ function LoginPage() {
           ) : (
             <div>
               <button
+                type="submit"
                 disabled={isAnyErrors}
                 className={clsx(
                   'w-full rounded-lg mt-2 group inline-flex items-center justify-center py-2 px-4 text-xl font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2',
@@ -181,113 +185,6 @@ function LoginPage() {
         )}
       </LoginLayout>
     </>
-    /*
-    <>
-      <AlertDialog isOpen={isOpen} isCentered={true} leastDestructiveRef={cancelRef} onClose={onClose} size="xl">
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="3rem" fontWeight="600">
-              Hata
-            </AlertDialogHeader>
-            <AlertDialogBody fontSize="2rem">{alertMessage}</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button
-                borderRadius="1.2rem"
-                fontSize="2.5rem"
-                fontFamily="Poppins, sans-serif"
-                py="2.5rem"
-                px="1.5rem"
-                ref={cancelRef}
-                onClick={onClose}
-              >
-                Geri
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-      <div className={styles.container}>
-        <div className={styles['hero__container']}>
-          <div className={styles['hero__content']}>
-            <h1 className={styles['hero__header']}>Lorem ipsum</h1>
-            <p className={styles['hero__text']}>
-              {' '}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque doloribus natus molestias facere, odit ullam corporis impedit,
-              quo veritatis error voluptates voluptatem? Pariatur, magni fugit. Blanditiis qui temporibus dolores. Iusto, totam repudiandae? Vel,
-              velit, dignissimos ab, nesciunt cumque aperiam repellat delectus enim tempora rem quae beatae assumenda. Quos, hic nostrum. Quo
-              molestias quod tempora, quos illo voluptas dignissimos exercitationem?{' '}
-            </p>
-          </div>
-        </div>
-        <div className={styles['form__container']}>
-          <h3 className={styles['form__header']}>Giriş Yapın</h3>
-          <form action="" className={styles['login__form']} onSubmit={handleSubmit} autoComplete="off">
-            <div className={styles['form__input-area']}>
-              <div className={`${styles['form__input-container']} ${errors.email && touched.email && styles['form__input-container-error']}`}>
-                <label
-                  className={`${styles['form__input-label']} ${errors.email && touched.email && styles['form__input-label-error']}`}
-                  htmlFor="email"
-                >
-                  E-posta
-                </label>
-                <input
-                  className={`${styles['form__input']} ${errors.email && touched.email && styles['form__input-error']}`}
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  type="email"
-                  placeholder="Email adresinizi veya kullanıcı adınızı giriniz"
-                  id="email"
-                />
-                {errors.email && touched.email && <p className={styles['form__input-error-p']}>{errors.email}</p>}
-              </div>
-              <div className={`${styles['form__input-container']} ${errors.password && touched.password && styles['form__input-container-error']}`}>
-                <label
-                  htmlFor="password"
-                  className={`${styles['form__input-label']} ${errors.password && touched.password && styles['form__input-label-error']}`}
-                >
-                  Şifre
-                </label>
-                <input
-                  className={`${styles['form__input']} ${errors.password && touched.password && styles['form__input-error']}`}
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  type="password"
-                  placeholder="Şifrenizi giriniz"
-                  id="password"
-                />
-                {errors.password && touched.password && <p className={styles['form__input-error-p']}>{errors.password}</p>}
-              </div>
-              <p className={styles['form__prompt-register']}>
-                Hesabınız yok mu?{' '}
-                <span onClick={handleDirectRegisterPage} className={styles['form__register-cta']}>
-                  Hesap oluşturun
-                </span>
-              </p>
-            </div>
-            {isSubmitting ? (
-              <Progress isIndeterminate height="1rem" width="100%" marginBottom="2rem" />
-            ) : (
-              <button disabled={isSubmitting} className={`${styles['form__button']} button`} type="submit">
-                {isSubmitting ? <Spinner /> : 'Giriş Yapın'}
-              </button>
-            )}
-          </form>
-          <div className={styles['or__container']}>
-            <span>Ya da</span>
-          </div>
-          {isSubmitting ? (
-            <Progress isIndeterminate height="1rem" width="60%" marginBottom="2rem" />
-          ) : (
-            <div className={styles['google-signin']}>
-              <button onClick={() => handleGoogleLogin()}>Google ile giriş yapın</button>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-    */
   );
 }
 

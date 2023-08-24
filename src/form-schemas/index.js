@@ -10,9 +10,8 @@ const passwordRegex = /^(?=.*\d)(?=.*[!.,@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 //  At least 8, at most 32 characters long
 
 export const RegistrationSchema = yup.object().shape({
-  firstname: yup.string().min(2, 'İsim en az 2 harf içermelidir').required('Lütfen geçerli bir isim giriniz.'),
-  lastname: yup.string().min(2, 'Soyisim en az 2 harf içermelidir').required('Lütfen geçerli bir soyisim giriniz.'),
-  username: yup.string().min(3, 'Kullanıcı adı en az 3 harf içermelidir').required('Lütfen geçerli bir kullanıcı adı giriniz.'),
+  firstname: yup.string().min(2, 'İsminiz en az 2 harf içermelidir').required('Lütfen geçerli bir isim giriniz.'),
+  lastname: yup.string().min(2, 'Soyisminiz en az 2 harf içermelidir').required('Lütfen geçerli bir soyisim giriniz.'),
   email: yup.string().email('Lütfen geçerli bir e-posta adresi giriniz.').required('Lütfen geçerli bir e-posta adresi giriniz'),
   password: yup
     .string()
