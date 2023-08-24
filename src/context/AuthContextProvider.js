@@ -36,7 +36,6 @@ const useFirebaseAuth = () => {
   const handleUser = (user) => {
     if (user) {
       setUser(user);
-
       setLoading(false);
       return user;
     } else {
