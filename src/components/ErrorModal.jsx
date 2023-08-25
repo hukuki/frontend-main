@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
+import { clsx } from 'clsx';
 
 function Panel({ children }) {
   return (
@@ -17,11 +18,14 @@ function Title({ children }) {
   );
 }
 
-function Button({ children, onClick }) {
+function Button({ children, onClick, className }) {
   return (
     <button
       type="button"
-      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+      className={clsx(
+        'inline-flex justify-start rounded-md border border-transparent  px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+        className ? className : 'bg-blue-100 focus-visible:ring-blue-500 text-blue-900 hover:bg-blue-200'
+      )}
       onClick={onClick}
     >
       {children}

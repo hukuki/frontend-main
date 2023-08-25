@@ -38,7 +38,6 @@ function Hero() {
           </svg>
           <span className="ml-3">Demo'yu izleyin.</span>
         </Button>
-        <button onClick={() => setModalOpen(true)}>Error Modal</button>
       </div>
     </Container>
   );

@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import useAuthContext from '../../context/AuthContextProvider';
 import SearchResultCardsContainer from '../../components/SearchResultCardsContainer';
 import MagnifierBookLoading from '../../components/MagnifierBookLoading';
+import ErrorModal from '../../components/ErrorModal';
 
 function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
   const [open, setOpen] = useState(false);
@@ -54,12 +55,16 @@ function SearchMethodsPopover({ onAdvancedClick, onClassicClick, ...props }) {
   );
 }
 
-const SearchResultsPage = ({ data, query, algo }) => {
+const SearchResultsPage = ({ data, query, algo, error }) => {
   const [results, setResulsts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(query);
   const [searchAlgo, setSearchAlgo] = useState(algo);
-  const { user } = useAuthContext();
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(error);
+
+  const handleReport = () => {
+    router.push('/feedback');
+  };
 
   useEffect(() => {
     if (router.isReady) {
@@ -79,6 +84,22 @@ const SearchResultsPage = ({ data, query, algo }) => {
 
   return (
     <>
+      {isErrorModalOpen && (
+        <ErrorModal isOpen={isErrorModalOpen} closeModal={() => setIsErrorModalOpen(false)}>
+          <ErrorModal.Panel>
+            <div className="flex flex-col items-start justify-center gap-4">
+              <ErrorModal.Title>Bir hata oluştu</ErrorModal.Title>
+              <span className="text-md text-slate-600">Bir hata oluştu. Lütfen tekrar deneyiniz.</span>
+              <div className="w-full flex justify-end gap-2">
+                <ErrorModal.Button onClick={() => setIsErrorModalOpen(false)}>Anladım</ErrorModal.Button>
+                <ErrorModal.Button onClick={handleReport} className="bg-orange-100 focus-visible:ring-orange-500 text-orange-900 hover:bg-orange-200">
+                  Raporla
+                </ErrorModal.Button>
+              </div>
+            </div>
+          </ErrorModal.Panel>
+        </ErrorModal>
+      )}
       <AnimatePresence>
         {loading ? (
           <motion.div
@@ -142,11 +163,11 @@ export async function getServerSideProps(context) {
     });
     const data = await res.json();
     return {
-      props: { data, query: search, algo },
+      props: { data, query: search, algo, error: true },
     };
   } catch (err) {
     console.log(err);
-    return { props: { data: new Array(10).fill({}), query: search, algo } };
+    return { props: { data: new Array(10).fill({}), query: search, algo, error: true } };
   }
 }
 
