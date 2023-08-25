@@ -37,3 +37,14 @@ export const SpaceSchema = yup.object().shape({
   name: yup.string().required('Lütfen bir proje ismi giriniz'),
   description: yup.string().required(),
 });
+
+export const FeedbackSchema = yup.object().shape({
+  firstname: yup.string().required('Lütfen isminizi giriniz.'),
+  lastname: yup.string().required('Lütfen soyisminizi giriniz.'),
+  email: yup.string().email('Lütfen geçerli bir email adresi giriniz.').required('Lütfen geçerli bir email adresi giriniz'),
+  message: yup
+    .string()
+    .min(100, 'Lütfen 100 karakterden daha fazla bir mesaj giriniz.')
+    .max(1000, 'Lütfen en fazla 1000 karakterden oluşan bir mesaj giriniz.')
+    .required('Lütfen mesajınızı girmeyi unutmayın.'),
+});

@@ -100,7 +100,7 @@ function RegisterPage() {
         <div className="flex flex-col">
           <Link href="/">
             <Logo
-            // className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl" 
+            // className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-900 lowercase font-display text-3xl md:text-4xl"
             />
           </Link>
           <div className="mt-12">
@@ -108,7 +108,7 @@ function RegisterPage() {
             <p className="mt-2 text-sm text-gray-700">
               Zaten bir hesabınız var mı?{' '}
               <Link href="/login" className="font-medium text-blue-600 hover:underline">
-                Giriş yapın  
+                Giriş yapın
               </Link>{' '}
             </p>
           </div>
@@ -138,7 +138,7 @@ function RegisterPage() {
                 name="firstname"
               />
               <p className={clsx('', errors.firstname && touched.firstname ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-                Lütfen doğru bir ad girin.
+                Lütfen geçerli bir isim giriniz.
               </p>
             </div>
             <div className="sm:mb-0 mb-3">
@@ -214,7 +214,7 @@ function RegisterPage() {
               name="password"
             />
             <p className={clsx('', errors.password && touched.password ? 'mt-2 block text-sm font-semibold text-red-400' : 'hidden')}>
-        Geçerli bir şifre en az 8 karakter, en fazla 32 karakter ve en az 1 rakam, 1 küçük harf, 1 büyük harf ve 1 özel karakterden oluşmalıdır.
+              Geçerli bir şifre en az 8 karakter, en fazla 32 karakter ve en az 1 rakam, 1 küçük harf, 1 büyük harf ve 1 özel karakterden oluşmalıdır.
             </p>
           </div>
           <div>
