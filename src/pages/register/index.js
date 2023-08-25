@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { Logo } from '../../components/Logo';
 import clsx from 'clsx';
 import { Progress } from '@chakra-ui/react';
+import { convertFirebaseErrorCodeToMessage } from '../../utils/alerts/convert_firebase_error';
+
 function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signUpWithGoogle, signUpWithEmailAndPassword } = useAuthContext();
@@ -19,23 +21,17 @@ function RegisterPage() {
   const handleGoogleSignup = async () => {
     setIsSubmitting(true);
     try {
-      const { error, user } = await signUpWithGoogle('/search');
+      const { error, _ } = await signUpWithGoogle('/search');
       setIsSubmitting(false);
       if (error) {
-        // TODO: Show a toast message
         const message = convertFirebaseErrorCodeToMessage(error.code);
         setAlertMessage(message);
-        onOpen();
-        console.log(error);
       } else {
         router.push('/search');
       }
     } catch (err) {
+      setAlertMessage('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.');
       setIsSubmitting(false);
-      const message = convertFirebaseErrorCodeToMessage(error.code);
-      setAlertMessage(message);
-      onOpen();
-      console.log(err);
     }
   };
 
@@ -43,24 +39,18 @@ function RegisterPage() {
     setIsSubmitting(true);
     try {
       const { email, password } = values;
-      const { error, user } = await signUpWithEmailAndPassword({ email, password }, '/search');
+      const { error, _ } = await signUpWithEmailAndPassword({ email, password }, '/search');
       setIsSubmitting(false);
       if (error) {
-        // TODO: Show a toast message
         const message = convertFirebaseErrorCodeToMessage(error.code);
         setAlertMessage(message);
-        onOpen();
-        console.log(error);
       } else {
         actions.resetForm();
         router.push('/search');
       }
     } catch (err) {
+      setAlertMessage('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.');
       setIsSubmitting(false);
-      const message = convertFirebaseErrorCodeToMessage(error.code);
-      setAlertMessage(message);
-      onOpen();
-      console.log(err);
     }
   };
 
@@ -112,8 +102,13 @@ function RegisterPage() {
               </Link>{' '}
             </p>
           </div>
+          {alertMessage && (
+            <div className="mt-2">
+              <span className="text-red-400 font-semibold text-md">{alertMessage}</span>
+            </div>
+          )}
         </div>
-        <form action="" className="mt-10 grid grid-cols-1 gap-y-4 sm:gap-y-6" onSubmit={handleRegistration} autoComplete="off">
+        <form action="" className="mt-4 grid grid-cols-1 gap-y-4 sm:gap-y-6" onSubmit={handleSubmit} autoComplete="off">
           <div className="sm:flex sm:gap-x-4 sm:space-y-0 space-y-4 sm:mb-0">
             <div className="sm:mb-0 mb-3">
               <label
@@ -132,7 +127,7 @@ function RegisterPage() {
                 value={values.firstname}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                type="firstname"
+                type="text"
                 placeholder="Lütfen adınızı girin."
                 id="firstname"
                 name="firstname"
@@ -158,7 +153,7 @@ function RegisterPage() {
                 value={values.lastname}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                type="lastname"
+                type="text"
                 placeholder="Lütfen soyadınızı girin."
                 id="lastname"
                 name="lastname"
@@ -248,6 +243,7 @@ function RegisterPage() {
           ) : (
             <div>
               <button
+                type="submit"
                 disabled={isAnyErrors}
                 className={clsx(
                   'w-full rounded-lg mt-2 group inline-flex items-center justify-center py-2 px-4 text-xl font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2',

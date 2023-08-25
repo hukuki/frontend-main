@@ -23,8 +23,7 @@ function Hero() {
           hiç bu kadar <span className="text-violet-500">kolay</span> olmamıştı.
         </p>
       </h1>
-      <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-Son teknoloji yapay zekanın gücüyle belgelerinizi kolayca bulun</p>
+      <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">Son teknoloji yapay zekanın gücüyle belgelerinizi kolayca bulun</p>
       <div className="mt-10 flex justify-center space-x-6">
         <Button
           color="slate"

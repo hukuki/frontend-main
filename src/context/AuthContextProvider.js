@@ -28,6 +28,7 @@ const useFirebaseAuth = () => {
 
   const router = useRouter();
 
+  // TODO: Delete on deployment
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -35,7 +36,6 @@ const useFirebaseAuth = () => {
   const handleUser = (user) => {
     if (user) {
       setUser(user);
-
       setLoading(false);
       return user;
     } else {
