@@ -163,11 +163,11 @@ export async function getServerSideProps(context) {
     });
     const data = await res.json();
     return {
-      props: { data, query: search, algo },
+      props: { data, query: search, algo, error: true },
     };
   } catch (err) {
     console.log(err);
-    return { props: { data: new Array(10).fill({}), query: search, algo } };
+    return { props: { data: new Array(10).fill({}), query: search, algo, error: true } };
   }
 }
 
