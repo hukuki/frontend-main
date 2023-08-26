@@ -1,71 +1,96 @@
-import React, { Fragment, useRef, useState, useEffect, useId } from 'react';
+import React, { Fragment, useState, useMemo, createContext, useContext } from 'react';
 import useAuthContext from '../../context/AuthContextProvider';
 import { useRouter } from 'next/router';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { Logo } from '../../components/Logo';
-import DashboardSidebarButton from '../../components/DashboardSidebarButton';
-import { FaRegFolderOpen, FaBookmark, FaUserAlt, FaSignOutAlt, FaSearch } from 'react-icons/fa';
+import { FaHome, FaBriefcase, FaUpload, FaBookmark, FaUserTie, FaUserAlt, FaCog, FaQuestion } from 'react-icons/fa';
 import DashboardSearchbar from '../../components/DashboardSearchbar';
 import DashboardSpacesContainer from '../../components/DashboardSpacesContainer';
 
 const sections = [
   {
-    name: 'Profilim',
-    icon: function ProfileIcon({ divClass, iconClass }) {
-      let id = useId();
-      return (
-        <div id={id} className={clsx('group', divClass)}>
-          <FaUserAlt className={clsx('', iconClass ? iconClass : 'h-6 w-6 text-slate-500 group-hover:text-blue-500')} />
-        </div>
-      );
-    },
+    name: 'Ana Sayfa',
+    icon: FaHome,
   },
   {
-    name: 'Projelerim',
-    icon: function ProjectsIcon({ divClass, iconClass }) {
-      let id = useId();
-      return (
-        <div id={id} className={clsx('group', divClass)}>
-          <FaRegFolderOpen className={clsx('', iconClass ? iconClass : 'h-6 w-6 ')} />
-        </div>
-      );
-    },
+    name: 'Projeler',
+    icon: FaBriefcase,
   },
   {
-    name: 'Dokümanlarım',
-    icon: function SavedDocumentsIcon({ divClass, iconClass }) {
-      let id = useId();
-      return (
-        <div className={clsx('group', divClass)}>
-          <FaBookmark className={clsx('', iconClass ? iconClass : 'h-6 w-6 text-slate-500 group-hover:text-blue-500')} />
-        </div>
-      );
-    },
+    name: 'Yüklenenler',
+    icon: FaUpload,
   },
   {
-    name: 'Ara',
-    icon: function SearchIcon({ divClass, iconClass }) {
-      let id = useId();
-      return (
-        <div id={id} className={clsx('group', divClass)}>
-          <FaSearch className={clsx('', iconClass ? iconClass : 'h-6 w-6')} />
-        </div>
-      );
-    },
+    name: 'Kaydedilenler',
+    icon: FaBookmark,
   },
   {
-    name: 'Çıkış yap',
-    icon: function LogoutIcon({ divClass, iconClass }) {
-      let id = useId();
-      return (
-        <div id={id} className={('group', divClass)}>
-          <FaSignOutAlt className={clsx('', iconClass ? iconClass : 'h-6 w-6 text-slate-500 group-hover:text-blue-500')} />
-        </div>
-      );
-    },
+    name: 'Partnerler',
+    icon: FaUserTie,
+  },
+  {
+    name: 'Profil',
+    icon: FaUserAlt,
+  },
+  {
+    name: 'Ayarlar',
+    icon: FaCog,
+  },
+  {
+    name: 'Yardım',
+    icon: FaQuestion,
   },
 ];
+
+function Sidebar() {
+  return (
+    <div className="group/outer transition-all duration-300 hidden bg-[#fcfcfc] shadow md:inline-flex flex-col sticky top-0 left-0 md:w-56 box-border p-4 overflow-hidden">
+      <div className="h-20 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
+        <Logo />
+        <hr className="mt-4 border-slate-900/30" />
+      </div>
+      <div className="h-20 group-hover/outer:hidden block text-center lg:hidden">
+        <span className="text-4xl text-blue-500">c</span>
+        <span className="text-4xl text-violet-500">s</span>
+        <hr className="mt-4 border-slate-900/30" />
+      </div>
+      <div className="flex-1 w-full flex flex-col gap-y-2.5">
+        {sections.map((section, _) => {
+          if (section.name === 'Yardım') {
+            return (
+              <div className="mt-auto w-full border-t-2 border-slate-200">
+                <SidebarButton section={section} />
+              </div>
+            );
+          } else {
+            return <SidebarButton section={section} />;
+          }
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SidebarButton({ section, ...props }) {
+  const { activeTab, setActiveTab } = useContext(DashboardContext);
+  const selected = activeTab === section.name;
+  return (
+    <div
+      className={clsx(
+        'w-full cursor-pointer group p-3 text-base flex gap-x-2.5 justify-start items-center rounded-xl',
+        selected ? 'bg-[#efefef]' : 'bg-transparent hover:bg-[#efefef]'
+      )}
+      onClick={() => setActiveTab(section.name)}
+      {...props}
+    >
+      <span className={clsx('font-semibold group-hover:text-[#1a1d1f]', selected ? 'text-[#1a1d1f]' : 'text-[#6f767e]')}>{<section.icon />}</span>
+      <span className={clsx('group-hover/outer:block font-semibold group-hover:text-[#1a1d1f]', selected ? 'text-[#1a1d1f]' : 'text-[#6f767e]')}>
+        {section.name}
+      </span>
+    </div>
+  );
+}
 
 function MobileSidebarIcon({ open }) {
   return (
@@ -76,7 +101,8 @@ function MobileSidebarIcon({ open }) {
   );
 }
 
-function MobileSidebar({ activeLink, setActiveLink }) {
+function MobileSidebar() {
+  const { activeTab, setActiveTab } = useContext(DashboardContext);
   const { user, signOutWithGoogle } = useAuthContext();
   const router = useRouter();
 
@@ -116,46 +142,19 @@ function MobileSidebar({ activeLink, setActiveLink }) {
             className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow ring-1 ring-slate-900/5"
           >
             {({ close }) => (
-              <>
-                {sections.map((section, index) => {
-                  if (index === 3) {
-                    return (
-                      <>
-                        <hr className="m-2 border-slate-300/40" />
-                        <DashboardSidebarButton
-                          onClick={() => {
-                            close();
-                            router.push('/search');
-                          }}
-                          divClass="search_on_casevisor_animate bg-gradient-to-r from-blue-500/20 hover:from-blue-500/30 to-violet-500/20 hover:to-violet-500/30 bg-opacity-10"
-                          section={section}
-                          textClass="search_on_casevisor_animate text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
-                        />
-                      </>
-                    );
-                  }
-                  if (index === 4) {
-                    return (
-                      <div onClick={handleLogout}>
-                        <hr className="m-2 border-slate-300/40" />
-                        <DashboardSidebarButton section={section} />
-                      </div>
-                    );
-                  }
+              <div className="flex flex-col gap-y-2.5">
+                {sections.map((section, _) => {
                   return (
-                    <DashboardSidebarButton
+                    <SidebarButton
                       section={section}
-                      divClass={clsx('bg-transparent')}
-                      textClass={clsx('text-slate-400')}
-                      iconClass={clsx('text-slate-400')}
                       onClick={() => {
-                        setActiveLink(section.name);
+                        setActiveTab(section.name);
                         close();
                       }}
                     />
                   );
                 })}
-              </>
+              </div>
             )}
           </Popover.Panel>
         </Transition.Child>
@@ -164,9 +163,11 @@ function MobileSidebar({ activeLink, setActiveLink }) {
   );
 }
 
+export const DashboardContext = createContext();
+
 function DashboardPage() {
   const { user, signOutWithGoogle } = useAuthContext();
-  const [activeLink, setActiveLink] = useState('Projelerim');
+  const [activeTab, setActiveTab] = useState('Projeler');
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -175,82 +176,26 @@ function DashboardPage() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-neutral-50 h-full">
-      <div className="group/outer transition-all duration-300 hidden bg-white shadow md:inline-flex flex-col sticky top-0 left-0 md:w-20 md:hover:w-64 lg:hover:w-64 lg:w-64 h-[98vh] box-border rounded-xl m-2 p-4 overflow-hidden ">
-        <div className="h-64 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
-          <Logo 
-          //className="logo_animate max-w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500 text-3xl lowercase" 
-          />
+    <DashboardContext.Provider value={{ activeTab, setActiveTab }}>
+      <div className="flex flex-col md:flex-row bg-[#fcfcfc] h-full">
+        <Sidebar />
+        <div className="w-full flex items-center gap-x-4 p-2 md:hidden bg-white shadow">
+          <div className="ml-2">
+            <MobileSidebar />
+          </div>
+          <div className="ml-5">
+            <Logo />
+          </div>
         </div>
-        <div className="h-64 group-hover/outer:hidden block text-center lg:hidden">
-          <span className="text-4xl text-blue-500">c</span>
-          <span className="text-4xl text-violet-500">s</span>
-          <hr className="mt-4 border-slate-900/30" />
-        </div>
-        <div className="flex-1 w-full flex flex-col gap-y-4">
-          {sections.map((section, index) => {
-            if (index === 3) {
-              return (
-                <>
-                  <DashboardSidebarButton
-                    divClass="search_on_casevisor_animate bg-gradient-to-tl from-blue-500 hover:from-blue-900 via-purple-500 to-violet-500 hover:to-violet-500 justify-center group-hover/outer:justify-start transition lg:justify-start"
-                    section={section}
-                    onClick={() => router.push('/search')}
-                    textClass="text-white whitespace-nowrap group-hover:text-black-600 hidden group-hover/outer:block lg:block"
-                    iconClass="text-white group-hover:text-black-600"
-                  />
-                </>
-              );
-            }
-            if (index === 4) {
-              return (
-                <div className="mt-auto" onClick={handleLogout}>
-                  <hr />
-                  <DashboardSidebarButton
-                    divClass="mt-2 justify-center group-hover/outer:justify-start lg:justify-start"
-                    section={section}
-                    textClass="text-slate-900 whitespace-nowrap group-hover:text-black-600 hidden group-hover/outer:block  lg:block"
-                    iconClass="text-slate-900 group-hover:text-black-600"
-                  />
-                </div>
-              );
-            }
-            return (
-              <DashboardSidebarButton
-                divClass={clsx(
-                  'hover:bg-slate-200 justify-center group-hover/outer:justify-start lg:justify-start hover:text-black-600',
-    
-                )}
-                onClick={() => setActiveLink(section.name)}
-                section={section}
-                textClass={clsx(
-                  'whitespace-nowrap hidden group-hover/outer:block lg:block'
-                )}
-              />
-            );
-          })}
+        <div className="block m-2 flex-1">
+          {activeTab === 'Projeler' && (
+            <>
+              <DashboardSpacesContainer />
+            </>
+          )}
         </div>
       </div>
-      <div className="w-full flex items-center gap-x-4 p-2 md:hidden bg-white shadow">
-        <div className="ml-2">
-          <MobileSidebar activeLink={activeLink} setActiveLink={setActiveLink} />
-        </div>
-        <div 
-          className='ml-5'
-        >
-          <Logo 
-          //className="mr-2 text-transparent bg-gradient-to-r bg-clip-text text-3xl from-blue-500 to-violet-500 font-light lowercase" 
-          />
-        </div>
-      </div>
-      <div className="block m-2 flex-1">
-        {activeLink == 'Projelerim' && (
-          <>
-            <DashboardSpacesContainer />
-          </>
-        )}
-      </div>
-    </div>
+    </DashboardContext.Provider>
   );
 }
 
