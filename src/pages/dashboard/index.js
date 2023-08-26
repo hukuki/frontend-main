@@ -12,7 +12,7 @@ const sections = [
   {
     name: 'Ana Sayfa',
     icon: FaHome,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -21,7 +21,7 @@ const sections = [
   {
     name: 'Projeler',
     icon: FaBriefcase,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -30,7 +30,7 @@ const sections = [
   {
     name: 'Yüklenenler',
     icon: FaUpload,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -39,7 +39,7 @@ const sections = [
   {
     name: 'Kaydedilenler',
     icon: FaBookmark,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -48,7 +48,7 @@ const sections = [
   {
     name: 'Partnerler',
     icon: FaUserTie,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -57,7 +57,7 @@ const sections = [
   {
     name: 'Profil',
     icon: FaUserAlt,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -66,7 +66,7 @@ const sections = [
   {
     name: 'Ayarlar',
     icon: FaCog,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -75,9 +75,9 @@ const sections = [
   {
     name: 'Çıkış Yap',
     icon: FaSignOutAlt,
-    onClick({ setActiveTab, router }) {
-      return () => {
-        console.log(router);
+    onClick({ signOutWithGoogle, router }) {
+      return async () => {
+        await signOutWithGoogle();
         router.push('/');
       };
     },
@@ -85,7 +85,7 @@ const sections = [
   {
     name: 'Yardım',
     icon: FaQuestion,
-    onClick({ setActiveTab, router }) {
+    onClick({ setActiveTab }) {
       return () => {
         setActiveTab(this.name);
       };
@@ -123,13 +123,14 @@ function SidebarButton({ section, ...props }) {
   const { activeTab, setActiveTab } = useContext(DashboardContext);
   const selected = activeTab === section.name;
   const router = useRouter();
+  const { signOutWithGoogle } = useAuthContext();
   return (
     <div
       className={clsx(
         'w-full cursor-pointer group p-3 text-base flex gap-x-2.5 justify-start items-center rounded-xl',
         selected ? 'bg-[#efefef]' : 'bg-transparent hover:bg-[#efefef]'
       )}
-      onClick={section.onClick({ setActiveTab, router })}
+      onClick={section.onClick({ setActiveTab, router, signOutWithGoogle })}
       {...props}
     >
       <span className={clsx('font-semibold group-hover:text-[#1a1d1f]', selected ? 'text-[#1a1d1f]' : 'text-[#6f767e]')}>{<section.icon />}</span>
@@ -211,11 +212,6 @@ function DashboardPage() {
   const { user, signOutWithGoogle } = useAuthContext();
   const [activeTab, setActiveTab] = useState('Projeler');
   const router = useRouter();
-
-  const handleLogout = async () => {
-    await signOutWithGoogle();
-    router.push('/');
-  };
 
   return (
     <DashboardContext.Provider value={{ activeTab, setActiveTab }}>
