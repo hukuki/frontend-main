@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { Logo } from '../../components/Logo';
-import { FaHome, FaBriefcase, FaUpload, FaBookmark, FaUserTie, FaUserAlt, FaCog, FaQuestion } from 'react-icons/fa';
+import { FaHome, FaBriefcase, FaUpload, FaBookmark, FaUserTie, FaUserAlt, FaCog, FaQuestion, FaSignOutAlt } from 'react-icons/fa';
 import DashboardSearchbar from '../../components/DashboardSearchbar';
 import DashboardSpacesContainer from '../../components/DashboardSpacesContainer';
 
@@ -12,47 +12,94 @@ const sections = [
   {
     name: 'Ana Sayfa',
     icon: FaHome,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
   {
     name: 'Projeler',
     icon: FaBriefcase,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
   {
     name: 'Yüklenenler',
     icon: FaUpload,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
   {
     name: 'Kaydedilenler',
     icon: FaBookmark,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
   {
     name: 'Partnerler',
     icon: FaUserTie,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
   {
     name: 'Profil',
     icon: FaUserAlt,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
   {
     name: 'Ayarlar',
     icon: FaCog,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
+  },
+  {
+    name: 'Çıkış Yap',
+    icon: FaSignOutAlt,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        console.log(router);
+        router.push('/');
+      };
+    },
   },
   {
     name: 'Yardım',
     icon: FaQuestion,
+    onClick({ setActiveTab, router }) {
+      return () => {
+        setActiveTab(this.name);
+      };
+    },
   },
 ];
 
 function Sidebar() {
+  const { activeTab, setActiveTab } = useContext(DashboardContext);
+  const router = useRouter();
   return (
     <div className="group/outer transition-all duration-300 hidden bg-[#fcfcfc] shadow md:inline-flex flex-col sticky top-0 left-0 md:w-56 box-border p-4 overflow-hidden">
-      <div className="h-20 whitespace-nowrap hidden group-hover/outer:block lg:block text-center">
-        <Logo />
-        <hr className="mt-4 border-slate-900/30" />
-      </div>
-      <div className="h-20 group-hover/outer:hidden block text-center lg:hidden">
-        <span className="text-4xl text-blue-500">c</span>
-        <span className="text-4xl text-violet-500">s</span>
+      <div className="h-20 whitespace-nowrap text-center">
+        <Logo onClick={() => router.push('/')} className="cursor-pointer" />
         <hr className="mt-4 border-slate-900/30" />
       </div>
       <div className="flex-1 w-full flex flex-col gap-y-2.5">
@@ -75,13 +122,14 @@ function Sidebar() {
 function SidebarButton({ section, ...props }) {
   const { activeTab, setActiveTab } = useContext(DashboardContext);
   const selected = activeTab === section.name;
+  const router = useRouter();
   return (
     <div
       className={clsx(
         'w-full cursor-pointer group p-3 text-base flex gap-x-2.5 justify-start items-center rounded-xl',
         selected ? 'bg-[#efefef]' : 'bg-transparent hover:bg-[#efefef]'
       )}
-      onClick={() => setActiveTab(section.name)}
+      onClick={section.onClick({ setActiveTab, router })}
       {...props}
     >
       <span className={clsx('font-semibold group-hover:text-[#1a1d1f]', selected ? 'text-[#1a1d1f]' : 'text-[#6f767e]')}>{<section.icon />}</span>
@@ -106,60 +154,54 @@ function MobileSidebar() {
   const { user, signOutWithGoogle } = useAuthContext();
   const router = useRouter();
 
-  const handleLogout = async () => {
-    await signOutWithGoogle();
-    router.push('/');
-  };
-
   return (
-    <Popover>
-      <Popover.Button className="relative z-10 flex justify-center items-center outline-none">
-        {({ open }) => <MobileSidebarIcon open={open} />}
-      </Popover.Button>
-      <Transition.Root>
-        <Transition.Child
-          as={Fragment}
-          enter="duration-300 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="duration-300 ease-in"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
-        </Transition.Child>
-        <Transition.Child
-          as={Fragment}
-          enter="duration-300 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="duration-300 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Popover.Panel
-            as="div"
-            className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow ring-1 ring-slate-900/5"
-          >
-            {({ close }) => (
-              <div className="flex flex-col gap-y-2.5">
-                {sections.map((section, _) => {
-                  return (
-                    <SidebarButton
-                      section={section}
-                      onClick={() => {
-                        setActiveTab(section.name);
-                        close();
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </Popover.Panel>
-        </Transition.Child>
-      </Transition.Root>
-    </Popover>
+    <div className="w-full flex items-center gap-x-4 p-2 md:hidden bg-white shadow">
+      <div className="ml-2">
+        <Popover>
+          <Popover.Button className="relative z-10 flex justify-center items-center outline-none">
+            {({ open }) => <MobileSidebarIcon open={open} />}
+          </Popover.Button>
+          <Transition.Root>
+            <Transition.Child
+              as={Fragment}
+              enter="duration-300 ease-out"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="duration-300 ease-in"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
+            </Transition.Child>
+            <Transition.Child
+              as={Fragment}
+              enter="duration-300 ease-out"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="duration-300 ease-in"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Popover.Panel
+                as="div"
+                className="absolute z-10 inset-x-0 mt-6 mx-2 flex origin-top flex-col rounded-lg bg-white p-4 text-lg tracking-tight text-slate-900 shadow ring-1 ring-slate-900/5"
+              >
+                {({ close }) => (
+                  <div className="flex flex-col gap-y-2.5">
+                    {sections.map((section, _) => {
+                      return <SidebarButton section={section} />;
+                    })}
+                  </div>
+                )}
+              </Popover.Panel>
+            </Transition.Child>
+          </Transition.Root>
+        </Popover>
+      </div>
+      <div className="ml-5">
+        <Logo className="cursor-pointer" onClick={() => router.push('/')} />
+      </div>
+    </div>
   );
 }
 
@@ -179,14 +221,7 @@ function DashboardPage() {
     <DashboardContext.Provider value={{ activeTab, setActiveTab }}>
       <div className="flex flex-col md:flex-row bg-[#fcfcfc] h-full">
         <Sidebar />
-        <div className="w-full flex items-center gap-x-4 p-2 md:hidden bg-white shadow">
-          <div className="ml-2">
-            <MobileSidebar />
-          </div>
-          <div className="ml-5">
-            <Logo />
-          </div>
-        </div>
+        <MobileSidebar />
         <div className="block m-2 flex-1">
           {activeTab === 'Projeler' && (
             <>
