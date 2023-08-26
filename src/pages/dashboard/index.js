@@ -12,63 +12,84 @@ const sections = [
   {
     name: 'Ana Sayfa',
     icon: FaHome,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
   {
     name: 'Projeler',
     icon: FaBriefcase,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
   {
     name: 'Yüklenenler',
     icon: FaUpload,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
   {
     name: 'Kaydedilenler',
     icon: FaBookmark,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
   {
     name: 'Partnerler',
     icon: FaUserTie,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
   {
     name: 'Profil',
     icon: FaUserAlt,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
   {
     name: 'Ayarlar',
     icon: FaCog,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
@@ -85,16 +106,18 @@ const sections = [
   {
     name: 'Yardım',
     icon: FaQuestion,
-    onClick({ setActiveTab }) {
+    onClick({ setActiveTab, close }) {
       return () => {
         setActiveTab(this.name);
+        if (close) {
+          close();
+        }
       };
     },
   },
 ];
 
 function Sidebar() {
-  const { activeTab, setActiveTab } = useContext(DashboardContext);
   const router = useRouter();
   return (
     <div className="group/outer transition-all duration-300 hidden bg-[#fcfcfc] shadow md:inline-flex flex-col sticky top-0 left-0 md:w-56 box-border p-4 overflow-hidden">
@@ -119,7 +142,7 @@ function Sidebar() {
   );
 }
 
-function SidebarButton({ section, ...props }) {
+function SidebarButton({ section, close, ...props }) {
   const { activeTab, setActiveTab } = useContext(DashboardContext);
   const selected = activeTab === section.name;
   const router = useRouter();
@@ -130,7 +153,9 @@ function SidebarButton({ section, ...props }) {
         'w-full cursor-pointer group p-3 text-base flex gap-x-2.5 justify-start items-center rounded-xl',
         selected ? 'bg-[#efefef]' : 'bg-transparent hover:bg-[#efefef]'
       )}
-      onClick={section.onClick({ setActiveTab, router, signOutWithGoogle })}
+      onClick={() => {
+        section.onClick({ setActiveTab, router, signOutWithGoogle, close })();
+      }}
       {...props}
     >
       <span className={clsx('font-semibold group-hover:text-[#1a1d1f]', selected ? 'text-[#1a1d1f]' : 'text-[#6f767e]')}>{<section.icon />}</span>
@@ -151,8 +176,6 @@ function MobileSidebarIcon({ open }) {
 }
 
 function MobileSidebar() {
-  const { activeTab, setActiveTab } = useContext(DashboardContext);
-  const { user, signOutWithGoogle } = useAuthContext();
   const router = useRouter();
 
   return (
@@ -190,7 +213,7 @@ function MobileSidebar() {
                 {({ close }) => (
                   <div className="flex flex-col gap-y-2.5">
                     {sections.map((section, _) => {
-                      return <SidebarButton section={section} />;
+                      return <SidebarButton section={section} close={close} />;
                     })}
                   </div>
                 )}
@@ -206,12 +229,20 @@ function MobileSidebar() {
   );
 }
 
+function Panel() {
+  const { activeTab, setActiveTab } = useContext(DashboardContext);
+  switch (activeTab) {
+    case 'Projeler':
+      return <DashboardSpacesContainer />;
+    default:
+      return <h1 className="text-red-500">{activeTab}</h1>;
+  }
+}
+
 export const DashboardContext = createContext();
 
 function DashboardPage() {
-  const { user, signOutWithGoogle } = useAuthContext();
   const [activeTab, setActiveTab] = useState('Projeler');
-  const router = useRouter();
 
   return (
     <DashboardContext.Provider value={{ activeTab, setActiveTab }}>
@@ -219,11 +250,7 @@ function DashboardPage() {
         <Sidebar />
         <MobileSidebar />
         <div className="block m-2 flex-1">
-          {activeTab === 'Projeler' && (
-            <>
-              <DashboardSpacesContainer />
-            </>
-          )}
+          <Panel />
         </div>
       </div>
     </DashboardContext.Provider>
