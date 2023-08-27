@@ -5,8 +5,8 @@ import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { Logo } from '../../components/Logo';
 import { FaHome, FaBriefcase, FaUpload, FaBookmark, FaUserTie, FaUserAlt, FaCog, FaQuestion, FaSignOutAlt } from 'react-icons/fa';
-import DashboardSearchbar from '../../components/DashboardSearchbar';
 import DashboardSpacesContainer from '../../components/DashboardSpacesContainer';
+import DashboardMainPanel from './DashboardMainPanel';
 
 const sections = [
   {
@@ -230,10 +230,12 @@ function MobileSidebar() {
 }
 
 function Panel() {
-  const { activeTab, setActiveTab } = useContext(DashboardContext);
+  const { activeTab, _ } = useContext(DashboardContext);
   switch (activeTab) {
     case 'Projeler':
       return <DashboardSpacesContainer />;
+    case 'Ana Sayfa':
+      return <DashboardMainPanel />;
     default:
       return <h1 className="text-red-500">{activeTab}</h1>;
   }
@@ -242,14 +244,14 @@ function Panel() {
 export const DashboardContext = createContext();
 
 function DashboardPage() {
-  const [activeTab, setActiveTab] = useState('Projeler');
+  const [activeTab, setActiveTab] = useState('Ana Sayfa');
 
   return (
     <DashboardContext.Provider value={{ activeTab, setActiveTab }}>
       <div className="flex flex-col md:flex-row bg-[#fcfcfc] h-full">
         <Sidebar />
         <MobileSidebar />
-        <div className="block m-2 flex-1">
+        <div className="block flex-1">
           <Panel />
         </div>
       </div>
